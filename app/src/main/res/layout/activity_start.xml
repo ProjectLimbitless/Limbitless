@@ -8,6 +8,7 @@
     android:paddingTop="8dp"
     android:paddingRight="8dp"
     android:paddingBottom="8dp"
+    android:background="#8089E3"
     android:weightSum="0"
     tools:context=".StartActivity">
 
@@ -41,6 +42,7 @@
         android:textStyle="bold"
         android:typeface="serif" />
 
+
     <Button
         android:id="@+id/btn_to_gallery"
         android:layout_width="match_parent"
@@ -54,5 +56,4 @@
         android:textSize="48sp"
         android:textStyle="bold"
         android:typeface="serif" />
-
 </LinearLayout>

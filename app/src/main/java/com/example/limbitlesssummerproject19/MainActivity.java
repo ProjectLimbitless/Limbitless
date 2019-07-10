@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // We create a button and add a listener to it.
+        //Create a buttons and adds a listener to it
 
         btnStart = (Button) findViewById(R.id.btn_to_start);
         btnStart.setOnClickListener( new View.OnClickListener() {
@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
             //Upon clicking the button, a new window will open called StartActivity
 
             public void onClick(View view){
+
+                //On Click start button, we go to the start activity
                 Intent intent = new Intent(MainActivity.this,
                         StartActivity.class);
                 startActivity(intent);

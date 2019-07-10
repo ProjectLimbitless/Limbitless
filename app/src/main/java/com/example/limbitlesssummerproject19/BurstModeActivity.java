@@ -6,4 +6,6 @@ package com.example.limbitlesssummerproject19;
  */
 
 public class BurstModeActivity {
+
+
 }

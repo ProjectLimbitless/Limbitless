@@ -5,6 +5,7 @@ package com.example.limbitlesssummerproject19;
  * This would allow the user to check for images acquired after full revolution.
  * This is work in progress since all images are saved in CameraActivity.
  *
+ *
  */
 
 public class GalleryActivity {

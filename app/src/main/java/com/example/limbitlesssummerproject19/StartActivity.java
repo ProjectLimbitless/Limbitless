@@ -21,22 +21,27 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
-        // Create button and a listener is added
+        /*
+         *  Creates gallery button and a listener is added
+         */
 
         btnGallery = (Button) findViewById(R.id.btn_to_gallery);
         btnGallery.setOnClickListener(new View.OnClickListener() {
 
-            // On click, the button opens Gallery Activity.
-            // Gallery Activity is still in work
+            /*
+             * On click, the button opens Gallery Activity. (Gallery Activity is still on work)
+             */
 
             public void onClick(View view) {
-                Intent intent = new Intent(StartActivity.this,   //On click, a new
-                        GalleryActivity.class);                                 // activity is open
+                Intent intent = new Intent(StartActivity.this,
+                        GalleryActivity.class);
                 startActivity(intent);
             }
         });
 
-        //Creates button and a listener is added.
+        /*
+         * Creates camera button and a listener is added. (CameraActivity is off the project)
+         */
 
         btnCameraone = (Button) findViewById(R.id.btn_to_capture);
         btnCameraone.setOnClickListener(new View.OnClickListener() {
@@ -50,11 +55,17 @@ public class StartActivity extends AppCompatActivity {
             }
         });
 
-        // Creates a Burst Mode button and a listener is added.
+        /*
+         * Creates a Burst Mode button and a listener is added.
+         */
+
         btnCameratwo = (Button) findViewById(R.id.btn_to_camera_two);
         btnCameratwo.setOnClickListener( new View.OnClickListener(){
 
-            //On click, the button opens the BurstModeActivity
+            /*
+             * Upon click, the button opens BurstModeActivity.
+             */
+
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StartActivity.this,
