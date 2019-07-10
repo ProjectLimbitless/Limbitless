@@ -12,31 +12,15 @@
     android:weightSum="0"
     tools:context=".StartActivity">
 
-
     <Button
-        android:id="@+id/btn_to_capture"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_weight="1"
-        android:background="@android:color/holo_green_light"
-        android:paddingBottom="0dp"
-        android:text="OneTimePic"
-        android:textColor="@android:color/white"
-        android:textSize="48sp"
-        android:textStyle="bold"
-        android:typeface="serif" />
-
-    <Button
-        android:id="@+id/btn_to_camera_two"
+        android:id="@+id/CameraButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:layout_weight="1"
         android:background="@android:color/holo_blue_light"
-        android:text="BurstMode"
+        android:text="Camera"
         android:textColor="@android:color/white"
         android:textSize="48sp"
         android:textStyle="bold"

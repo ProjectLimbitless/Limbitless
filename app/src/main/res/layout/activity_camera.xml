@@ -1,67 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CameraActivity">
 
-    <Button
-        android:id="@+id/mTake"
-        android:layout_width="74dp"
-        android:layout_height="69dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="31dp"
-        android:layout_marginLeft="31dp"
-        android:layout_marginBottom="17dp"
-        android:onClick="captureImage"
-        android:text="@string/capture_image" />
-
-    <Button
-        android:id="@+id/save_image_button"
-        android:layout_width="75dp"
-        android:layout_height="67dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginBottom="18dp"
-        android:text="@string/save_image" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="78dp"
-        android:layout_height="68dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="167dp"
-        android:layout_marginRight="167dp"
-        android:layout_marginBottom="16dp"
-        android:text="Burst Mode" />
-
-    <FrameLayout
-        android:id="@+id/framelayout1"
-        android:layout_width="match_parent"
-        android:layout_height="637dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="0dp"
-        android:layout_marginBottom="95dp">
-
-        <ImageView
-            android:id="@+id/camera_image_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <SurfaceView
-            android:id="@+id/preview_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </FrameLayout>
-
-
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

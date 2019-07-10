@@ -14,7 +14,7 @@ import android.widget.Button;
 
 public class StartActivity extends AppCompatActivity {
 
-    private Button btnGallery, btnCameraone,btnCameratwo;
+    private Button btnGallery, btnCamera;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,36 +40,18 @@ public class StartActivity extends AppCompatActivity {
         });
 
         /*
-         * Creates camera button and a listener is added. (CameraActivity is off the project)
-         */
-
-        btnCameraone = (Button) findViewById(R.id.btn_to_capture);
-        btnCameraone.setOnClickListener(new View.OnClickListener() {
-
-            // On click, the button opens Camera Activity
-
-            public void onClick(View view) {
-                Intent intent = new Intent(StartActivity.this,   //On click, a new
-                        CameraActivity.class);                                 // activity is open
-                startActivity(intent);
-            }
-        });
-
-        /*
          * Creates a Burst Mode button and a listener is added.
          */
 
-        btnCameratwo = (Button) findViewById(R.id.btn_to_camera_two);
-        btnCameratwo.setOnClickListener( new View.OnClickListener(){
-
+        btnCamera = (Button) findViewById(R.id.CameraButton);
+        btnCamera.setOnClickListener( new View.OnClickListener(){
             /*
-             * Upon click, the button opens BurstModeActivity.
+             * Upon click, the button opens CameraActivity.
              */
-
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StartActivity.this,
-                        BurstModeActivity.class);
+                        CameraActivity.class);
                 startActivity(intent);
             }
         });

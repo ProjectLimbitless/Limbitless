@@ -1,12 +1,13 @@
 package com.example.limbitlesssummerproject19;
 
-/**
- * Gallery Activity should be able to show the pictures stored inside the memory of the device.
- * This would allow the user to check for images acquired after full revolution.
- * This is work in progress since all images are saved in CameraActivity.
- *
- *
- */
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 
-public class GalleryActivity {
+public class GalleryActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_gallery);
+    }
 }
