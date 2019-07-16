@@ -6,9 +6,7 @@ android {
     defaultConfig {
         applicationId "com.example.limbitlesssummerproject19"
 
-        // minSdkVersion value was change from 15 to 'android-L' for some functionality in
-        // CameraActivity
-        minSdkVersion 'android-L'
+        minSdkVersion 15
 
         targetSdkVersion 28
         versionCode 1
