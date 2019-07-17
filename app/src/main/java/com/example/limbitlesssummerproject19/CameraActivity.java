@@ -35,6 +35,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -61,15 +62,16 @@ public class CameraActivity extends AppCompatActivity {
     private String cameraId; //unique ID used to access the camera
     CameraDevice cameraDevice; //representation of a single camera connected to the device
     CameraCaptureSession cameraCaptureSession; //configured capture session; used for capturing images from the camera
-    CaptureRequest captureRequest; //package of settings/outputs needed to capture a single image
     CaptureRequest.Builder captureRequestBuilder; //how to create the capture request
 
     private Size imageDimension; //describe width & height in pixels
-    private ImageReader imageReader; //allows app to access image data rendered into a Surface
     private File file; //file where photo will be stored
     Handler mBackgroundHandler; //to schedule actions to be executed at some point in the future
     HandlerThread mBackgroundThread; //the thread associated with the handler
 
+    String directoryName;
+    String sessionName;
+    File session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +80,26 @@ public class CameraActivity extends AppCompatActivity {
 
         textureView = (TextureView) findViewById(R.id.texture);
         button_capture = (Button) findViewById(R.id.button_capture);
+
+        //set up paths to store photos
+        directoryName = Environment.getExternalStorageDirectory()+File.separator+"ProstheticFolder";
+        File directory = new File(directoryName);
+        if(! directory.exists()) {
+            directory.mkdirs();
+        }
+
+        File countFiles = new File(directoryName);
+        File[] files = countFiles.listFiles(new FileFilter() {
+            @Override
+            public boolean accept(File pathname) {
+                return pathname.isDirectory();
+            }
+        });
+        sessionName = directoryName+File.separator+"Session "+(files.length + 1);
+        session = new File(sessionName);
+        if(! session.exists()) {
+            session.mkdirs();
+        }
 
 
         textureView.setSurfaceTextureListener(textureListener);
@@ -321,7 +343,7 @@ public class CameraActivity extends AppCompatActivity {
         String ts = tsLong.toString();
 
         //initializes a file to write the photo to with the jpg extension and the name from above
-        file = new File(Environment.getExternalStorageDirectory() + "/" + ts + ".jpg");
+        file = new File(sessionName + "/" + ts + ".jpg");
 
         //calback interface for being notified that a new image is available
         ImageReader.OnImageAvailableListener readerListener = new ImageReader.OnImageAvailableListener() {
