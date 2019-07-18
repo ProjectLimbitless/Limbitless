@@ -11,10 +11,12 @@ import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
@@ -29,18 +31,37 @@ public class GalleryActivity extends AppCompatActivity {
     static final int REQUEST_PERMISSION_KEY = 1;
     //LoadAlbum loadAlbumTast;
     GridView sessionGallery;
-    private byte[] mCameraData;
 
     // List containing paths to each session (directory)
     ArrayList<HashMap<String, String>> albumList = new ArrayList<HashMap<String, String>>();
+
+    private String[] sessionThumbnails = null;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
-        saveImage(R.drawable.butterfly);
-        saveImage(R.drawable.dog);
+        ContextWrapper cw = new ContextWrapper(getApplicationContext());
+
+
+        String directoryName = Environment.getExternalStorageDirectory()+File.separator+"ProstheticFolder";
+        File countFiles = new File(directoryName);
+        File[] files = countFiles.listFiles(new FileFilter() {
+            @Override
+            public boolean accept(File pathname) {
+                return pathname.isDirectory();
+            }
+        });
+        System.out.println("In gallery activity" + Arrays.toString(files));
+
+        // Get session thumbnails
+        for ( File f : files ) {
+            System.out.println("curr file " + f.toString());
+            System.out.println("contents " + Arrays.toString(f.listFiles()));
+
+        }
+        //sessionGallery.setAdapter(new ArrayAdapter<String>(cw, Arrays.toString(files)));
     }
 
     /** displayAlbum
@@ -55,7 +76,6 @@ public class GalleryActivity extends AppCompatActivity {
     /**
       * saveImage
       * Temporary method to save dummy images to internal storage
-     */
 
     private void saveImage(int id) {
 
@@ -80,7 +100,7 @@ public class GalleryActivity extends AppCompatActivity {
             System.out.println("Image Saved Successfully " + id);
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
 
 
         /*
@@ -101,8 +121,8 @@ public class GalleryActivity extends AppCompatActivity {
                         dateFormat.format(new Date()) + ".png");
             }
         }
-        return null;*/
-    }
+        return null;
+    }*/
 
 
 
