@@ -95,12 +95,18 @@ public class CameraActivity extends AppCompatActivity {
                 return pathname.isDirectory();
             }
         });
-        sessionName = directoryName+File.separator+"Session "+(files.length + 1);
+        if (files == null){
+            sessionName = directoryName+File.separator+"Session 1";
+            System.out.println("null under countFiles");
+        }
+        else {
+            sessionName = directoryName + File.separator + "Session " + (files.length + 1);
+        }
         session = new File(sessionName);
         if(! session.exists()) {
             session.mkdirs();
         }
-
+        System.out.println("Current files: " + Arrays.toString(directory.listFiles()));
 
         textureView.setSurfaceTextureListener(textureListener);
 
