@@ -8,36 +8,55 @@
     android:paddingTop="8dp"
     android:paddingRight="8dp"
     android:paddingBottom="8dp"
-    android:background="#8089E3"
+    android:background="@android:color/white"
     android:weightSum="0"
     tools:context=".StartActivity">
 
     <Button
         android:id="@+id/CameraButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_weight="1"
-        android:background="@android:color/holo_blue_light"
-        android:text="Camera"
+        android:background="@drawable/camera_button"
+        android:text="camera"
+
+        android:layout_width="350dp"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+
+        android:layout_weight="0.5"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@android:color/white"
-        android:textSize="48sp"
+        android:paddingRight="140dp"
+        android:paddingBottom="150dp"
+        android:textSize="60sp"
         android:textStyle="bold"
-        android:typeface="serif" />
+        android:typeface="normal" />
 
 
     <Button
         android:id="@+id/btn_to_gallery"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_weight="1"
-        android:background="@android:color/holo_blue_light"
-        android:text="Gallery"
+        android:text="gallery"
+        android:background="@drawable/gallery_button"
+
+        android:layout_width="350dp"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+
+        android:layout_weight="0.5"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@android:color/white"
-        android:textSize="48sp"
+
+        android:paddingRight="160dp"
+        android:paddingBottom="150dp"
+        android:textSize="60sp"
         android:textStyle="bold"
-        android:typeface="serif" />
+        android:typeface="normal" />
 </LinearLayout>
