@@ -38,7 +38,6 @@ public class GalleryActivity extends AppCompatActivity {
 
     // List of file paths and names to each session folder
     private ArrayList<Pair<String, String>> sessionThumbnails = new ArrayList<Pair<String, String>>();
-    private ArrayList<String> album = new ArrayList<String>();
 
 
     @Override
@@ -71,35 +70,24 @@ public class GalleryActivity extends AppCompatActivity {
 
             // Use adapter class as data provider
             sessionGallery = (GridView)findViewById(R.id.galleryGridView);
-            final GalleryAdapter galleryAdapter = new GalleryAdapter(this, sessionThumbnails);
+            final GalleryAdapter galleryAdapter = new GalleryAdapter(
+                    this, sessionThumbnails);
             sessionGallery.setAdapter(galleryAdapter);
 
-            // Open session when an album is clicked
+            // Open session when a thumbnail is clicked
             sessionGallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                    // Get images from selected session
-                    File openFile = new File(files[position].getAbsolutePath());
-                    for ( File i : openFile.listFiles() ) {
-                        album.add(i.getAbsolutePath());
-                    }
-
-                    // Update to albumAdapter
-                    Context c = getApplicationContext();
-                    final AlbumAdapter albumAdapter = new AlbumAdapter(c, album);
-                    sessionGallery.setAdapter(albumAdapter);
-
-                    // Update GridView Data
-                    // galleryAdapter.changeData(album);
-
-                    // Redraw GridView
-                    // galleryAdapter.notifyDataSetChanged();
+                    // Open session images in another activity
+                    Intent intent = new Intent(getApplicationContext(), AlbumActivity.class);
+                    intent.putExtra("fileName", files[position].getAbsolutePath());
+                    startActivity(intent);
                 }
             });
 
         } catch (Exception e){
-            Toast.makeText(getApplicationContext(), "No Albums To Display!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "No Albums To Display!",
+                    Toast.LENGTH_LONG).show();
         }
 
     }
@@ -152,9 +140,12 @@ public class GalleryActivity extends AppCompatActivity {
             // Fix rotation of image
             Matrix matrix = new Matrix();
             matrix.postRotate(90);
-            Bitmap scaledBitmap = Bitmap.createScaledBitmap(org, org.getWidth(), org.getHeight(), true);
-            Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
+            Bitmap scaledBitmap = Bitmap.createScaledBitmap(org, org.getWidth(), org.getHeight(),
+                    true);
+            Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0,
+                    scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
 
+            // Set image and title
             iv.setImageBitmap(rotatedBitmap);
             tv.setText(title);
 
@@ -162,58 +153,6 @@ public class GalleryActivity extends AppCompatActivity {
 
         }
     }
-
-
-    /**
-     * AlbumAdapter
-     * Data provider for album gridView
-     */
-    public class AlbumAdapter extends BaseAdapter {
-
-        private final Context mContext;
-        private ArrayList<String> images;
-
-        // Constructor
-        public AlbumAdapter(Context context, ArrayList<String> src){
-            this.mContext = context;
-            this.images = src;
-        }
-
-
-        @Override
-        public int getCount(){
-            return images.size();
-        }
-
-        @Override
-        public long getItemId(int position){
-            return 0;
-        }
-
-        @Override
-        public Object getItem(int position){
-            return null;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent){
-
-            ImageView iv = new ImageView(mContext);
-
-            Bitmap org = BitmapFactory.decodeFile(images.get(position));
-
-            // Fix rotation of image
-            Matrix matrix = new Matrix();
-            matrix.postRotate(90);
-            Bitmap scaledBitmap = Bitmap.createScaledBitmap(org, org.getWidth(), org.getHeight(), true);
-            Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
-
-            iv.setImageBitmap(rotatedBitmap);
-            return iv;
-        }
-
-    }
-
 
 
 }
