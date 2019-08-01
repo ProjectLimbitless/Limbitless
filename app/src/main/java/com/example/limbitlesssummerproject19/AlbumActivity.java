@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 
@@ -20,6 +21,7 @@ public class AlbumActivity extends AppCompatActivity {
 
     GridView albumGallery;
     private ArrayList<String> album = new ArrayList<String>();
+    private Button sendbtn;
 
 
     @Override
@@ -29,13 +31,17 @@ public class AlbumActivity extends AppCompatActivity {
         setContentView(R.layout.activity_album);
 
         albumGallery = (GridView)findViewById(R.id.albumGridView);
+        //sendbtn = (Button)findViewById(R.id.sendDataBtn);
+
 
         Intent intent = getIntent();
         String fileName = intent.getStringExtra("fileName");
+        System.out.println("open session: " + fileName);
 
         // Get file paths of images inside selected session
         File openFile = new File(fileName);
         for ( File i : openFile.listFiles() ) {
+            System.out.println(i.getAbsolutePath());
             album.add(i.getAbsolutePath());
         }
 

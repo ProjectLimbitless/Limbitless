@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "686204453086",
+    "firebase_url": "https://project-limbitless.firebaseio.com",
+    "project_id": "project-limbitless",
+    "storage_bucket": "project-limbitless.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:686204453086:android:6ae5e0c03284a6c6",
+        "android_client_info": {
+          "package_name": "com.example.limbitlesssummerproject19"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "686204453086-l02a7j3gaovfb8rrt769cvd3nkh7mnek.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBr_dvOU1xFP4mMYQggphCBmhj3Uso_0AM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "686204453086-l02a7j3gaovfb8rrt769cvd3nkh7mnek.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
