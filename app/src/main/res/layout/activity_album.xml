@@ -12,10 +12,17 @@
     android:weightSum="0"
     tools:context=".AlbumActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/sendDataBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="Send to Server" />
 
         <GridView
             android:id="@+id/albumGridView"
@@ -25,17 +32,15 @@
             android:columnWidth="172dp"
             android:gravity="center"
             android:horizontalSpacing="8dp"
+            android:verticalSpacing="8dp"
             android:numColumns="auto_fit"
             android:paddingLeft="5dp"
             android:paddingTop="5dp"
             android:paddingRight="5dp"
-            android:stretchMode="columnWidth"
-            android:verticalSpacing="5dp">
+            android:stretchMode="columnWidth">
 
         </GridView>
-
-
-    </LinearLayout>
+    </RelativeLayout>
 
 
 </android.support.constraint.ConstraintLayout>

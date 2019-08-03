@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,15 +15,32 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 public class AlbumActivity extends AppCompatActivity {
 
+    // Get Firebase storage references
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageRef = storage.getReference();
+
+
     GridView albumGallery;
-    private ArrayList<String> album = new ArrayList<String>();
     private Button sendbtn;
+
+    private ArrayList<String> album = new ArrayList<String>();
+    File sessionFolder;
 
 
     @Override
@@ -31,24 +50,55 @@ public class AlbumActivity extends AppCompatActivity {
         setContentView(R.layout.activity_album);
 
         albumGallery = (GridView)findViewById(R.id.albumGridView);
-        //sendbtn = (Button)findViewById(R.id.sendDataBtn);
-
+        sendbtn = (Button)findViewById(R.id.sendDataBtn);
 
         Intent intent = getIntent();
-        String fileName = intent.getStringExtra("fileName");
-        System.out.println("open session: " + fileName);
+        final String folderName = intent.getStringExtra("fileName");
 
-        // Get file paths of images inside selected session
-        File openFile = new File(fileName);
-        for ( File i : openFile.listFiles() ) {
-            System.out.println(i.getAbsolutePath());
+        // Get file paths of images inside selected session folder
+        sessionFolder = new File(folderName);
+        for ( File i : sessionFolder.listFiles() ) {
             album.add(i.getAbsolutePath());
         }
 
+        // Set gridView adapter
         AlbumAdapter albumAdapter = new AlbumAdapter(this, album);
         albumGallery.setAdapter(albumAdapter);
 
+        // Push data to firebase storage
+        sendbtn.setOnClickListener(new View.OnClickListener() {
+            List<Task<Void>> myTasks = new ArrayList<>();
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "Sending...",
+                        Toast.LENGTH_LONG).show();
+                for ( String f : album ) {
+                    final File image = new File(f);
+                    Uri uri = Uri.fromFile(new File(f));
+                    StorageReference saveRef = storageRef.child("userSessions/" + sessionFolder.getName() + "/" + image.getName());
+                    Task upload = saveRef.putFile(uri);
+                    myTasks.add(upload);
+                }
+                // Notify user when all images have been uploaded
+                Tasks.whenAll(myTasks).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(getApplicationContext(), "Images Sent Successfully!",
+                                Toast.LENGTH_LONG).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "Error. Images not sent.",
+                                Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        });
+
     }
+
+    //System.out.println("Successfully uploaded " + image.getName());
 
 
     /**
