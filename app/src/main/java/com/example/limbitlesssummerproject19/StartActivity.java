@@ -21,41 +21,6 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
-        /*
-         *  Creates gallery button and a listener is added
-         */
-
-        btnGallery = (Button) findViewById(R.id.btn_to_gallery);
-        btnGallery.setOnClickListener(new View.OnClickListener() {
-
-            /*
-             * On click, the button opens Gallery Activity. (Gallery Activity is still on work)
-             */
-
-            public void onClick(View view) {
-                Intent intent = new Intent(StartActivity.this,
-                        GalleryActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        /*
-         * Creates a Burst Mode button and a listener is added.
-         */
-
-        btnCamera = (Button) findViewById(R.id.CameraButton);
-        btnCamera.setOnClickListener( new View.OnClickListener(){
-            /*
-             * Upon click, the button opens CameraActivity.
-             */
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(StartActivity.this,
-                        CameraActivity.class);
-                startActivity(intent);
-            }
-        });
-
 
 
 

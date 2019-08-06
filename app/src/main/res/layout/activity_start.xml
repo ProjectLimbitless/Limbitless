@@ -15,7 +15,7 @@
     <Button
         android:id="@+id/CameraButton"
         android:background="@drawable/camera_button"
-        android:text="camera"
+        android:text="@string/camera"
 
         android:layout_width="350dp"
         android:layout_height="0dp"
@@ -29,34 +29,11 @@
         android:layout_weight="0.5"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@android:color/white"
-        android:paddingRight="140dp"
+        android:paddingRight="110dp"
         android:paddingBottom="150dp"
         android:textSize="60sp"
         android:textStyle="bold"
         android:typeface="normal" />
 
 
-    <Button
-        android:id="@+id/btn_to_gallery"
-        android:text="gallery"
-        android:background="@drawable/gallery_button"
-
-        android:layout_width="350dp"
-        android:layout_height="0dp"
-        android:layout_gravity="center_horizontal"
-
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-
-        android:layout_weight="0.5"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="@android:color/white"
-
-        android:paddingRight="160dp"
-        android:paddingBottom="150dp"
-        android:textSize="60sp"
-        android:textStyle="bold"
-        android:typeface="normal" />
 </LinearLayout>

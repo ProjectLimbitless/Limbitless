@@ -120,6 +120,21 @@ public class CameraActivity extends AppCompatActivity {
         textureView = (AutoFitTextureView) findViewById(R.id.texture);
         button_capture = (Button) findViewById(R.id.button_capture);
 
+
+        View myView2 = (View) findViewById(R.id.RectangleWithBorders);
+        //myView2.getBackground().setAlpha(64);
+
+        View topView = (View) findViewById(R.id.topView);
+        View bottomView = (View) findViewById(R.id.bottomView);
+        View leftView = (View) findViewById(R.id.leftView);
+        View rightView = (View) findViewById(R.id.rightView);
+
+        topView.getBackground().setAlpha(128);
+        bottomView.getBackground().setAlpha(128);
+        leftView.getBackground().setAlpha(128);
+        rightView.getBackground().setAlpha(128);
+
+
         //set up paths to store photos
         createDirectory();
 
@@ -399,7 +414,7 @@ public class CameraActivity extends AppCompatActivity {
 
             List<CaptureRequest> captureList = new ArrayList<>();
             mPreviewRequestBuilder.addTarget(mImageReader.getSurface());
-            for ( int i=0 ; i < 10 ; i++ ) {
+            for ( int requestImage = 0 ; requestImage < 2 ; requestImage++ ) {
                 captureList.add(mPreviewRequestBuilder.build());
             }
 
@@ -570,7 +585,7 @@ public class CameraActivity extends AppCompatActivity {
                         Arrays.asList(map.getOutputSizes(ImageFormat.JPEG)),
                         new CompareSizesByArea());
                 mImageReader = ImageReader.newInstance(largest.getWidth(), largest.getHeight(),
-                        ImageFormat.JPEG, /*maxImages*/10);
+                        ImageFormat.JPEG, /*maxImages*/1);
                 mImageReader.setOnImageAvailableListener(
                         mOnImageAvailableListener, mBackgroundHandler);
 
@@ -775,7 +790,7 @@ public class CameraActivity extends AppCompatActivity {
                     public void run() {
                         toast.cancel();
                     }
-                }, 300);
+                }, 200);
 
             }
         });
