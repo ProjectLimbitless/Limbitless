@@ -4,6 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="8dp"
+    android:paddingTop="8dp"
+    android:paddingRight="8dp"
+    android:paddingBottom="8dp"
+    android:weightSum="0"
     tools:context=".GalleryActivity">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -14,16 +20,16 @@
             android:id="@+id/galleryGridView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="5dp"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:numColumns="auto_fit"
+            android:background="#ffffff"
             android:columnWidth="172dp"
-            android:horizontalSpacing="5dp"
-            android:verticalSpacing="5dp"
             android:gravity="center"
-            android:stretchMode="columnWidth"
-            android:background="#ffffff">
+            android:horizontalSpacing="8dp"
+            android:verticalSpacing="8dp"
+            android:numColumns="auto_fit"
+            android:paddingLeft="5dp"
+            android:paddingTop="5dp"
+            android:paddingRight="5dp"
+            android:stretchMode="columnWidth">
         </GridView>
 
     </LinearLayout>

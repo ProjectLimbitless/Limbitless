@@ -1,13 +1,10 @@
 package com.example.limbitlesssummerproject19;
 
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -25,18 +21,14 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Locale;
+
 
 public class GalleryActivity extends AppCompatActivity {
 
     GridView sessionGallery;
 
-    // List of file paths and names to each session folder
+    // List of file paths and names of each session folder
     private ArrayList<Pair<String, String>> sessionThumbnails = new ArrayList<Pair<String, String>>();
 
 
@@ -65,6 +57,9 @@ public class GalleryActivity extends AppCompatActivity {
                 if(sessionImages.length != 0){
                     Pair newPair = new Pair<>(sessionImages[0].getAbsolutePath(), f.getName());
                     sessionThumbnails.add(newPair);
+                }
+                else{
+                    f.delete(); // Delete empty folders
                 }
             }
 
@@ -142,9 +137,12 @@ public class GalleryActivity extends AppCompatActivity {
             matrix.postRotate(90);
             Bitmap scaledBitmap = Bitmap.createScaledBitmap(org, org.getWidth(), org.getHeight(),
                     true);
-            Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0,
-                    scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
 
+            // Crop images into square
+            int diff = scaledBitmap.getWidth()-scaledBitmap.getHeight();
+            int toSubtract = diff/2;
+            Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap, toSubtract, 0,
+                    scaledBitmap.getHeight(), scaledBitmap.getHeight(), matrix, true);
             // Set image and title
             iv.setImageBitmap(rotatedBitmap);
             tv.setText(title);
