@@ -53,6 +53,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -60,6 +61,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -169,6 +173,7 @@ public class CameraActivity extends AppCompatActivity {
                 return pathname.isDirectory();
             }
         });
+
         if ( null == files){
             sessionName = directoryName + File.separator + "Session 1";
             System.out.println("null under countFiles");
@@ -181,6 +186,21 @@ public class CameraActivity extends AppCompatActivity {
             session.mkdirs();
         }
         System.out.println("Current files: " + Arrays.toString(directory.listFiles()));
+
+
+        // Get current date
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy_mm_dd_hh_mm",
+                Locale.getDefault());
+        sessionName = directoryName + File.separator + dateFormat.format(new Date());
+
+        // Save photos
+        session = new File(sessionName);
+        if(! session.exists()) {
+            session.mkdirs();
+        }
+
+
+
     }
 
     //this interface is the contract for receiving the results for permission requests

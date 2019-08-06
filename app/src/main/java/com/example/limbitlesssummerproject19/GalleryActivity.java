@@ -1,71 +1,90 @@
 package com.example.limbitlesssummerproject19;
 
 import android.content.Context;
-import android.content.ContextWrapper;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Pair;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Locale;
+
 
 public class GalleryActivity extends AppCompatActivity {
 
-    static final int REQUEST_PERMISSION_KEY = 1;
     GridView sessionGallery;
 
-    // List containing image thumbnails for each session folder
-    private ArrayList<Bitmap> sessionThumbnails = new ArrayList<Bitmap>();
+    // List of file paths and names of each session folder
+    private ArrayList<Pair<String, String>> sessionThumbnails = new ArrayList<Pair<String, String>>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
-        ContextWrapper cw = new ContextWrapper(getApplicationContext());
+
+        String directoryName = Environment.getExternalStorageDirectory()+File.separator+"ProstheticFolder";
+        final File[] files;
 
         // Open ProstheticFolder directory
-        String directoryName = Environment.getExternalStorageDirectory()+File.separator+"ProstheticFolder";
-        File countFiles = new File(directoryName);
-        File[] files = countFiles.listFiles(new FileFilter() {
-            @Override
-            public boolean accept(File pathname) {
-                return pathname.isDirectory();
-            }
-        });
+        try {
+            File countFiles = new File(directoryName);
+            files = countFiles.listFiles(new FileFilter() {
+                @Override
+                public boolean accept(File pathname) {
+                    return pathname.isDirectory();
+                }
+            });
 
-        // Get session thumbnails  (image at first index of each session)
-        for ( File f : files ) {
-            File[] insideFile = f.listFiles();
-            if(insideFile.length != 0){
-                sessionThumbnails.add(BitmapFactory.decodeFile(insideFile[0].getAbsolutePath()));
+            // Get session thumbnails  (image at first index of each session)
+            for ( File f : files ) {
+                File[] sessionImages = f.listFiles();
+                if(sessionImages.length != 0){
+                    Pair newPair = new Pair<>(sessionImages[0].getAbsolutePath(), f.getName());
+                    sessionThumbnails.add(newPair);
+                }
+                else{
+                    f.delete(); // Delete empty folders
+                }
             }
+
+            // Use adapter class as data provider
+            sessionGallery = (GridView)findViewById(R.id.galleryGridView);
+            final GalleryAdapter galleryAdapter = new GalleryAdapter(
+                    this, sessionThumbnails);
+            sessionGallery.setAdapter(galleryAdapter);
+
+            // Open session when a thumbnail is clicked
+            sessionGallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    // Open session images in another activity
+                    Intent intent = new Intent(getApplicationContext(), AlbumActivity.class);
+                    intent.putExtra("fileName", files[position].getAbsolutePath());
+                    startActivity(intent);
+                }
+            });
+
+        } catch (Exception e){
+            Toast.makeText(getApplicationContext(), "No Albums To Display!",
+                    Toast.LENGTH_LONG).show();
         }
 
-        // Use adapter class as data provider
-        sessionGallery = (GridView)findViewById(R.id.galleryGridView);
-        GalleryAdapter galleryAdapter = new GalleryAdapter(this, sessionThumbnails);
-        sessionGallery.setAdapter(galleryAdapter);
     }
 
 
@@ -76,10 +95,10 @@ public class GalleryActivity extends AppCompatActivity {
     public class GalleryAdapter extends BaseAdapter {
 
         private final Context mContext;
-        private final ArrayList<Bitmap> thumbnails;
+        private ArrayList<Pair<String, String>> thumbnails;
 
         // Constructor
-        public GalleryAdapter(Context context, ArrayList<Bitmap> src){
+        public GalleryAdapter(Context context, ArrayList<Pair<String, String>> src){
             this.mContext = context;
             this.thumbnails = src;
         }
@@ -101,9 +120,35 @@ public class GalleryActivity extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent){
-            ImageView iv = new ImageView(mContext);
-            iv.setImageBitmap(thumbnails.get(position));
-            return iv;
+
+            if (convertView == null) {
+                final LayoutInflater layoutInflater = LayoutInflater.from(mContext);
+                convertView = layoutInflater.inflate(R.layout.single_thumbnail, null);
+            }
+
+            final ImageView iv = (ImageView)convertView.findViewById(R.id.thumbnail_image);
+            final TextView tv = (TextView)convertView.findViewById(R.id.thumbnail_title);
+
+            Bitmap org = BitmapFactory.decodeFile(thumbnails.get(position).first);
+            String title = thumbnails.get(position).second;
+
+            // Fix rotation of image
+            Matrix matrix = new Matrix();
+            matrix.postRotate(90);
+            Bitmap scaledBitmap = Bitmap.createScaledBitmap(org, org.getWidth(), org.getHeight(),
+                    true);
+
+            // Crop images into square
+            int diff = scaledBitmap.getWidth()-scaledBitmap.getHeight();
+            int toSubtract = diff/2;
+            Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap, toSubtract, 0,
+                    scaledBitmap.getHeight(), scaledBitmap.getHeight(), matrix, true);
+            // Set image and title
+            iv.setImageBitmap(rotatedBitmap);
+            tv.setText(title);
+
+            return convertView;
+
         }
     }
 
