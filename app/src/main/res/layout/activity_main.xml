@@ -7,6 +7,30 @@
     android:orientation="vertical"
     android:background="#F4F0DB"
     tools:context=".MainActivity">
+<!--
+    <ImageButton
+        android:id="@+id/experimentalImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="188dp"
+
+        android
+
+        android:src="@drawable/new_session_picture"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.829">
+
+    </ImageButton>
+
+-->
+
+
 
 
     <Button
@@ -15,14 +39,23 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/tutorial_button"
-
         android:text="@string/tutorial"
 
+        android:paddingTop="60dp"
+        android:paddingBottom="30dp"
+        android:drawableTop="@drawable/tutorial_picture"
+
+
+
+
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="#D7B740"
+
+        android:textColor="#F4F0DB"
         android:textSize="@android:dimen/app_icon_size"
-        android:textStyle="bold"
+        android:textStyle="normal"
         android:typeface="normal"
+        android:layout_gravity="center"
+        android:gravity="center|bottom"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,11 +73,17 @@
         android:background="@drawable/start_button"
         android:text="@string/newSession"
 
+        android:drawableTop="@drawable/new_session_picture"
+
+        android:paddingBottom="25dp"
+        android:paddingTop="25dp"
 
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="#D7B740"
+        android:textColor="#F4F0DB"
         android:textSize="@android:dimen/app_icon_size"
-        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:gravity="center|bottom"
+        android:textStyle="normal"
         android:typeface="normal"
 
 
@@ -52,6 +91,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
 
 
     </Button>
@@ -70,11 +110,21 @@
         android:layout_marginTop="0dp"
 
 
+        android:drawableTop="@drawable/gallery_picture"
+
+        android:paddingTop="40dp"
+        android:paddingBottom="30dp"
+
+
+
+
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="#D7B740"
+        android:textColor="#F4F0DB"
         android:textSize="@android:dimen/app_icon_size"
-        android:textStyle="bold"
+        android:textStyle="normal"
         android:typeface="normal"
+        android:layout_gravity="center"
+        android:gravity="center|bottom"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_to_tutorial"
@@ -82,6 +132,5 @@
         app:layout_constraintTop_toBottomOf="@+id/btn_to_start" >
 
     </Button>
-
 
 </android.support.constraint.ConstraintLayout>
