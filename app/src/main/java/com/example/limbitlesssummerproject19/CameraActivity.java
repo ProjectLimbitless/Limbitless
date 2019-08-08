@@ -87,8 +87,8 @@ public class CameraActivity extends AppCompatActivity {
     private Semaphore mCameraOpenCloseLock = new Semaphore(1);
     private ImageReader mImageReader;
     private Integer mSensorOrientation;
-    private static final int MAX_PREVIEW_WIDTH = 1920;
-    private static final int MAX_PREVIEW_HEIGHT = 1080;
+    private static final int MAX_PREVIEW_WIDTH = 1080;
+    private static final int MAX_PREVIEW_HEIGHT = 1920;
     private static final String TAG = "Project Limbitless";
     private Size mPreviewSize;
     private boolean mFlashSupported;
@@ -117,11 +117,13 @@ public class CameraActivity extends AppCompatActivity {
         View bottomView = (View) findViewById(R.id.bottomView);
         View leftView = (View) findViewById(R.id.leftView);
         View rightView = (View) findViewById(R.id.rightView);
+        View buttonContainer = (View) findViewById(R.id.button_container);
 
         topView.getBackground().setAlpha(128);
         bottomView.getBackground().setAlpha(128);
         leftView.getBackground().setAlpha(128);
         rightView.getBackground().setAlpha(128);
+
 
 
         //set up paths to store photos
@@ -351,6 +353,7 @@ public class CameraActivity extends AppCompatActivity {
                                 aeState == CaptureResult.CONTROL_AE_STATE_CONVERGED) {
                             mState = STATE_PICTURE_TAKEN;
                             captureStillPicture();
+
                         } else {
                             runPrecaptureSequence();
                         }
@@ -373,6 +376,7 @@ public class CameraActivity extends AppCompatActivity {
                     if (aeState == null || aeState != CaptureResult.CONTROL_AE_STATE_PRECAPTURE) {
                         mState = STATE_PICTURE_TAKEN;
                         captureStillPicture();
+
                     }
                     break;
                 }
@@ -419,11 +423,12 @@ public class CameraActivity extends AppCompatActivity {
 
             List<CaptureRequest> captureList = new ArrayList<>();
             mPreviewRequestBuilder.addTarget(mImageReader.getSurface());
-            for ( int requestImage = 0 ; requestImage < 2 ; requestImage++ ) {
+            for ( int requestImage = 0 ; requestImage < 4 ; requestImage++ ) {
                 captureList.add(mPreviewRequestBuilder.build());
             }
 
             mCaptureSession.stopRepeating();
+            mCaptureSession.abortCaptures();
             mCaptureSession.captureBurst(captureList, cameraCaptureCallback, null);
             mPreviewRequestBuilder.removeTarget(mImageReader.getSurface());
         } catch (CameraAccessException e) {
@@ -439,16 +444,15 @@ public class CameraActivity extends AppCompatActivity {
         public void onCaptureCompleted(CameraCaptureSession session, CaptureRequest request,
                                        TotalCaptureResult result) {
 
-
-            mPictureCounter++;
             //showToast("Saving image : " + mPictureCounter);
-            if (mPictureCounter >= 10) {
-                //showToast("Saved: " + mFile);
+            if (mPictureCounter >= 4) {
+                showToast(mPictureCounter + " images saved!");
                 Log.d(TAG, mFile.toString());
                 //Log.d(TAG, session.toString());
+                mPictureCounter = 0;
                 unlockFocus();
             }
-
+            mPictureCounter++;
 
         }
     };
