@@ -1,9 +1,14 @@
 <!-- strings.xml are important because it allows the button in a new activity to be reused but
  with a different name. Strings.xml allows to save time and performance -->
 <resources>
-    <string name="app_name">LimbitlessSummerProject2019</string>
+    <string name="app_name">Lim[b]itless</string>
     <string name="capture_image">Take</string>
     <string name="gallery">Gallery</string>
     <string name="recapture_image">Retake</string>
     <string name="save_image">Save</string>
+    <string name="takePicture">Take Picture</string>
+    <string name="tutorial">Tutorial</string>
+    <string name="newSession">New Session</string>
+    <string name="camera">Camera</string>
+    <string name="galleryButton">Gallery</string>
 </resources>

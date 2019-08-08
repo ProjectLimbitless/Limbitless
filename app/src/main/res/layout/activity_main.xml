@@ -1,46 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingLeft="8dp"
-    android:paddingTop="8dp"
-    android:paddingRight="8dp"
-    android:paddingBottom="8dp"
-    android:background="#8089E3"
-    android:weightSum="0"
+    android:background="#F4F0DB"
     tools:context=".MainActivity">
 
     <Button
+
         android:id="@+id/btn_to_tutorial"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/tutorial_button"
+        android:text="@string/tutorial"
+
+        android:paddingTop="60dp"
+        android:paddingBottom="30dp"
+        android:drawableTop="@drawable/tutorial_picture"
+
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+
+        android:textColor="#F4F0DB"
+        android:textSize="@android:dimen/app_icon_size"
+        android:textStyle="normal"
+        android:typeface="normal"
         android:layout_gravity="center"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_weight="1"
-        android:background="@android:color/darker_gray"
-        android:paddingBottom="0dp"
-        android:text="Tutorial"
-        android:textColor="@android:color/white"
-        android:textSize="48sp"
-        android:textStyle="bold"
-        android:typeface="serif" />
+        android:gravity="center|bottom"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_to_gallery"
+        app:layout_constraintTop_toBottomOf="@+id/btn_to_start">
+
+
+    </Button>
 
     <Button
+
         android:id="@+id/btn_to_start"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_weight="1"
-        android:background="@android:color/holo_green_light"
-        android:text="Start"
-        android:textColor="@android:color/white"
-        android:textSize="48dp"
-        android:textStyle="bold"
-        android:typeface="serif" />
+        android:layout_height="400dp"
+        android:background="@drawable/start_button"
+        android:text="@string/newSession"
 
-</LinearLayout>
+        android:paddingBottom="25dp"
+        android:paddingTop="25dp"
+        android:drawableTop="@drawable/new_session_picture"
+
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+
+        android:textColor="#F4F0DB"
+        android:textSize="@android:dimen/app_icon_size"
+        android:layout_gravity="center"
+        android:gravity="center|bottom"
+        android:textStyle="normal"
+        android:typeface="normal"
+
+
+        app:layout_constraintBottom_toTopOf="@+id/btn_to_gallery"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </Button>
+
+
+    <Button
+
+        android:id="@+id/btn_to_gallery"
+        android:background="@drawable/gallery_button"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="@string/galleryButton"
+
+
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="0dp"
+
+        android:paddingBottom="30dp"
+        android:paddingTop="40dp"
+        android:drawableTop="@drawable/gallery_picture"
+
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+
+        android:textColor="#F4F0DB"
+        android:textSize="@android:dimen/app_icon_size"
+        android:textStyle="normal"
+        android:typeface="normal"
+        android:layout_gravity="center"
+        android:gravity="center|bottom"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_to_tutorial"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_to_start" >
+
+    </Button>
+
+</android.support.constraint.ConstraintLayout>
