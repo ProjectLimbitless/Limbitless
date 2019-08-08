@@ -1,15 +1,9 @@
 package com.example.limbitlesssummerproject19;
 
 import android.Manifest;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.assist.AssistStructure;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.graphics.Camera;
 import android.graphics.ImageFormat;
 import android.graphics.Matrix;
 import android.graphics.Point;
@@ -34,7 +28,6 @@ import android.os.HandlerThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -48,7 +41,6 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -62,7 +54,6 @@ import java.util.List;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 
@@ -86,7 +77,6 @@ public class CameraActivity extends AppCompatActivity {
     CameraCaptureSession mCaptureSession; //configured capture session; used for capturing images from the camera
     CaptureRequest.Builder mPreviewRequestBuilder; //how to create the capture request
 
-    private Size imageDimension; //describe width & height in pixels
     private File file; //file where photo will be stored
     Handler mBackgroundHandler; //to schedule actions to be executed at some point in the future
     HandlerThread mBackgroundThread; //the thread associated with the handler
@@ -104,8 +94,6 @@ public class CameraActivity extends AppCompatActivity {
     private boolean mFlashSupported;
     private int number = 0;
     private File mFile;
-    private int mRatioWidth = 0;
-    private int mRatioHeight = 0;
     private CaptureRequest mPreviewRequest;
     private int mPictureCounter = 0;
     private int mState = STATE_PREVIEW;
@@ -124,9 +112,6 @@ public class CameraActivity extends AppCompatActivity {
         textureView = (AutoFitTextureView) findViewById(R.id.texture);
         button_capture = (Button) findViewById(R.id.button_capture);
 
-
-        View myView2 = (View) findViewById(R.id.RectangleWithBorders);
-        //myView2.getBackground().setAlpha(64);
 
         View topView = (View) findViewById(R.id.topView);
         View bottomView = (View) findViewById(R.id.bottomView);
@@ -498,9 +483,6 @@ public class CameraActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
-
-
 
 
 

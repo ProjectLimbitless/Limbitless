@@ -7,31 +7,6 @@
     android:orientation="vertical"
     android:background="#F4F0DB"
     tools:context=".MainActivity">
-<!--
-    <ImageButton
-        android:id="@+id/experimentalImageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="188dp"
-
-        android
-
-        android:src="@drawable/new_session_picture"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.829">
-
-    </ImageButton>
-
--->
-
-
-
 
     <Button
 
@@ -44,9 +19,6 @@
         android:paddingTop="60dp"
         android:paddingBottom="30dp"
         android:drawableTop="@drawable/tutorial_picture"
-
-
-
 
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
 
@@ -73,12 +45,12 @@
         android:background="@drawable/start_button"
         android:text="@string/newSession"
 
-        android:drawableTop="@drawable/new_session_picture"
-
         android:paddingBottom="25dp"
         android:paddingTop="25dp"
+        android:drawableTop="@drawable/new_session_picture"
 
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+
         android:textColor="#F4F0DB"
         android:textSize="@android:dimen/app_icon_size"
         android:layout_gravity="center"
@@ -91,8 +63,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-
 
     </Button>
 
@@ -109,16 +79,12 @@
         android:layout_marginBottom="0dp"
         android:layout_marginTop="0dp"
 
-
+        android:paddingBottom="30dp"
+        android:paddingTop="40dp"
         android:drawableTop="@drawable/gallery_picture"
 
-        android:paddingTop="40dp"
-        android:paddingBottom="30dp"
-
-
-
-
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+
         android:textColor="#F4F0DB"
         android:textSize="@android:dimen/app_icon_size"
         android:textStyle="normal"
