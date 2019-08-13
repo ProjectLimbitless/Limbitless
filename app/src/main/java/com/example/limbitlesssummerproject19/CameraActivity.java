@@ -25,6 +25,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
@@ -92,10 +93,13 @@ public class CameraActivity extends AppCompatActivity {
     private static final String TAG = "Project Limbitless";
     private Size mPreviewSize;
     private boolean mFlashSupported;
-    private int number = 0;
+    private int numberOfImages = 0;
     private File mFile;
     private CaptureRequest mPreviewRequest;
-    private int mPictureCounter = 0;
+    private int onesDigit = 0;
+    private int tenthDigit = 0;
+    private int hundredsDigit = 0;
+    private int thousandsDigit = 0;
     private int mState = STATE_PREVIEW;
     private static final int STATE_PREVIEW = 0;
     private static final int STATE_WAITING_LOCK = 1;
@@ -125,6 +129,7 @@ public class CameraActivity extends AppCompatActivity {
         rightView.getBackground().setAlpha(128);
 
 
+        final Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         //set up paths to store photos
         createDirectory();
@@ -136,8 +141,23 @@ public class CameraActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 takePicture2(); //helper function to take a picture when button is clicked
+                vibe.vibrate(100);
             }
         });
+
+        /*button_capture.setOnLongClickListener(new View.OnLongClickListener(){
+
+            @Override
+            public boolean onLongClick(View v) {
+                takePicture2();
+                return true;
+            }
+        });*/
+
+
+
+
+
     }
 
     private void takePicture2(){
@@ -161,6 +181,7 @@ public class CameraActivity extends AppCompatActivity {
             }
         });
 
+        /*
         if ( null == files){
             sessionName = directoryName + File.separator + "Session 1";
             System.out.println("null under countFiles");
@@ -173,6 +194,9 @@ public class CameraActivity extends AppCompatActivity {
             session.mkdirs();
         }
         System.out.println("Current files: " + Arrays.toString(directory.listFiles()));
+
+
+        */
 
 
         // Get current date
@@ -404,7 +428,7 @@ public class CameraActivity extends AppCompatActivity {
             // This is how to tell the camera to trigger.
             mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_PRECAPTURE_TRIGGER,
                     CaptureRequest.CONTROL_AE_PRECAPTURE_TRIGGER_START);
-            // Tell #mCaptureCallback to wait for the precapture sequence to be set.
+            // Tell #mCaptureCallback to wait for the pre-capture sequence to be set.
             mState = STATE_WAITING_PRECAPTURE;
             mCaptureSession.capture(mPreviewRequestBuilder.build(), mCaptureCallback,
                     mBackgroundHandler);
@@ -420,10 +444,9 @@ public class CameraActivity extends AppCompatActivity {
     private void captureStillPicture() {
         try {
 
-
             List<CaptureRequest> captureList = new ArrayList<>();
             mPreviewRequestBuilder.addTarget(mImageReader.getSurface());
-            for ( int requestImage = 0 ; requestImage < 4 ; requestImage++ ) {
+            for ( int requestImage = 0 ; requestImage < 1 ; requestImage++ ) {
                 captureList.add(mPreviewRequestBuilder.build());
             }
 
@@ -431,12 +454,12 @@ public class CameraActivity extends AppCompatActivity {
             mCaptureSession.abortCaptures();
             mCaptureSession.captureBurst(captureList, cameraCaptureCallback, null);
             mPreviewRequestBuilder.removeTarget(mImageReader.getSurface());
+
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
 
     }
-
 
     CameraCaptureSession.CaptureCallback cameraCaptureCallback = new CameraCaptureSession.CaptureCallback() {
 
@@ -444,15 +467,26 @@ public class CameraActivity extends AppCompatActivity {
         public void onCaptureCompleted(CameraCaptureSession session, CaptureRequest request,
                                        TotalCaptureResult result) {
 
-            //showToast("Saving image : " + mPictureCounter);
-            if (mPictureCounter >= 4) {
-                showToast(mPictureCounter + " images saved!");
-                Log.d(TAG, mFile.toString());
-                //Log.d(TAG, session.toString());
-                mPictureCounter = 0;
+            if(numberOfImages == 0) {
+
+                showToast("Image Saved!");
                 unlockFocus();
+                numberOfImages++;
+
+            }else if (numberOfImages < 2) {
+
+//                Log.d(TAG, mFile.toString());
+                //Log.d(TAG, session.toString());
+                unlockFocus();
+                numberOfImages++;
+
+            } else {
+
+                showToast("Image Saved!");
+                //showToast((numberOfImages + 1) + " images saved!");
+                numberOfImages = 0;
+
             }
-            mPictureCounter++;
 
         }
     };
@@ -591,7 +625,7 @@ public class CameraActivity extends AppCompatActivity {
                         Arrays.asList(map.getOutputSizes(ImageFormat.JPEG)),
                         new CompareSizesByArea());
                 mImageReader = ImageReader.newInstance(largest.getWidth(), largest.getHeight(),
-                        ImageFormat.JPEG, /*maxImages*/1);
+                        ImageFormat.JPEG, /*maxImages*/3);
                 mImageReader.setOnImageAvailableListener(
                         mOnImageAvailableListener, mBackgroundHandler);
 
@@ -719,12 +753,11 @@ public class CameraActivity extends AppCompatActivity {
         @Override
         public void onImageAvailable(ImageReader reader) {
 
+
             Image image = null;
             newFile();
-            //Log.d(TAG, "onImageAvailable: Image has been called");
             image = reader.acquireNextImage();
             mBackgroundHandler.post(new ImageSaver(image, mFile));
-
 
         }
 
@@ -732,9 +765,21 @@ public class CameraActivity extends AppCompatActivity {
 
     public void newFile(){
 
-        number++;
-        mFile = new File(sessionName + "/Image " + number + ".jpg");
-        showToast("" + number);
+
+        thousandsDigit++;
+
+        if( thousandsDigit > 9){
+            hundredsDigit++;
+            thousandsDigit = 0;
+        }
+
+        if(hundredsDigit > 9){
+            tenthDigit++;
+            hundredsDigit = 0;
+        }
+
+        mFile = new File(sessionName + "/Image " + onesDigit +
+                tenthDigit + hundredsDigit + thousandsDigit + ".jpg");
 
     }
 
@@ -796,7 +841,7 @@ public class CameraActivity extends AppCompatActivity {
                     public void run() {
                         toast.cancel();
                     }
-                }, 200);
+                }, 300);
 
             }
         });
@@ -833,137 +878,6 @@ public class CameraActivity extends AppCompatActivity {
         textureView.setTransform(matrix);
     }
 
-
-    /*helper function to take a picture when button is clicked;
-      called in onCreate -> button_capture.setOnClickListener()
-     */
-    private void takePicture() throws CameraAccessException {
-        //automatically returns if camera is null
-        if(cameraDevice == null) {
-            return;
-        }
-
-        //getSystemService() = returns the handle to a system-level service by class
-        //CameraManager is a system service manager for detecting, characterizing, and connecting to CameraDevice
-        CameraManager manager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
-
-        //getCameraCharacteristics() = queries the capabilities of a camera device
-        CameraCharacteristics characteristics = manager.getCameraCharacteristics(cameraDevice.getId());
-
-        Size[] jpegSizez = null;
-
-        //get() = get a camera characteristics field value
-        /* SCALAR_STREAM_CONFIGURATION_MAP = the available stream configurations that this camera device supports;
-         * also includes the minimum frame durations and the stall durations for each format/size combination
-         */
-        //getOutputSizes = retrieves a list of sizes compatible with "JPEG" to use as an output
-        jpegSizez = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP).getOutputSizes(ImageFormat.JPEG);
-
-        //default height and width
-        int width = 640;
-        int height = 480;
-
-        //if list of JPEG sizes is not null, then it will grab a width/height from that list
-        if(jpegSizez != null && jpegSizez.length > 0) {
-            width = jpegSizez[0].getWidth();
-            height = jpegSizez[0].getHeight();
-        }
-
-        //ImageReader class allows direct application access to image data rendered into a Surface
-        //newInstance() = creates a new reader for images of the desired size and format
-        ImageReader reader = ImageReader.newInstance(width, height, ImageFormat.JPEG, 1);
-
-        //List of surfaces -> Surfaces are handles onto raw buffers that are managed by the screen compositor
-        List<Surface> outputSurfaces = new ArrayList<>(2);
-
-        //reader.getSurface = returns a surface as a drawing target, used to produce Image for the ImageReader
-        outputSurfaces.add(reader.getSurface());
-
-        //adds a new Surface from the existing SurfaceTexture
-        outputSurfaces.add(new Surface(textureView.getSurfaceTexture()));
-
-        //TEMPLATE_STILL_CAPTURE is used to prioritize image quality over frame rate
-        //CaptureRequest defines the parameters for camera device (e.g. exposition, resolution)
-        final CaptureRequest.Builder captureBuilder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE);
-
-        //adds a surface to list of targets for this request
-        captureBuilder.addTarget(reader.getSurface());
-
-        //initializes the capture request (the way the photo will be taken)
-        //CONTROL_MODE = overall mode of 3A(auto-exposure, auto-white-balance, auto-focus)
-        //CONTROL_MODE_AUTO = use settings for each individual 3A routine (manual control of capture parameters is disabled)
-        captureBuilder.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO);
-
-        //used for orientation correction of the photo
-        int rotation = getWindowManager().getDefaultDisplay().getRotation(); //gets current orientation of photo
-        captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, ORIENTATIONS.get(rotation)); //corrects orientation
-
-        //used to make the photo name a time stamp of when the photo was taken
-        Long tsLong = System.currentTimeMillis()/1000;
-        String ts = tsLong.toString();
-
-        //initializes a file to write the photo to with the jpg extension and the name from above
-        file = new File(sessionName + "/" + ts + ".jpg");
-
-        //calback interface for being notified that a new image is available
-        ImageReader.OnImageAvailableListener readerListener = new ImageReader.OnImageAvailableListener() {
-            @Override
-            public void onImageAvailable(ImageReader reader) {
-                Image image = null;
-                image = reader.acquireLatestImage(); //acquires latest image from the ImageReader's queue
-
-                //creates a byte buffer from the image (how the image is stored in memory)
-                //getPlanes() = returns the array of pixel planes for the image,
-                //getBuffer() = returns byte buffer
-                ByteBuffer buffer = image.getPlanes()[0].getBuffer();
-                byte[] bytes = new byte[buffer.capacity()]; //initializes array of bytes in order to write to file
-
-                //writes the byte buffer into the array of bytes
-                buffer.get(bytes);
-                try {
-                    save(bytes); //helper function to save bytes
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    if(image != null) {
-                        image.close(); //always closes the image afterwards
-                    }
-                }
-            }
-        };
-
-        //registers a listener to be invoked when a new image becomes available from the ImageReader
-        //invokes the listener on the Backrgound Handler
-        reader.setOnImageAvailableListener(readerListener, mBackgroundHandler);
-
-        //callback for tracking the progress of a captureRequest submitted to the camera device
-        final CameraCaptureSession.CaptureCallback captureListener = new CameraCaptureSession.CaptureCallback() {
-            @Override
-            public void onCaptureCompleted(CameraCaptureSession session, CaptureRequest request, TotalCaptureResult result) {
-                super.onCaptureCompleted(session, request, result);
-
-                Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_LONG).show();
-                createCameraPreviewSession(); //creates new cameraPreview if capture is successful
-            }
-        };
-
-        //creates another capture session afterwards (to the user, the camera just stays open and the cycle is repeated
-        cameraDevice.createCaptureSession(outputSurfaces, new CameraCaptureSession.StateCallback() {
-            @Override
-            public void onConfigured(CameraCaptureSession session) {
-                try {
-                    session.capture(captureBuilder.build(), captureListener, mBackgroundHandler);
-                } catch (CameraAccessException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onConfigureFailed(CameraCaptureSession session) {
-
-            }
-        }, mBackgroundHandler);
-    }
 
     /* helper function to save bytes
      * called in takePicture() -> ImageReader.onImageAvailableListener -> onImageAvailable();

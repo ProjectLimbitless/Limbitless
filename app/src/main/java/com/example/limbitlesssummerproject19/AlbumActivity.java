@@ -137,15 +137,23 @@ public class AlbumActivity extends AppCompatActivity {
 
             ImageView iv = new ImageView(mContext);
 
-            Bitmap org = BitmapFactory.decodeFile(images.get(position));
+            Bitmap originalImage = BitmapFactory.decodeFile(images.get(position));
+
 
             // Fix rotation of image
             Matrix matrix = new Matrix();
             matrix.postRotate(90);
-            Bitmap scaledBitmap = Bitmap.createScaledBitmap(org, org.getWidth(), org.getHeight(),
-                    true);
+
+
+
+            Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalImage, originalImage.getWidth(),
+                    originalImage.getHeight(), true);
+
+
             Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0,
                     scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
+
+            iv.setAdjustViewBounds(true);
 
             iv.setImageBitmap(rotatedBitmap);
             return iv;

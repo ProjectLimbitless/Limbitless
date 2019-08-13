@@ -53,6 +53,10 @@ public class MainActivity extends AppCompatActivity {
              */
 
             public void onClick(View view) {
+
+                Toast.makeText(getApplicationContext(), "Opening Gallery...",
+                        Toast.LENGTH_SHORT).show();
+
                 Intent intent = new Intent(MainActivity.this,
                         GalleryActivity.class);
                 startActivity(intent);
@@ -72,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(getApplicationContext(),"Tutorial not Accessible",
+                Toast.makeText(getApplicationContext(),"Tutorial Not Accessible",
                         Toast.LENGTH_SHORT).show();
 
             }

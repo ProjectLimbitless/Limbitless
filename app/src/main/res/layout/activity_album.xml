@@ -35,7 +35,7 @@
             android:verticalSpacing="8dp"
             android:numColumns="auto_fit"
             android:paddingLeft="5dp"
-            android:paddingTop="5dp"
+            android:paddingTop="10dp"
             android:paddingRight="5dp"
             android:stretchMode="columnWidth">
 

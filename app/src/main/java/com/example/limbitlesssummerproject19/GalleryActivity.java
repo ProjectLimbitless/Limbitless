@@ -73,6 +73,10 @@ public class GalleryActivity extends AppCompatActivity {
             sessionGallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    Toast.makeText(getApplicationContext(), "Opening Session...",
+                            Toast.LENGTH_LONG).show();
+
                     // Open session images in another activity
                     Intent intent = new Intent(getApplicationContext(), AlbumActivity.class);
                     intent.putExtra("fileName", files[position].getAbsolutePath());
