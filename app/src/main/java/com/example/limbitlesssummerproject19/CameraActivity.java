@@ -170,8 +170,6 @@ public class CameraActivity extends AppCompatActivity {
         if( !session.exists() ) {
             session.mkdirs();
         }
-        System.out.println("Current files: " + Arrays.toString(directory.listFiles()));
-
 
         // Get current date
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy_mm_dd_hh_mm",
