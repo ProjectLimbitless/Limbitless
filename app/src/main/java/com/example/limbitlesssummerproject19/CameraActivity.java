@@ -2,6 +2,7 @@ package com.example.limbitlesssummerproject19;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.ImageFormat;
@@ -21,15 +22,12 @@ import android.hardware.camera2.TotalCaptureResult;
 import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.Image;
 import android.media.ImageReader;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Vibrator;
-import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Size;
@@ -38,7 +36,13 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -61,7 +65,8 @@ import java.util.Locale;
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class CameraActivity extends AppCompatActivity {
 
-    Button button_capture; //Button on camera preview to capture image
+    Button captureButton, returnButton; //Button on camera preview to capture image
+    ImageButton imageButton;
     AutoFitTextureView textureView; //The camera preview itself
 
     // used for orientation correction of photos
@@ -114,7 +119,9 @@ public class CameraActivity extends AppCompatActivity {
         context = this;
 
         textureView = (AutoFitTextureView) findViewById(R.id.texture);
-        button_capture = (Button) findViewById(R.id.button_capture);
+        captureButton = (Button) findViewById(R.id.button_capture);
+        returnButton = (Button) findViewById(R.id.return_button);
+        imageButton = (ImageButton) findViewById(R.id.image_button);
 
 
         View topView = (View) findViewById(R.id.topView);
@@ -130,6 +137,7 @@ public class CameraActivity extends AppCompatActivity {
 
 
         final Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.completion);
 
         //set up paths to store photos
         createDirectory();
@@ -137,26 +145,37 @@ public class CameraActivity extends AppCompatActivity {
         textureView.setSurfaceTextureListener(textureListener);
 
         //set a listener to respond when the camera capture button is clicked
-        button_capture.setOnClickListener(new View.OnClickListener(){
+        captureButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 takePicture2(); //helper function to take a picture when button is clicked
                 vibe.vibrate(100);
+                mediaPlayer.start();
             }
         });
 
-        /*button_capture.setOnLongClickListener(new View.OnLongClickListener(){
-
+        returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View v) {
-                takePicture2();
-                return true;
+            public void onClick(View v) {
+                Intent intent = new Intent(CameraActivity.this,
+                        MainActivity.class);
+                startActivity(intent);
+
             }
-        });*/
+        });
 
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                Toast.makeText(getApplicationContext(), "Opening Gallery...",
+                        Toast.LENGTH_SHORT).show();
 
-
+                Intent intent = new Intent(CameraActivity.this,
+                        GalleryActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -181,24 +200,6 @@ public class CameraActivity extends AppCompatActivity {
             }
         });
 
-        /*
-        if ( null == files){
-            sessionName = directoryName + File.separator + "Session 1";
-            System.out.println("null under countFiles");
-        }
-        else {
-            sessionName = directoryName + File.separator + "Session " + ( files.length + 1 );
-        }
-        session = new File( sessionName );
-        if( !session.exists() ) {
-            session.mkdirs();
-        }
-        System.out.println("Current files: " + Arrays.toString(directory.listFiles()));
-
-
-        */
-
-
         // Get current date
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy_mm_dd_hh_mm",
                 Locale.getDefault());
@@ -206,12 +207,9 @@ public class CameraActivity extends AppCompatActivity {
 
         // Save photos
         session = new File(sessionName);
-        if(! session.exists()) {
+        if(!session.exists()) {
             session.mkdirs();
         }
-
-
-
     }
 
     //this interface is the contract for receiving the results for permission requests

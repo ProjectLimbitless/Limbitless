@@ -1,12 +1,12 @@
 package com.example.limbitlesssummerproject19;
 
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Main Activity is the first window that opens in the device. This window has two buttons: Start
@@ -48,9 +48,9 @@ public class MainActivity extends AppCompatActivity {
         btnGallery = (Button) findViewById(R.id.btn_to_gallery);
         btnGallery.setOnClickListener(new View.OnClickListener() {
 
-            /*
-             * On click, the button opens Gallery Activity. (Gallery Activity is still on work)
-             */
+            //
+            // On click, the button opens Gallery Activity. (Gallery Activity is still on work)
+            //
 
             public void onClick(View view) {
 

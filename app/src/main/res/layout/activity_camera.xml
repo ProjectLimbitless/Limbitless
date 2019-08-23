@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -28,14 +28,14 @@
 
     <View
         android:id="@+id/RectangleWithBorders"
-        android:layout_width="300dp"
-        android:layout_height="450dp"
+        android:layout_width="250dp"
+        android:layout_height="375dp"
         android:background="@drawable/rectangle_transparent"
         android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@+id/texture"
-        app:layout_constraintEnd_toEndOf="@+id/texture"
-        app:layout_constraintStart_toStartOf="@+id/texture"
-        app:layout_constraintTop_toTopOf="@+id/texture" />
+        app:layout_constraintBottom_toTopOf="@+id/bottomView"
+        app:layout_constraintEnd_toStartOf="@+id/rightView"
+        app:layout_constraintStart_toEndOf="@+id/leftView"
+        app:layout_constraintTop_toBottomOf="@+id/topView" />
 
     <View
         android:id="@+id/leftView"
@@ -72,7 +72,12 @@
         app:layout_constraintBottom_toTopOf="@id/RectangleWithBorders"
         app:layout_constraintEnd_toStartOf="@id/rightView"
         app:layout_constraintStart_toEndOf="@id/leftView"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" >
+
+
+
+    </View>
+
 
     <View
         android:id="@+id/bottomView"
@@ -98,22 +103,42 @@
         app:layout_constraintEnd_toStartOf="@id/rightView"
         app:layout_constraintStart_toEndOf="@id/leftView"
         >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/button_capture"
-            android:layout_width="@android:dimen/app_icon_size"
-            android:layout_height="@android:dimen/app_icon_size"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
-            android:layout_marginStart="180dp"
-            android:layout_marginLeft="0dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="180dp"
-            android:background="@drawable/take_button" />
+            <ImageButton
+
+                android:id="@+id/image_button"
+                android:layout_width="@android:dimen/app_icon_size"
+                android:layout_height="@android:dimen/app_icon_size"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="30dp"
+                android:layout_toStartOf="@+id/button_capture"
+                android:layout_toLeftOf="@+id/button_capture" />
+
+            <Button
+                android:id="@+id/button_capture"
+                android:layout_width="@android:dimen/app_icon_size"
+                android:layout_height="@android:dimen/app_icon_size"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/take_button" />
+
+            <Button
+                android:id="@+id/return_button"
+                android:layout_width="@android:dimen/app_icon_size"
+                android:layout_height="@android:dimen/app_icon_size"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="30dp"
+                android:layout_toEndOf="@+id/button_capture"
+                android:layout_toRightOf="@+id/button_capture" />
+
+        </RelativeLayout>
+
+
 
     </FrameLayout>
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 
