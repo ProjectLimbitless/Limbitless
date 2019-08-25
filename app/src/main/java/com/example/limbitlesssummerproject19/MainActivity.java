@@ -2,11 +2,11 @@ package com.example.limbitlesssummerproject19;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Main Activity is the first window that opens in the device. This window has two buttons: Start
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(MainActivity.this,
-                        GalleryActivity.class);
+                        GalleryActivityTest.class);
                 startActivity(intent);
             }
         });
