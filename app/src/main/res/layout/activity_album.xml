@@ -1,46 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingLeft="8dp"
-    android:paddingTop="8dp"
-    android:paddingRight="8dp"
-    android:paddingBottom="8dp"
-    android:weightSum="0"
-    tools:context=".AlbumActivity">
+
 
     <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:paddingLeft="8dp"
+        android:paddingTop="8dp"
+        android:paddingRight="8dp"
+        android:weightSum="0"
+        >
 
-        <Button
-            android:id="@+id/sendDataBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:text="Send to Server" />
-
-        <GridView
-            android:id="@+id/albumGridView"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#ffffff"
+            android:layout_height="wrap_content"
             android:columnWidth="172dp"
             android:gravity="center"
             android:horizontalSpacing="8dp"
             android:verticalSpacing="8dp"
             android:numColumns="auto_fit"
-            android:paddingLeft="5dp"
-            android:paddingTop="10dp"
-            android:paddingRight="5dp"
-            android:stretchMode="columnWidth">
+            android:stretchMode="columnWidth"
+            />
 
-        </GridView>
+        <Button
+            android:id="@+id/sendDataBtn"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="0dp"
+            android:background="#CFCFCF"
+            android:text="Send to Server" />
+
+
+
+        <!--<GridView-->
+            <!--android:id="@+id/albumGridView"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="fill_parent"-->
+            <!--android:smoothScrollbar="true"-->
+            <!--android:background="#ffffff"-->
+            <!--android:columnWidth="172dp"-->
+            <!--android:gravity="center"-->
+            <!--android:horizontalSpacing="8dp"-->
+            <!--android:verticalSpacing="8dp"-->
+            <!--android:numColumns="auto_fit"-->
+            <!--android:paddingLeft="5dp"-->
+            <!--android:paddingTop="5dp"-->
+            <!--android:paddingRight="5dp"-->
+            <!--android:stretchMode="columnWidth">-->
+
+
+        <!--</GridView>-->
     </RelativeLayout>
 
+    <!--<android.support.constraint.ConstraintLayout-->
+    <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:tools="http://schemas.android.com/tools"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="vertical"-->
+    <!--android:paddingLeft="8dp"-->
+    <!--android:paddingTop="8dp"-->
+    <!--android:paddingRight="8dp"-->
+    <!--android:paddingBottom="8dp"-->
+    <!--android:weightSum="0"-->
+    <!--tools:context=".AlbumActivity">-->
 
-</android.support.constraint.ConstraintLayout>
+<!--</android.support.constraint.ConstraintLayout>-->

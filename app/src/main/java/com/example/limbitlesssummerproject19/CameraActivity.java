@@ -200,6 +200,22 @@ public class CameraActivity extends AppCompatActivity {
             }
         });
 
+        //May be necessary
+/*
+        if ( null == files){
+            sessionName = directoryName + File.separator + "Session 1";
+            System.out.println("null under countFiles");
+        }
+        else {
+            sessionName = directoryName + File.separator + "Session " + ( files.length + 1 );
+        }
+        session = new File( sessionName );
+        if( !session.exists() ) {
+            session.mkdirs();
+        }
+        */
+
+
         // Get current date
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy_mm_dd_hh_mm",
                 Locale.getDefault());

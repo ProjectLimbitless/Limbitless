@@ -1,6 +1,9 @@
 package com.example.limbitlesssummerproject19;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,6 +13,9 @@ import android.os.Bundle;
 
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -36,13 +42,17 @@ public class AlbumActivity extends AppCompatActivity {
     // Get Firebase storage references
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
+    Context context;
 
 
-    GridView albumGallery;
+    //GridView albumGallery;
+    RecyclerView albumGallery;
     private Button sendbtn;
 
     private ArrayList<String> album = new ArrayList<String>();
     File sessionFolder;
+    String folderName;
+
 
 
     @Override
@@ -50,12 +60,18 @@ public class AlbumActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_album);
+        context = getApplicationContext();
 
-        albumGallery = (GridView)findViewById(R.id.albumGridView);
+        // Set up recycler view
+        albumGallery = (RecyclerView) findViewById(R.id.recView);
+        albumGallery.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(context,2);
+        albumGallery.setLayoutManager(layoutManager);
+
         sendbtn = (Button)findViewById(R.id.sendDataBtn);
 
         Intent intent = getIntent();
-        final String folderName = intent.getStringExtra("fileName");
+        folderName = intent.getStringExtra("fileName");
 
         // Get file paths of images inside selected session folder
         sessionFolder = new File(folderName);
@@ -63,7 +79,7 @@ public class AlbumActivity extends AppCompatActivity {
             album.add(i.getAbsolutePath());
         }
 
-        // Set gridView adapter
+        // Set recycler view adapter
         AlbumAdapter albumAdapter = new AlbumAdapter(this, album);
         albumGallery.setAdapter(albumAdapter);
 
@@ -72,8 +88,11 @@ public class AlbumActivity extends AppCompatActivity {
             List<Task<Void>> myTasks = new ArrayList<>();
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Sending...",
-                        Toast.LENGTH_LONG).show();
+
+                sendbtn.setText("Sending...");
+                sendbtn.setBackgroundColor(getResources().getColor(R.color.accentColor));
+
+
                 for ( String f : album ) {
                     final File image = new File(f);
                     Uri uri = Uri.fromFile(new File(f));
@@ -85,13 +104,17 @@ public class AlbumActivity extends AppCompatActivity {
                 Tasks.whenAll(myTasks).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Toast.makeText(getApplicationContext(), "Images Sent Successfully!",
+                        sendbtn.setText("Send to Server");
+                        sendbtn.setBackgroundColor(getResources().getColor(R.color.originalBtn));
+                        Toast.makeText(context, "Images Sent Successfully!",
                                 Toast.LENGTH_LONG).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getApplicationContext(), "Error. Images not sent.",
+                        sendbtn.setText("Send to Server");
+                        sendbtn.setBackgroundColor(getResources().getColor(R.color.originalBtn));
+                        Toast.makeText(context, "Error. Images not sent.",
                                 Toast.LENGTH_LONG).show();
                     }
                 });
@@ -100,46 +123,35 @@ public class AlbumActivity extends AppCompatActivity {
 
     }
 
-    //System.out.println("Successfully uploaded " + image.getName());
 
 
     /**
      * AlbumAdapter
-     * Data provider for album gridView
+     * Data provider for recyclerView
      */
-    public class AlbumAdapter extends BaseAdapter {
+    public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> {
 
         private final Context mContext;
         private ArrayList<String> images;
 
-        // Constructor
-        public AlbumAdapter(Context context, ArrayList<String> src){
+        public AlbumAdapter(Context context, ArrayList<String> galleryList) {
+            this.images = galleryList;
             this.mContext = context;
-            this.images = src;
-        }
-
-
-        @Override
-        public int getCount(){
-            return images.size();
         }
 
         @Override
-        public long getItemId(int position){
-            return 0;
+        public AlbumAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.single_image, viewGroup, false);
+            return new ViewHolder(view);
         }
 
         @Override
-        public Object getItem(int position){
-            return null;
-        }
+        public void onBindViewHolder(AlbumAdapter.ViewHolder viewHolder, int i) {
+            viewHolder.img.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent){
 
-            ImageView iv = new ImageView(mContext);
+            Bitmap originalImage = BitmapFactory.decodeFile(images.get(i));
 
-            Bitmap originalImage = BitmapFactory.decodeFile(images.get(position));
 
 
             // Fix rotation of image
@@ -155,11 +167,66 @@ public class AlbumActivity extends AppCompatActivity {
             Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0,
                     scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
 
-            iv.setAdjustViewBounds(true);
-
-            iv.setImageBitmap(rotatedBitmap);
-            return iv;
+            // Set image
+            viewHolder.img.setImageBitmap(rotatedBitmap);
         }
+
+        @Override
+        public int getItemCount() {
+            return images.size();
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder{
+            private ImageView img;
+            public ViewHolder(View view) {
+                super(view);
+                img = (ImageView) view.findViewById(R.id.img);
+            }
+        }
+
+//        private final Context mContext;
+//        private ArrayList<String> images;
+//
+//        // Constructor
+//        public AlbumAdapter(Context context, ArrayList<String> src){
+//            this.mContext = context;
+//            this.images = src;
+//        }
+//
+//
+//        @Override
+//        public int getCount(){
+//            return images.size();
+//        }
+//
+//        @Override
+//        public long getItemId(int position){
+//            return 0;
+//        }
+//
+//        @Override
+//        public Object getItem(int position){
+//            return null;
+//        }
+//
+//        @Override
+//        public View getView(int position, View convertView, ViewGroup parent){
+//
+//            ImageView iv = new ImageView(mContext);
+//
+//            Bitmap org = BitmapFactory.decodeFile(images.get(position));
+//
+//            // Fix rotation of image
+//            Matrix matrix = new Matrix();
+//            matrix.postRotate(90);
+//            Bitmap scaledBitmap = Bitmap.createScaledBitmap(org, org.getWidth(), org.getHeight(),
+//                    true);
+//            Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0,
+//                    scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
+//
+//            iv.setImageBitmap(rotatedBitmap);
+//            return iv;
+//        }
 
     }
 }

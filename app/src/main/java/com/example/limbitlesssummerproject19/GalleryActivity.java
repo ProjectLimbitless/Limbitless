@@ -148,9 +148,14 @@ public class GalleryActivity extends AppCompatActivity {
             int toSubtract = diff/2;
             Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap, toSubtract, 0,
                     scaledBitmap.getHeight(), scaledBitmap.getHeight(), matrix, true);
-            // Set image and title
+
+            // Set image
             iv.setImageBitmap(rotatedBitmap);
-            tv.setText(title);
+
+            // Format title string and set title
+            String[] parts = title.split("_");
+            String newTitle = parts[0]+"/"+parts[1]+"/"+parts[2]+" "+parts[3]+":"+parts[4];
+            tv.setText(newTitle);
 
             return convertView;
 

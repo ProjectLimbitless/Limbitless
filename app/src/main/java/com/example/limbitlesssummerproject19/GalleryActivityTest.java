@@ -18,7 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 
-import com.squareup.picasso.Picasso;
+//import com.squareup.picasso.Picasso;
 
 
 import java.io.File;
@@ -124,7 +124,7 @@ public class GalleryActivityTest extends AppCompatActivity {
 
             final String path = thumbnails.get(position).first;
 
-            Picasso.get()
+           /* Picasso.get()
                     .load(path)
                     .resize(250, 250)
                     .centerCrop()
@@ -135,7 +135,7 @@ public class GalleryActivityTest extends AppCompatActivity {
                 public void onClick(View v) {
                     //handle click event on image
                 }
-            });
+            });*/
 
         }
 
