@@ -213,7 +213,7 @@ public class CameraActivity extends AppCompatActivity {
         if( !session.exists() ) {
             session.mkdirs();
         }
-        */
+*/
 
 
         // Get current date
