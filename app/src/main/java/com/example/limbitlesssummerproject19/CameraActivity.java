@@ -201,7 +201,8 @@ public class CameraActivity extends AppCompatActivity {
         });
 
         //May be necessary
-/*
+
+
         if ( null == files){
             sessionName = directoryName + File.separator + "Session 1";
             System.out.println("null under countFiles");
@@ -213,7 +214,6 @@ public class CameraActivity extends AppCompatActivity {
         if( !session.exists() ) {
             session.mkdirs();
         }
-*/
 
 
         // Get current date
