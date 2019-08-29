@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(MainActivity.this,
-                        GalleryActivityTest.class);
+                        GalleryActivity.class);
                 startActivity(intent);
             }
         });

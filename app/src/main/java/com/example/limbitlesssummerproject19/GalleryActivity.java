@@ -64,6 +64,8 @@ public class GalleryActivity extends AppCompatActivity {
                 }
             }
 
+
+
             // Use adapter class as data provider
             sessionGallery = (GridView)findViewById(R.id.galleryGridView);
             final GalleryAdapter galleryAdapter = new GalleryAdapter(
