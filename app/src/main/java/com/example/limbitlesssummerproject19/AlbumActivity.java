@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
+
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -22,6 +23,7 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
+
 
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -147,13 +149,21 @@ public class AlbumActivity extends AppCompatActivity {
         public void onBindViewHolder(AlbumAdapter.ViewHolder viewHolder, int i) {
             viewHolder.img.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-            Bitmap org = BitmapFactory.decodeFile(images.get(i));
+
+            Bitmap originalImage = BitmapFactory.decodeFile(images.get(i));
+
+
 
             // Fix rotation of image
             Matrix matrix = new Matrix();
             matrix.postRotate(90);
-            Bitmap scaledBitmap = Bitmap.createScaledBitmap(org, org.getWidth(), org.getHeight(),
-                    true);
+
+
+
+            Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalImage, originalImage.getWidth(),
+                    originalImage.getHeight(), true);
+
+
             Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0,
                     scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
 

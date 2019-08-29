@@ -8,12 +8,4 @@
 
     </solid>
 
-    <stroke
-
-        android:dashGap="0dp"
-        android:dashWidth="10dp"
-        android:width="3dp">
-
-    </stroke>
-
 </shape>

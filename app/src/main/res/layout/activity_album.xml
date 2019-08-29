@@ -34,6 +34,7 @@
             android:text="Send to Server" />
 
 
+
         <!--<GridView-->
             <!--android:id="@+id/albumGridView"-->
             <!--android:layout_width="fill_parent"-->
