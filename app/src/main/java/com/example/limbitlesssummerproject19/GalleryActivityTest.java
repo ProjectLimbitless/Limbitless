@@ -1,26 +1,39 @@
 package com.example.limbitlesssummerproject19;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.os.Bundle;
 
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.Placeholder;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.GridLayoutManager;
+
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
 //import com.squareup.picasso.Picasso;
 
 
+import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
@@ -29,17 +42,17 @@ public class GalleryActivityTest extends AppCompatActivity {
 
 
     private RecyclerView recycleView;
-    private ArrayList<Pair<String, String>> sessionThumbnails = new ArrayList<Pair<String, String>>();
+    private ArrayList<Pair<String, String>> sessionFiles = new ArrayList<Pair<String, String>>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.gallery_activity_image_grid);
+        setContentView(R.layout.gallery_activity_test);
 
         recycleView = findViewById(R.id.recycle_view);
-        StaggeredGridLayoutManager staggeredGridLayoutManager =
-                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        recycleView.setLayoutManager(staggeredGridLayoutManager);
+       GridLayoutManager gridLayoutManager =
+                new GridLayoutManager(GalleryActivityTest.this, 2);
+        recycleView.setLayoutManager(gridLayoutManager);
 
 
         String directoryName = Environment.getExternalStorageDirectory() +
@@ -64,11 +77,15 @@ public class GalleryActivityTest extends AppCompatActivity {
                 File[] sessionImages = f.listFiles();
                 if (sessionImages.length != 0) {
                     Pair newPair = new Pair<>(sessionImages[0].getAbsolutePath(), f.getName());
-                    sessionThumbnails.add(newPair);
+                    sessionFiles.add(newPair);
                 } else {
                     f.delete(); // Delete empty folders
                 }
             }
+
+
+            RecyclerAdapter recyclerAdapter = new RecyclerAdapter(GalleryActivityTest.this, sessionFiles);
+            recycleView.setAdapter(recyclerAdapter);
 
 
             //Need to do something here for on click listener perhaps
@@ -78,99 +95,116 @@ public class GalleryActivityTest extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
         }
 
-        ImageGridAdapter imageGridAdapter = new ImageGridAdapter(this, sessionThumbnails);
-        recycleView.setAdapter(imageGridAdapter);
-
-
-        // Need to create a list or some sort of code that takes the first image of the internal
-        // storage inside the device.
-
 
     }
 
-    public class ImageGridAdapter extends RecyclerView.Adapter<ImageGridAdapter.GridItemViewHolder> {
-
-        private ArrayList<Pair<String, String>> thumbnails;
-        private final Context context;
+    public static class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.PlaceViewHolder> {
 
 
-        public class GridItemViewHolder extends RecyclerView.ViewHolder {
+        private Context mContext;
+        private ArrayList<Pair<String,String>> mSessionImage;
 
-            SquareImageView siv;
+        //  Creating a constructor for the gallery
+        public RecyclerAdapter(Context mContext, ArrayList<Pair<String,String>> mImageList){
 
-            public GridItemViewHolder(View view){
-                super(view);
-                siv = view.findViewById(R.id.single_image_view);
-            }
+            this.mContext = mContext;
+            this.mSessionImage = mImageList;
         }
 
-        public ImageGridAdapter( Context context, ArrayList<Pair< String, String >> imageList){
-            this.context = context;
-            this.thumbnails = imageList;
-        }
 
         @NonNull
         @Override
-        public GridItemViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+        //  Placing a view into and imageview using a holder
+        public PlaceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-            View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(
-                    R.layout.single_thumbnail, null, false);
 
-            return new GridItemViewHolder(itemView);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.gallery_single_image_view_test,
+                    parent, false);
+
+            return new PlaceViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(@NonNull GridItemViewHolder holder, int position) {
+        public void onBindViewHolder(PlaceViewHolder holder, int position) {
 
-            final String path = thumbnails.get(position).first;
+            /*
+             *  Decoding the image from the mSessionImage and placing it into the imageView
+             *  This is important to do since the image has to placed well
+             *
+             */
 
-           /* Picasso.get()
-                    .load(path)
-                    .resize(250, 250)
-                    .centerCrop()
-                    .into(holder.siv);
+            Bitmap originalImage = BitmapFactory.decodeFile(mSessionImage.get(position).first);
 
-            holder.siv.setOnClickListener(new View.OnClickListener() {
+            // Fix rotation of image
+            Matrix matrix = new Matrix();
+            matrix.postRotate(90);
+            Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalImage, originalImage.getWidth(), originalImage.getHeight(),
+                    true);
+
+            // Crop images into square
+            int diff = scaledBitmap.getWidth()-scaledBitmap.getHeight();
+            int toSubtract = diff/2;
+            Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap, toSubtract, 0,
+                    scaledBitmap.getHeight(), scaledBitmap.getHeight(), matrix, true);
+
+
+            //  Glide is a open source library that allows a bitmap to be uploaded into
+            //  an imageView without having OOM problems. It also allows for smooth scrolling
+            Glide.with(holder.mImageView.getContext()).load(bitMapToByte(rotatedBitmap)).into(holder.mImageView);
+
+
+            // This is a of the to the imageView - opens the Album activity
+            holder.mImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    //handle click event on image
-                }
-            });*/
+                public void onClick(View view) {
 
+                    Toast.makeText(null, "Works!",Toast.LENGTH_SHORT).show();
+
+                }
+            });
+
+
+            /*
+             *  Setting the text just down below the image view
+             *
+             */
+            String title = mSessionImage.get(position).second;
+            // Format title string and set title
+            String[] parts = title.split("_");
+            String newTitle = parts[0]+"/"+parts[1]+"/"+parts[2]+" "+parts[3]+":"+parts[4];
+            holder.sessionTitle.setText(newTitle);
+
+        }
+
+        // Changes the rotated image into a byteArray
+        public byte[] bitMapToByte(Bitmap bitmap){
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+            return byteArray;
         }
 
         @Override
         public int getItemCount() {
-            return thumbnails.size();
+            return mSessionImage.size();
+        }
+
+        //  The view is placed on an a place holder sets and ImageView on single_session_view
+        public static class PlaceViewHolder extends RecyclerView.ViewHolder {
+
+            ImageView mImageView;
+            TextView sessionTitle;
+
+            public PlaceViewHolder(View itemView) {
+                super(itemView);
+
+                mImageView = itemView.findViewById(R.id.single_session_view);
+                sessionTitle = itemView.findViewById(R.id.session_title);
+            }
         }
 
 
     }
 
-
-    public class SquareImageView extends AppCompatImageView {
-
-        public SquareImageView(Context context){
-            super(context);
-        }
-
-        public SquareImageView(Context context, AttributeSet attributeSet){
-            super(context, attributeSet);
-        }
-
-        public SquareImageView(Context context, AttributeSet attributeSet, int defStyleAttribute){
-            super(context, attributeSet, defStyleAttribute);
-        }
-
-        @Override
-        protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec){
-            super.onMeasure( widthMeasureSpec , widthMeasureSpec );
-
-            int width = getMeasuredWidth();
-
-            setMeasuredDimension( width, width );
-        }
-
-    }
 }
 

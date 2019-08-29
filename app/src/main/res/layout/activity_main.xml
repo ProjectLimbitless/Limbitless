@@ -18,8 +18,8 @@
 
         android:paddingTop="60dp"
         android:paddingBottom="30dp"
-        android:drawableTop="@drawable/tutorial_picture"
 
+        android:drawableTop="@drawable/tutorial_picture"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
 
         android:textColor="#F4F0DB"
