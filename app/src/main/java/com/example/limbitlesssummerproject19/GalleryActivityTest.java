@@ -98,7 +98,7 @@ public class GalleryActivityTest extends AppCompatActivity {
 
     }
 
-    public static class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.PlaceViewHolder> {
+    public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.PlaceViewHolder> {
 
 
         private Context mContext;
@@ -125,7 +125,7 @@ public class GalleryActivityTest extends AppCompatActivity {
         }
 
         @Override
-        public void onBindViewHolder(PlaceViewHolder holder, int position) {
+        public void onBindViewHolder(PlaceViewHolder holder, final int position) {
 
             /*
              *  Decoding the image from the mSessionImage and placing it into the imageView
@@ -158,7 +158,12 @@ public class GalleryActivityTest extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
 
-                    Toast.makeText(null, "Works!",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(null, "Works!",Toast.LENGTH_SHORT).show();
+
+                    // Open session images in another activity
+                    Intent intent = new Intent(getApplicationContext(), AlbumActivity.class);
+                    intent.putExtra("fileName", mSessionImage.get(position).first);
+                    startActivity(intent);
 
                 }
             });
@@ -190,7 +195,7 @@ public class GalleryActivityTest extends AppCompatActivity {
         }
 
         //  The view is placed on an a place holder sets and ImageView on single_session_view
-        public static class PlaceViewHolder extends RecyclerView.ViewHolder {
+        public class PlaceViewHolder extends RecyclerView.ViewHolder {
 
             ImageView mImageView;
             TextView sessionTitle;
