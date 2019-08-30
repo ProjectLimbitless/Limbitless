@@ -25,7 +25,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 
-
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -33,6 +33,7 @@ import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -147,29 +148,39 @@ public class AlbumActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(AlbumAdapter.ViewHolder viewHolder, int i) {
-            viewHolder.img.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
+            viewHolder.imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
             Bitmap originalImage = BitmapFactory.decodeFile(images.get(i));
-
-
 
             // Fix rotation of image
             Matrix matrix = new Matrix();
             matrix.postRotate(90);
 
-
-
             Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalImage, originalImage.getWidth(),
                     originalImage.getHeight(), true);
-
 
             Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0,
                     scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
 
+            Glide.with(viewHolder.imageView.getContext()).load(bitMapToByte(rotatedBitmap)).into(viewHolder.imageView);
+
             // Set image
-            viewHolder.img.setImageBitmap(rotatedBitmap);
+            //viewHolder.imageView.setImageBitmap(rotatedBitmap);
         }
+
+        // Changes the rotated image into a byteArray
+        public byte[] bitMapToByte(Bitmap bitmap){
+
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+
+            byte[] byteArray = stream.toByteArray();
+
+            return byteArray;
+        }
+
 
         @Override
         public int getItemCount() {
@@ -177,10 +188,13 @@ public class AlbumActivity extends AppCompatActivity {
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder{
-            private ImageView img;
+
+            private ImageView imageView;
+
             public ViewHolder(View view) {
                 super(view);
-                img = (ImageView) view.findViewById(R.id.img);
+
+                imageView = (ImageView) view.findViewById(R.id.img);
             }
         }
 

@@ -10,28 +10,28 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.constraint.Placeholder;
+
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatImageView;
+
 import android.support.v7.widget.GridLayoutManager;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.AttributeSet;
+
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
-//import com.squareup.picasso.Picasso;
 
 
 import com.bumptech.glide.Glide;
-import com.squareup.picasso.Picasso;
+
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -41,7 +41,7 @@ import java.util.ArrayList;
 public class GalleryActivityTest extends AppCompatActivity {
 
 
-    private RecyclerView recycleView;
+    private RecyclerView recyclerView;
     private ArrayList<Pair<String, String>> sessionFiles = new ArrayList<Pair<String, String>>();
 
     @Override
@@ -49,10 +49,10 @@ public class GalleryActivityTest extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gallery_activity_test);
 
-        recycleView = findViewById(R.id.recycle_view);
+        recyclerView = findViewById(R.id.recycle_view);
        GridLayoutManager gridLayoutManager =
                 new GridLayoutManager(GalleryActivityTest.this, 2);
-        recycleView.setLayoutManager(gridLayoutManager);
+        recyclerView.setLayoutManager(gridLayoutManager);
 
 
         String directoryName = Environment.getExternalStorageDirectory() +
@@ -85,7 +85,7 @@ public class GalleryActivityTest extends AppCompatActivity {
 
 
             RecyclerAdapter recyclerAdapter = new RecyclerAdapter(GalleryActivityTest.this, sessionFiles);
-            recycleView.setAdapter(recyclerAdapter);
+            recyclerView.setAdapter(recyclerAdapter);
 
 
             //Need to do something here for on click listener perhaps
@@ -125,7 +125,7 @@ public class GalleryActivityTest extends AppCompatActivity {
         }
 
         @Override
-        public void onBindViewHolder(PlaceViewHolder holder, int position) {
+        public void onBindViewHolder(PlaceViewHolder holder, final int position) {
 
             /*
              *  Decoding the image from the mSessionImage and placing it into the imageView
@@ -158,7 +158,12 @@ public class GalleryActivityTest extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
 
-                    Toast.makeText(null, "Works!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "Opening Session...", Toast.LENGTH_LONG).show();
+
+                    String action;
+                    Intent intent = new Intent(mContext, GalleryActivity.class);
+                    intent.putExtra("fileName", mSessionImage.get(position).first);
+                    mContext.startActivity(intent);
 
                 }
             });
@@ -178,15 +183,21 @@ public class GalleryActivityTest extends AppCompatActivity {
 
         // Changes the rotated image into a byteArray
         public byte[] bitMapToByte(Bitmap bitmap){
+
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
+
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+
             byte[] byteArray = stream.toByteArray();
+
             return byteArray;
         }
 
         @Override
         public int getItemCount() {
+
             return mSessionImage.size();
+
         }
 
         //  The view is placed on an a place holder sets and ImageView on single_session_view
