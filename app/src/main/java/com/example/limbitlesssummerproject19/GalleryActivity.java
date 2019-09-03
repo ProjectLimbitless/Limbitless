@@ -81,6 +81,8 @@ public class GalleryActivity extends AppCompatActivity {
                             Toast.LENGTH_LONG).show();
 
                     // Open session images in another activity
+
+
                     Intent intent = new Intent(getApplicationContext(), AlbumActivity.class);
                     intent.putExtra("fileName", files[position].getAbsolutePath());
                     startActivity(intent);
@@ -95,10 +97,10 @@ public class GalleryActivity extends AppCompatActivity {
     }
 
 
-    /**
-     * GalleryAdapter
-     * Data provider for gallery gridView
-     */
+
+    // GalleryAdapter
+    // Data provider for gallery gridView
+
     public class GalleryAdapter extends BaseAdapter {
 
         private final Context mContext;

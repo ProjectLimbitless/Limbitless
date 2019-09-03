@@ -6,43 +6,32 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.Bundle;
-
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-
 import android.support.v7.app.AppCompatActivity;
-
 import android.support.v7.widget.GridLayoutManager;
-
 import android.support.v7.widget.RecyclerView;
-
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-
-
-
 import com.bumptech.glide.Glide;
-
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
+
 
 public class GalleryActivityTest extends AppCompatActivity {
 
 
     private RecyclerView recyclerView;
     private ArrayList<Pair<String, String>> sessionFiles = new ArrayList<Pair<String, String>>();
+    public File[] files;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,47 +39,55 @@ public class GalleryActivityTest extends AppCompatActivity {
         setContentView(R.layout.gallery_activity_test);
 
         recyclerView = findViewById(R.id.recycle_view);
-       GridLayoutManager gridLayoutManager =
-                new GridLayoutManager(GalleryActivityTest.this, 2);
+
+        //  Creates a grid layout of two columns
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(
+                GalleryActivityTest.this, 2);
+
         recyclerView.setLayoutManager(gridLayoutManager);
 
+        String directoryName = Environment.getExternalStorageDirectory() + File.separator +
+                "ProstheticFolder";
 
-        String directoryName = Environment.getExternalStorageDirectory() +
-                File.separator+"ProstheticFolder";
-
-        final File[] files;
-        // Open ProstheticFolder directory
+        // Open ProstheticFolder directory and obtaining the first image of the array to
+        // be displayed in the gallery
         try {
+
             File countFiles = new File(directoryName);
 
-
-
             files = countFiles.listFiles(new FileFilter() {
+
                 @Override
                 public boolean accept(File pathname) {
                     return pathname.isDirectory();
+
                 }
             });
 
-            // Get session thumbnails  (image at first index of each session)
+            // Get session thumbnails ( image at first index of each session )
             for (File f : files) {
+
                 File[] sessionImages = f.listFiles();
+
                 if (sessionImages.length != 0) {
+
                     Pair newPair = new Pair<>(sessionImages[0].getAbsolutePath(), f.getName());
                     sessionFiles.add(newPair);
+
                 } else {
+
                     f.delete(); // Delete empty folders
                 }
             }
 
-
-            RecyclerAdapter recyclerAdapter = new RecyclerAdapter(GalleryActivityTest.this, sessionFiles);
+            //  Uses the recycler view to save memory inside the system
+            RecyclerAdapter recyclerAdapter = new RecyclerAdapter(
+                    GalleryActivityTest.this, sessionFiles);
             recyclerView.setAdapter(recyclerAdapter);
 
 
-            //Need to do something here for on click listener perhaps
-
         } catch (Exception e){
+
             Toast.makeText(getApplicationContext(), "No Albums To Display!",
                     Toast.LENGTH_LONG).show();
         }
@@ -98,13 +95,13 @@ public class GalleryActivityTest extends AppCompatActivity {
 
     }
 
-    public static class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.PlaceViewHolder> {
+    public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.PlaceViewHolder> {
 
-
+        // Defining variables to be used inside the RecylcerView adapter
         private Context mContext;
         private ArrayList<Pair<String,String>> mSessionImage;
 
-        //  Creating a constructor for the gallery
+        //  Creates a constructor for the gallery
         public RecyclerAdapter(Context mContext, ArrayList<Pair<String,String>> mImageList){
 
             this.mContext = mContext;
@@ -114,12 +111,11 @@ public class GalleryActivityTest extends AppCompatActivity {
 
         @NonNull
         @Override
-        //  Placing a view into and imageview using a holder
+        //  Placing a view into and imageview using a holder ang attaches imageView to the parent
         public PlaceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.gallery_single_image_view_test,
-                    parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout
+                            .gallery_single_image_view_test, parent, false);
 
             return new PlaceViewHolder(view);
         }
@@ -128,7 +124,7 @@ public class GalleryActivityTest extends AppCompatActivity {
         public void onBindViewHolder(PlaceViewHolder holder, final int position) {
 
             /*
-             *  Decoding the image from the mSessionImage and placing it into the imageView
+             *  Decodes the image from the mSessionImage and placing it into the imageView
              *  This is important to do since the image has to placed well
              *
              */
@@ -138,8 +134,9 @@ public class GalleryActivityTest extends AppCompatActivity {
             // Fix rotation of image
             Matrix matrix = new Matrix();
             matrix.postRotate(90);
-            Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalImage, originalImage.getWidth(), originalImage.getHeight(),
-                    true);
+
+            Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalImage, originalImage.getWidth(),
+                    originalImage.getHeight(), true);
 
             // Crop images into square
             int diff = scaledBitmap.getWidth()-scaledBitmap.getHeight();
@@ -150,7 +147,8 @@ public class GalleryActivityTest extends AppCompatActivity {
 
             //  Glide is a open source library that allows a bitmap to be uploaded into
             //  an imageView without having OOM problems. It also allows for smooth scrolling
-            Glide.with(holder.mImageView.getContext()).load(bitMapToByte(rotatedBitmap)).into(holder.mImageView);
+            Glide.with(holder.mImageView.getContext()).load(bitMapToByte(rotatedBitmap))
+                    .into(holder.mImageView);
 
 
             // This is a of the to the imageView - opens the Album activity
@@ -160,23 +158,20 @@ public class GalleryActivityTest extends AppCompatActivity {
 
                     Toast.makeText(mContext, "Opening Session...", Toast.LENGTH_LONG).show();
 
-                    String action;
-                    Intent intent = new Intent(mContext, GalleryActivity.class);
-                    intent.putExtra("fileName", mSessionImage.get(position).first);
+                    Intent intent = new Intent(mContext, AlbumActivity.class);
+                    intent.putExtra("fileName", files[position].getAbsolutePath());
                     mContext.startActivity(intent);
 
                 }
             });
 
-
             /*
-             *  Setting the text just down below the image view
-             *
+             *  Setting the text just down below the image view\
              */
             String title = mSessionImage.get(position).second;
-            // Format title string and set title
-            String[] parts = title.split("_");
-            String newTitle = parts[0]+"/"+parts[1]+"/"+parts[2]+" "+parts[3]+":"+parts[4];
+            String[] parts = title.split("_"); // Format title string and set title
+            String newTitle = parts[0] + "/" + parts[1] + "/" + parts[2] + " " + parts[3]
+                    + ":" + parts[4];
             holder.sessionTitle.setText(newTitle);
 
         }
@@ -201,7 +196,7 @@ public class GalleryActivityTest extends AppCompatActivity {
         }
 
         //  The view is placed on an a place holder sets and ImageView on single_session_view
-        public static class PlaceViewHolder extends RecyclerView.ViewHolder {
+        public class PlaceViewHolder extends RecyclerView.ViewHolder {
 
             ImageView mImageView;
             TextView sessionTitle;
