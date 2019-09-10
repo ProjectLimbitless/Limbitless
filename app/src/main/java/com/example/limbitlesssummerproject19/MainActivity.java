@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
+
 
 
 /**
@@ -19,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnStart;                        //Declaring btnStart as an instance of Button
     private Button btnGallery;
     private Button btnTutorial;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,12 +57,13 @@ public class MainActivity extends AppCompatActivity {
 
             public void onClick(View view) {
 
-                Toast.makeText(getApplicationContext(), "Opening Gallery...",
+                Toast.makeText(getApplicationContext(), "Preparing Gallery...",
                         Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(MainActivity.this,
-                        GalleryActivityTest.class);
+                        GalleryActivity.class);
                 startActivity(intent);
+
             }
         });
 

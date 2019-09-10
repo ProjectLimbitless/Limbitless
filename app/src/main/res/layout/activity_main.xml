@@ -8,6 +8,31 @@
     android:background="#F4F0DB"
     tools:context=".MainActivity">
 
+ <RelativeLayout
+     android:layout_width="match_parent"
+     android:layout_height="match_parent">
+
+
+     <com.github.ybq.android.spinkit.SpinKitView
+
+         android:id="@+id/spin_kit"
+         style="@style/SpinKitView.Large.ThreeBounce"
+         android:layout_width="150dp"
+         android:layout_height="150dp"
+
+         android:layout_centerInParent="true"
+         android:layout_centerHorizontal="true"
+         android:layout_gravity="center"
+         android:layout_marginEnd="0dp"
+         android:layout_marginRight="0dp"
+         app:SpinKit_Color="#235B99"
+         app:SpinKit_Style="ThreeBounce"
+
+
+         />
+ </RelativeLayout>
+
+
     <Button
 
         android:id="@+id/btn_to_tutorial"
@@ -100,5 +125,10 @@
         app:layout_constraintTop_toBottomOf="@+id/btn_to_start" >
 
     </Button>
+
+
+
+
+
 
 </android.support.constraint.ConstraintLayout>
