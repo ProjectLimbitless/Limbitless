@@ -65,8 +65,8 @@ import java.util.Locale;
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class CameraActivity extends AppCompatActivity {
 
-    Button captureButton, returnButton; //Button on camera preview to capture image
-    ImageButton imageButton;
+    //Button captureButton; //Button on camera preview to capture image
+    ImageButton imageButton, returnButton, captureButton;
     AutoFitTextureView textureView; //The camera preview itself
 
     // used for orientation correction of photos
@@ -119,9 +119,11 @@ public class CameraActivity extends AppCompatActivity {
         context = this;
 
         textureView = (AutoFitTextureView) findViewById(R.id.texture);
-        captureButton = (Button) findViewById(R.id.button_capture);
-        returnButton = (Button) findViewById(R.id.return_button);
+        captureButton = (ImageButton) findViewById(R.id.button_capture);
+        returnButton = (ImageButton) findViewById(R.id.return_button);
         imageButton = (ImageButton) findViewById(R.id.image_button);
+
+        returnButton.setImageResource(R.drawable.return_button);
 
 
         View topView = (View) findViewById(R.id.topView);
