@@ -3,163 +3,232 @@ package com.example.limbitlesssummerproject19;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.os.Environment;
+import android.media.ExifInterface;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
+import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
+import com.bumptech.glide.load.resource.bitmap.TransformationUtils;
 import java.io.File;
 import java.io.FileFilter;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 
 
 public class GalleryActivity extends AppCompatActivity {
 
-    GridView sessionGallery;
-
-    // List of file paths and names of each session folder
-    private ArrayList<Pair<String, String>> sessionThumbnails = new ArrayList<Pair<String, String>>();
-
+    private RecyclerView recyclerView;
+    private ArrayList<Pair<String, String>> sessionFiles = new ArrayList<Pair<String, String>>();
+    public File[] files;
+    private String directoryName;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //  Sets the content of the gallery activity
         setContentView(R.layout.activity_gallery);
 
-        String directoryName = Environment.getExternalStorageDirectory()+File.separator+"ProstheticFolder";
-        final File[] files;
+        //  Sets the recycle_view content
+        recyclerView = findViewById(R.id.recycle_view);
 
-        // Open ProstheticFolder directory
+        //  Creates a grid layout of two columns
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(
+                GalleryActivity.this, 2);
+
+        // Sets the grid layout into the recycler view
+        recyclerView.setLayoutManager(gridLayoutManager);
+
+        // Obtains the directory name
+        directoryName = Environment.getExternalStorageDirectory() + File.separator +
+                "ProstheticFolder";
+
+        // Open ProstheticFolder directory and obtaining the first image of the array to
+        // be displayed in the gallery
         try {
+
             File countFiles = new File(directoryName);
+
             files = countFiles.listFiles(new FileFilter() {
+
                 @Override
                 public boolean accept(File pathname) {
                     return pathname.isDirectory();
+
                 }
             });
 
-            // Get session thumbnails  (image at first index of each session)
-            for ( File f : files ) {
+            // Get session thumbnails ( image at first index of each session )
+            for (File f : files) {
+
                 File[] sessionImages = f.listFiles();
-                if(sessionImages.length != 0){
+
+                if (sessionImages.length != 0) {
+
                     Pair newPair = new Pair<>(sessionImages[0].getAbsolutePath(), f.getName());
-                    sessionThumbnails.add(newPair);
-                }
-                else{
+                    sessionFiles.add(newPair);
+
+                } else {
+
                     f.delete(); // Delete empty folders
                 }
             }
 
+            //  Uses the recycler adapter and glide
+            RecyclerAdapter recyclerAdapter = new RecyclerAdapter(
+                    GalleryActivity.this,
+                    sessionFiles);
+
+            //   Sets images into recycler view
+            recyclerView.setAdapter(recyclerAdapter);
 
 
-            // Use adapter class as data provider
-            sessionGallery = (GridView)findViewById(R.id.galleryGridView);
-            final GalleryAdapter galleryAdapter = new GalleryAdapter(
-                    this, sessionThumbnails);
-            sessionGallery.setAdapter(galleryAdapter);
+        } catch (Exception e) {
 
-            // Open session when a thumbnail is clicked
-            sessionGallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                    Toast.makeText(getApplicationContext(), "Opening Session...",
-                            Toast.LENGTH_LONG).show();
-
-                    // Open session images in another activity
-                    Intent intent = new Intent(getApplicationContext(), AlbumActivity.class);
-                    intent.putExtra("fileName", files[position].getAbsolutePath());
-                    startActivity(intent);
-                }
-            });
-
-        } catch (Exception e){
             Toast.makeText(getApplicationContext(), "No Albums To Display!",
                     Toast.LENGTH_LONG).show();
         }
 
+
     }
 
 
-    /**
-     * GalleryAdapter
-     * Data provider for gallery gridView
-     */
-    public class GalleryAdapter extends BaseAdapter {
+    public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.PlaceViewHolder> {
 
-        private final Context mContext;
-        private ArrayList<Pair<String, String>> thumbnails;
+        // Defines member variables
+        private Context mContext;
+        private ArrayList<Pair<String, String>> mSessionImage;
 
-        // Constructor
-        public GalleryAdapter(Context context, ArrayList<Pair<String, String>> src){
-            this.mContext = context;
-            this.thumbnails = src;
+        //  Creates a constructor for the gallery
+        public RecyclerAdapter(Context mContext, ArrayList<Pair<String, String>> mImageList) {
+
+            this.mContext = mContext;
+            this.mSessionImage = mImageList;
+        }
+
+
+        @NonNull
+        @Override
+        //  Placing a view into and imageview using a holder ang attaches imageView to the parent
+        public PlaceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout
+                    .single_image_view_gallery, parent, false);
+
+            return new PlaceViewHolder(view);
         }
 
         @Override
-        public int getCount(){
-            return thumbnails.size();
+        public void onBindViewHolder(PlaceViewHolder holder, final int position) {
+
+            //  Glide is a open source library that allows a bitmap to be uploaded into
+            //  an imageView without having out of memory problems. It also allows for smooth
+            // scrolling and image transformation.
+
+            Glide.with(holder.mImageView.getContext())
+                    .asBitmap()
+                    .load(mSessionImage.get(position).first)
+                    .centerCrop()
+                    .transform(new ImageTransformation(holder.mImageView.getContext(), 90))
+                    .into(holder.mImageView);
+
+
+            // Opens the Album activity
+            holder.mImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Toast.makeText(mContext, "Preparing Session...", Toast.LENGTH_LONG).show();
+
+                    Intent intent = new Intent(mContext, AlbumActivity.class);
+                    intent.putExtra("fileName", files[position].getAbsolutePath());
+                    mContext.startActivity(intent);
+
+                }
+            });
+
+
+            //  Sets the text just down below the image view\
+
+            String title = mSessionImage.get(position).second;
+            String[] parts = title.split("_"); // Format title string and set title
+            String newTitle = parts[0] + "/" + parts[1] + "/" + parts[2] + " " + parts[3]
+                    + ":" + parts[4];
+            holder.sessionTitle.setText(newTitle);
+
         }
 
         @Override
-        public long getItemId(int position){
-            return 0;
+        public int getItemCount() {
+
+            return mSessionImage.size();
         }
 
-        @Override
-        public Object getItem(int position){
-            return null;
-        }
+        //  View placed on an a place holder and sets ImageView on single_session_view
+        public class PlaceViewHolder extends RecyclerView.ViewHolder {
 
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent){
+            ImageView mImageView;
+            TextView sessionTitle;
 
-            if (convertView == null) {
-                final LayoutInflater layoutInflater = LayoutInflater.from(mContext);
-                convertView = layoutInflater.inflate(R.layout.single_thumbnail, null);
+            public PlaceViewHolder(View itemView) {
+                super(itemView);
+
+                mImageView = itemView.findViewById(R.id.single_session_view);
+                sessionTitle = itemView.findViewById(R.id.session_title);
             }
+        }
 
-            final ImageView iv = (ImageView)convertView.findViewById(R.id.thumbnail_image);
-            final TextView tv = (TextView)convertView.findViewById(R.id.thumbnail_title);
 
-            Bitmap org = BitmapFactory.decodeFile(thumbnails.get(position).first);
-            String title = thumbnails.get(position).second;
+    }
 
-            // Fix rotation of image
-            Matrix matrix = new Matrix();
-            matrix.postRotate(90);
-            Bitmap scaledBitmap = Bitmap.createScaledBitmap(org, org.getWidth(), org.getHeight(),
-                    true);
+    //  Image transformation from horizontal to vertical (used when working with Glide)
+    public class ImageTransformation extends BitmapTransformation {
 
-            // Crop images into square
-            int diff = scaledBitmap.getWidth()-scaledBitmap.getHeight();
-            int toSubtract = diff/2;
-            Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap, toSubtract, 0,
-                    scaledBitmap.getHeight(), scaledBitmap.getHeight(), matrix, true);
+        private Context context;
+        private int mOrientation;
 
-            // Set image
-            iv.setImageBitmap(rotatedBitmap);
+        public ImageTransformation(Context context, int orientation) {
+            this.context = context;
+            this.mOrientation = orientation;
+        }
 
-            // Format title string and set title
-            String[] parts = title.split("_");
-            String newTitle = parts[0]+"/"+parts[1]+"/"+parts[2]+" "+parts[3]+":"+parts[4];
-            tv.setText(newTitle);
+        @Override
+        protected Bitmap transform(BitmapPool pool, Bitmap toTransform, int outWidth, int outHeight) {
+            int newOrientation = getOrientation(mOrientation);
+            return TransformationUtils.rotateImageExif(pool, toTransform, newOrientation);
+        }
 
-            return convertView;
+        //  Sets orientation
+        private int getOrientation(int orientation) {
+            int newOrientation;
+            switch (orientation) {
+                case 90:
+                    newOrientation = ExifInterface.ORIENTATION_ROTATE_90;
+                    break;
+                // other cases
+                default:
+                    newOrientation = ExifInterface.ORIENTATION_NORMAL;
+                    break;
+            }
+            return newOrientation;
+        }
+
+
+        @Override
+        public void updateDiskCacheKey(@NonNull MessageDigest messageDigest) {
 
         }
     }
