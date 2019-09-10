@@ -3,6 +3,9 @@ package com.example.limbitlesssummerproject19;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -29,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //Create a buttons and adds a listener to it
+
 
 
 
@@ -89,4 +93,5 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
 }

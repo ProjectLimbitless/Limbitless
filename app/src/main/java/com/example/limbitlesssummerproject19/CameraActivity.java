@@ -36,6 +36,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.Size;
 import android.util.SparseIntArray;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
@@ -123,7 +126,6 @@ public class CameraActivity extends AppCompatActivity {
         returnButton = (ImageButton) findViewById(R.id.return_button);
         imageButton = (ImageButton) findViewById(R.id.image_button);
 
-        returnButton.setImageResource(R.drawable.return_button);
 
 
         View topView = (View) findViewById(R.id.topView);
@@ -156,7 +158,7 @@ public class CameraActivity extends AppCompatActivity {
             }
         });
 
-        returnButton.setOnClickListener(new View.OnClickListener() {
+        /*returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CameraActivity.this,
@@ -164,7 +166,7 @@ public class CameraActivity extends AppCompatActivity {
                 startActivity(intent);
 
             }
-        });
+        });*/
 
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -957,5 +959,22 @@ public class CameraActivity extends AppCompatActivity {
         mBackgroundThread.join();
         mBackgroundThread = null;
         mBackgroundHandler = null;
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_items, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.return_button:
+                startActivity(new Intent(this, MainActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
