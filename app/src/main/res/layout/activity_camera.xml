@@ -5,26 +5,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#235B99"
+    android:background="#000"
     tools:context=".CameraActivity">
 
     <com.example.limbitlesssummerproject19.AutoFitTextureView
         android:id="@+id/texture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+
         android:layout_marginStart="0dp"
         android:layout_marginLeft="0dp"
         android:layout_marginTop="0dp"
         android:layout_marginEnd="0dp"
         android:layout_marginRight="0dp"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        android:layout_alignParentLeft="true" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <View
         android:id="@+id/RectangleWithBorders"
@@ -72,11 +75,7 @@
         app:layout_constraintBottom_toTopOf="@id/RectangleWithBorders"
         app:layout_constraintEnd_toStartOf="@id/rightView"
         app:layout_constraintStart_toEndOf="@id/leftView"
-        app:layout_constraintTop_toTopOf="parent" >
-
-
-
-    </View>
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <View
@@ -101,44 +100,50 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/RectangleWithBorders"
         app:layout_constraintEnd_toStartOf="@id/rightView"
-        app:layout_constraintStart_toEndOf="@id/leftView"
-        >
+        app:layout_constraintStart_toEndOf="@id/leftView" >
+
         <RelativeLayout
+
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginTop="40dp"
+            android:layout_gravity="center">
 
             <ImageButton
 
                 android:id="@+id/image_button"
-                android:layout_width="@android:dimen/app_icon_size"
-                android:layout_height="@android:dimen/app_icon_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circle_shape_button"
+                android:layout_marginRight="10dp"
+
                 android:layout_centerVertical="true"
-                android:layout_marginRight="30dp"
                 android:layout_toStartOf="@+id/button_capture"
                 android:layout_toLeftOf="@+id/button_capture" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/button_capture"
-                android:layout_width="@android:dimen/app_icon_size"
-                android:layout_height="@android:dimen/app_icon_size"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true"
-                android:background="@drawable/take_button" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/picture_button"
+                android:layout_centerInParent="true" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/return_button"
-                android:layout_width="@android:dimen/app_icon_size"
-                android:layout_height="@android:dimen/app_icon_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/circle_shape_button"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
                 android:layout_toEndOf="@+id/button_capture"
-                android:layout_toRightOf="@+id/button_capture" />
+                android:layout_toRightOf="@+id/button_capture"
+
+                 />
 
         </RelativeLayout>
-
-
-
     </FrameLayout>
-
+    <!--#235B99-->
 </android.support.constraint.ConstraintLayout>
 
