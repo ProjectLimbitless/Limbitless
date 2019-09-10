@@ -22,6 +22,8 @@
         android:gravity="center"
         android:padding="8dp"
         android:text="Test Image"
+        android:textColor="#fff"
+        android:fontFamily="@font/montserrat_regular"
         >
     </TextView>
 

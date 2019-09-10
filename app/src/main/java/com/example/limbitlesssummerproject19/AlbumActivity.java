@@ -11,6 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -90,7 +93,7 @@ public class AlbumActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                sendButton.setText("Sending...");
+                sendButton.setText("Sending!");
                 sendButton.setBackgroundColor(getResources().getColor(R.color.accentColor));
 
 
@@ -114,7 +117,7 @@ public class AlbumActivity extends AppCompatActivity {
 
                         sendButton.setText("Send to Server");
 
-                        sendButton.setBackgroundColor(getResources().getColor(R.color.originalBtn));
+                        sendButton.setBackgroundColor(getResources().getColor(R.color.sendColor));
 
                         Toast.makeText(context, "Images Sent Successfully!",
                                 Toast.LENGTH_LONG).show();
@@ -126,7 +129,7 @@ public class AlbumActivity extends AppCompatActivity {
 
                         sendButton.setText("Send to Server");
 
-                        sendButton.setBackgroundColor(getResources().getColor(R.color.originalBtn));
+                        sendButton.setBackgroundColor(getResources().getColor(R.color.sendColor));
 
                         Toast.makeText(context, "Error. Images not sent.",
                                 Toast.LENGTH_LONG).show();
@@ -234,6 +237,25 @@ public class AlbumActivity extends AppCompatActivity {
         @Override
         public void updateDiskCacheKey(@NonNull MessageDigest messageDigest) {
 
+        }
+    }
+
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_items, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.return_button:
+                startActivity(new Intent(this, GalleryActivity.class));
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

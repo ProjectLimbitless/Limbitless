@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000"
+    android:background="#333333"
     tools:context=".CameraActivity">
 
     <com.example.limbitlesssummerproject19.AutoFitTextureView
@@ -112,11 +112,13 @@
             <ImageButton
 
                 android:id="@+id/image_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/circle_shape_button"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/camera_button_selector"
+                android:src="@drawable/camera_gallery_circular"
                 android:layout_marginRight="10dp"
-
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
                 android:layout_centerVertical="true"
                 android:layout_toStartOf="@+id/button_capture"
                 android:layout_toLeftOf="@+id/button_capture" />
@@ -128,19 +130,20 @@
                 android:background="@drawable/picture_button"
                 android:layout_centerInParent="true" />
 
-            <ImageButton
+            <!--<ImageButton
                 android:id="@+id/return_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:background="@drawable/circle_shape_button"
+                android:src="@drawable/return_button_circular"
+                android:background="@drawable/camera_button_selector"
                 android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
+                android:scaleType="fitCenter"
                 android:layout_toEndOf="@+id/button_capture"
                 android:layout_toRightOf="@+id/button_capture"
 
-                 />
+                 />-->
 
         </RelativeLayout>
     </FrameLayout>
