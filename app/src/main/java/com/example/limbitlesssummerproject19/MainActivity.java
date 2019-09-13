@@ -3,9 +3,15 @@ package com.example.limbitlesssummerproject19;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.Toast;
+
 
 
 /**
@@ -16,9 +22,9 @@ import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
-    private Button btnStart;                        //Declaring btnStart as an instance of Button
-    private Button btnGallery;
-    private Button btnTutorial;
+    private ImageButton btnStart;                        //Declaring btnStart as an instance of Button
+    private ImageButton btnGallery;
+    private ImageButton btnTutorial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        btnStart = (Button) findViewById(R.id.btn_to_start);
+
+        btnStart = findViewById(R.id.btn_to_start);
         btnStart.setOnClickListener( new View.OnClickListener() {
 
             //Upon clicking the button, a new window will open called StartActivity
@@ -45,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        btnGallery = (Button) findViewById(R.id.btn_to_gallery);
+        btnGallery = findViewById(R.id.btn_to_gallery);
         btnGallery.setOnClickListener(new View.OnClickListener() {
 
             //
@@ -54,12 +61,13 @@ public class MainActivity extends AppCompatActivity {
 
             public void onClick(View view) {
 
-                Toast.makeText(getApplicationContext(), "Opening Gallery...",
+                Toast.makeText(getApplicationContext(), "Preparing Gallery...",
                         Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(MainActivity.this,
-                        GalleryActivityTest.class);
+                        GalleryActivity.class);
                 startActivity(intent);
+
             }
         });
 
@@ -67,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
          * Creates a Burst Mode button and a listener is added.
          */
 
-       btnTutorial = (Button) findViewById(R.id.btn_to_tutorial);
+       btnTutorial = findViewById(R.id.btn_to_tutorial);
         btnTutorial.setOnClickListener( new View.OnClickListener(){
             /*
              * Upon click, the button opens CameraActivity.
@@ -85,4 +93,5 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
 }

@@ -10,8 +10,8 @@
 
     <ImageView
     android:id="@+id/single_session_view"
-    android:layout_width="200dp"
-    android:layout_height="200dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:scaleType="fitXY"
     android:adjustViewBounds="true"/>
 
@@ -22,7 +22,11 @@
         android:gravity="center"
         android:padding="8dp"
         android:text="Test Image"
+        android:textColor="#fff"
+        android:fontFamily="@font/montserrat_regular"
         >
     </TextView>
+
+
 
 </LinearLayout>

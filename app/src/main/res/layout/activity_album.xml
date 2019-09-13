@@ -9,6 +9,7 @@
         android:paddingTop="8dp"
         android:paddingRight="8dp"
         android:weightSum="0"
+        android:background="#333333"
         >
 
         <android.support.v7.widget.RecyclerView
@@ -25,47 +26,18 @@
 
         <Button
             android:id="@+id/sendDataBtn"
-            android:layout_width="130dp"
-            android:layout_height="wrap_content"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="0dp"
-            android:background="#CFCFCF"
-            android:text="Send to Server" />
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/send_to_server_button"
+            android:text="Send"
+            android:fontFamily="@font/montserrat_regular"
+
+            />
 
 
 
-        <!--<GridView-->
-            <!--android:id="@+id/albumGridView"-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="fill_parent"-->
-            <!--android:smoothScrollbar="true"-->
-            <!--android:background="#ffffff"-->
-            <!--android:columnWidth="172dp"-->
-            <!--android:gravity="center"-->
-            <!--android:horizontalSpacing="8dp"-->
-            <!--android:verticalSpacing="8dp"-->
-            <!--android:numColumns="auto_fit"-->
-            <!--android:paddingLeft="5dp"-->
-            <!--android:paddingTop="5dp"-->
-            <!--android:paddingRight="5dp"-->
-            <!--android:stretchMode="columnWidth">-->
-
-
-        <!--</GridView>-->
     </RelativeLayout>
 
-    <!--<android.support.constraint.ConstraintLayout-->
-    <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:tools="http://schemas.android.com/tools"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="vertical"-->
-    <!--android:paddingLeft="8dp"-->
-    <!--android:paddingTop="8dp"-->
-    <!--android:paddingRight="8dp"-->
-    <!--android:paddingBottom="8dp"-->
-    <!--android:weightSum="0"-->
-    <!--tools:context=".AlbumActivity">-->
-
-<!--</android.support.constraint.ConstraintLayout>-->

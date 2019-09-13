@@ -38,7 +38,6 @@
         <activity android:name=".MainActivity"/>
         <activity android:name=".CameraActivity" />
         <activity android:name=".GalleryActivity"></activity>
-        <activity android:name=".GalleryActivityTest"></activity>
         <activity android:name=".AlbumActivity" />
     </application>
 
