@@ -72,9 +72,8 @@ public class AlbumActivity extends AppCompatActivity {
         folderName = intent.getStringExtra("fileName");
 
         // Get file paths of images inside selected session folder
-        sessionFolder = new File(folderName);
-        for (File i : sessionFolder.listFiles()) {
-
+        sessionFolder = new File(folderName);//childFolder.getParent());
+        for ( File i : sessionFolder.listFiles() ) {
             album.add(i.getAbsolutePath());
 
         }
