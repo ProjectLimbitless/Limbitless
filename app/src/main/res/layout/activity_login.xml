@@ -33,20 +33,18 @@
         android:layout_gravity="center"
         android:layout_marginTop="172dp"
 
-        android:background="@drawable/start_button"
-        android:drawableTop="@drawable/new_session_picture"
+        android:background="@drawable/ic_launcher_round"
+
         android:gravity="center|bottom"
 
         android:paddingTop="25dp"
-
         android:paddingBottom="25dp"
-        android:text="@string/newSession"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="#F4F0DB"
         android:textSize="@android:dimen/app_icon_size"
+
+
         android:textStyle="normal"
-
-
         android:typeface="normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
@@ -75,3 +73,4 @@
 
 
 </android.support.constraint.ConstraintLayout>
+
