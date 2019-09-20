@@ -10,6 +10,10 @@ import android.graphics.Matrix;
 import android.graphics.Point;
 import android.graphics.RectF;
 import android.graphics.SurfaceTexture;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
 import android.hardware.camera2.CameraCharacteristics;
@@ -36,12 +40,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.Size;
 import android.util.SparseIntArray;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -66,7 +72,7 @@ import java.util.Locale;
 
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-public class CameraActivity extends AppCompatActivity {
+public class CameraActivity extends AppCompatActivity implements SensorEventListener{
 
     //Button captureButton; //Button on camera preview to capture image
     ImageButton imageButton, returnButton, captureButton;
@@ -115,6 +121,37 @@ public class CameraActivity extends AppCompatActivity {
     private static final int STATE_WAITING_NON_PRECAPTURE = 3;
     private static final int STATE_PICTURE_TAKEN = 4;
     Context context;
+
+    /*------------------------------------------------------------------*/
+    private SensorManager sensorManager;
+
+    private Sensor accelerometer, magnetometer;
+
+    private HandlerThread mSensorThread;
+    private Handler mSensorHandler;
+    private Handler mainHandler = new Handler();
+    ImageButton calibrateSensor, startSession;
+
+    private float[] mAccelerometerData = new float[3];
+    private float[] avgAccelerometerData = new float[3];
+    private float[] mMagnetometerData = new float[3];
+    private float[] avgMagnetometerData = new float[3];
+
+    float[] globalOrientation = new float[3];
+    float[] currentOrientation = new float[3];
+    float[] previousOrientation = new float[3];
+    float[] currentAvgOrientation = new float[3];
+
+    private Display mDisplay;
+
+    boolean SWITCH = true;
+    private Toast mToast = null;
+
+    MovingAverage orientationMA = new MovingAverage(20);
+    MovingAverage accelerometerMA = new MovingAverage(20);
+    MovingAverage magnetometerMA = new MovingAverage(20);
+
+    /*------------------------------------------------------------------*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,9 +159,9 @@ public class CameraActivity extends AppCompatActivity {
         context = this;
 
         textureView = (AutoFitTextureView) findViewById(R.id.texture);
-        captureButton = (ImageButton) findViewById(R.id.button_capture);
+        //captureButton = (ImageButton) findViewById(R.id.button_capture);
         returnButton = (ImageButton) findViewById(R.id.return_button);
-        imageButton = (ImageButton) findViewById(R.id.image_button);
+        //imageButton = (ImageButton) findViewById(R.id.image_button);
 
 
 
@@ -149,14 +186,14 @@ public class CameraActivity extends AppCompatActivity {
         textureView.setSurfaceTextureListener(textureListener);
 
         //set a listener to respond when the camera capture button is clicked
-        captureButton.setOnClickListener(new View.OnClickListener(){
+        /*captureButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 takePicture2(); //helper function to take a picture when button is clicked
                 vibe.vibrate(100);
                 mediaPlayer.start();
             }
-        });
+        });*/
 
         /*returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,7 +205,7 @@ public class CameraActivity extends AppCompatActivity {
             }
         });*/
 
-        imageButton.setOnClickListener(new View.OnClickListener() {
+       /* imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -179,7 +216,47 @@ public class CameraActivity extends AppCompatActivity {
                         GalleryActivity.class);
                 startActivity(intent);
             }
+        });*/
+
+        /*------------------------------------------------------------*/
+        //STARTING SESSION
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+
+        startSession = (ImageButton) findViewById(R.id.startSession);
+        startSession.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startSession();
+            }
         });
+
+        //CALIBRATING SENSOR
+        calibrateSensor = (ImageButton) findViewById(R.id.calibrate_sensor);
+        calibrateSensor.setVisibility(View.INVISIBLE);
+        calibrateSensor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                calibrateSensor.setVisibility(View.INVISIBLE);
+                setStartingPosition();
+                setCheckPoint();
+                makeToast(getApplicationContext(), "Sensors calibrated! Begin session when ready.", Toast.LENGTH_LONG);
+                captureButton.setVisibility(View.VISIBLE);
+            }
+        });
+
+        //STARTING CAPTURE SESSION
+        captureButton = (ImageButton) findViewById(R.id.button_capture);
+        captureButton.setVisibility(View.INVISIBLE);
+        captureButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sessionLoop();
+            }
+        });
+
+        WindowManager wm = (WindowManager) getSystemService(WINDOW_SERVICE);
+        mDisplay = wm.getDefaultDisplay();
+        /*------------------------------------------------------------*/
 
     }
 
@@ -927,6 +1004,20 @@ public class CameraActivity extends AppCompatActivity {
         else {
             textureView.setSurfaceTextureListener(textureListener);
         }
+        /*------------------------------------------------------------*/
+        mSensorThread = new HandlerThread("Sensor Thread", Thread.MAX_PRIORITY);
+        mSensorThread.start();
+        mSensorHandler = new Handler(mSensorThread.getLooper());
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        if(accelerometer != null) {
+            sensorManager.registerListener(this, accelerometer, 25000, mSensorHandler);
+        }
+
+        magnetometer = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+        if(magnetometer != null) {
+            sensorManager.registerListener(this, magnetometer, 25000, mSensorHandler);
+        }
+        /*------------------------------------------------------------*/
     }
 
     /* helper function to start a thread to have concurrent execution;
@@ -949,6 +1040,11 @@ public class CameraActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        /*---------------------------------------------------------------*/
+        sensorManager.unregisterListener(this);
+        mSensorThread.quitSafely();
+        /*---------------------------------------------------------------*/
     }
 
     /* helper function to end any threads;
@@ -977,4 +1073,206 @@ public class CameraActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    /*----------------------------------------------------------------*/
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        Sensor sensor = event.sensor;
+
+        if(sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            mAccelerometerData = event.values.clone();
+            accelerometerMA.addData(mAccelerometerData);
+            float[] temp = accelerometerMA.getAverage();
+            if(!withinRange(avgAccelerometerData[0], temp[0], (float) 0.01)) {
+                avgAccelerometerData[0] = temp[0];
+            }
+            if(!withinRange(avgAccelerometerData[1], temp[1], (float) 0.01)) {
+                avgAccelerometerData[1] = temp[1];
+            }
+            if(!withinRange(avgAccelerometerData[2], temp[2], (float) 0.01)) {
+                avgAccelerometerData[2] = temp[2];
+            }
+
+        }  else if(sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
+            mMagnetometerData = event.values.clone();
+            magnetometerMA.addData(mMagnetometerData);
+            float[] temp = magnetometerMA.getAverage();
+            if(!withinRange(avgMagnetometerData[0], temp[0], (float) 0.01)) {
+                avgMagnetometerData[0] = temp[0];
+            }
+            if(!withinRange(avgMagnetometerData[1], temp[1], (float) 0.01)) {
+                avgMagnetometerData[1] = temp[1];
+            }
+            if(!withinRange(avgMagnetometerData[2], temp[2], (float) 0.01)) {
+                avgMagnetometerData[2] = temp[2];
+            }
+
+        }
+
+        setOrientation();
+    }
+
+    private void setOrientation() {
+        float[] rotationMatrix = new float[9];
+        boolean rotationOK = SensorManager.getRotationMatrix(rotationMatrix, null, avgAccelerometerData, avgMagnetometerData);
+
+        float[] rotationMatrixAdjusted = new float[9];
+        switch(mDisplay.getRotation()) {
+            case Surface.ROTATION_0:
+                rotationMatrixAdjusted = rotationMatrix.clone();
+                break;
+
+            case Surface.ROTATION_90:
+                SensorManager.remapCoordinateSystem(rotationMatrix, SensorManager.AXIS_Y, SensorManager.AXIS_MINUS_X, rotationMatrixAdjusted);
+                break;
+
+            case Surface.ROTATION_180:
+                SensorManager.remapCoordinateSystem(rotationMatrix, SensorManager.AXIS_MINUS_X, SensorManager.AXIS_MINUS_Y, rotationMatrixAdjusted);
+                break;
+
+            case Surface.ROTATION_270:
+                SensorManager.remapCoordinateSystem(rotationMatrix, SensorManager.AXIS_MINUS_Y, SensorManager.AXIS_X, rotationMatrixAdjusted);
+                break;
+        }
+
+        float[] orientationValues = new float[3];
+        if(rotationOK) {
+            SensorManager.getOrientation(rotationMatrixAdjusted, orientationValues);
+        }
+
+        currentOrientation = orientationValues.clone();
+        orientationMA.addData(currentOrientation);
+        float[] temp = orientationMA.getAverage();
+
+        if(!withinRange(currentAvgOrientation[0], temp[0], (float) 0.02)) {
+            currentAvgOrientation[0] = temp[0];
+        }
+        if(!withinRange(currentAvgOrientation[1], temp[1], (float) 0.02)) {
+            currentAvgOrientation[1] = temp[1];
+        }
+        if(!withinRange(currentAvgOrientation[2], temp[2], (float) 0.02)) {
+            currentAvgOrientation[2] = temp[2];
+        }
+    }
+
+    private void makeToast(Context context, String message, int messageLength) {
+        //short = 0, long = 1
+        if(mToast!= null) mToast.cancel();
+        mToast = Toast.makeText(context, message, messageLength);
+        mToast.show();
+    }
+
+    private boolean withinPitchRange(float constant, float comparedVal, float range) {
+        if(Math.abs(constant - comparedVal) > range)
+            return false;
+        return true;
+    }
+
+    //test if compared val is +/- 0.1 from constant
+    //returns true if comparedVal is within range; false otherwise
+    private boolean withinRange(float constant, float comparedVal, float range) {
+        if(Math.abs(constant - comparedVal) > range)
+            return false;
+        return true;
+    }
+
+    //function to calculate the "angle" between two vectors
+    private float calculateAngle(float[] start, float[] end) {
+        float numerator = dotProduct(start, end);
+        float denominator = magnitude(start) * magnitude(end);
+        float answer = numerator / denominator;
+
+        return answer;
+    }
+
+    //function to take the dot product between two vectors
+    private float dotProduct(float[] start, float[] end) {
+        float product = 0;
+
+        for(int i = 0; i < 3; i++)
+            product = product + start[i] * end[i];
+        return product;
+    }
+
+    //function to take the magnitude of a vector
+    private float magnitude(float[] vector) {
+        float product = 0;
+        for(int i = 0; i < 3; i++)
+            product = product + (float) Math.pow(vector[i], 2);
+
+        return (float) Math.sqrt(product);
+    }
+
+    private void setStartingPosition() {
+        mainHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                boolean flag = true;
+                while(flag) {
+                    if(Math.abs(currentAvgOrientation[1]) > 1.2) {
+                        makeToast(getApplicationContext(), "Angle your phone down a bit more.", Toast.LENGTH_SHORT);
+                    } else {
+                        flag = false;
+                    }
+                }
+            }
+        });
+
+        globalOrientation[0] = currentAvgOrientation[0];
+        globalOrientation[1] = currentAvgOrientation[1];
+        globalOrientation[2] = currentAvgOrientation[2];
+    }
+
+    private void setCheckPoint() {
+        previousOrientation[0] = currentAvgOrientation[0];
+        previousOrientation[1] = currentAvgOrientation[1];
+        previousOrientation[2] = currentAvgOrientation[2];
+    }
+
+
+    private void startSession() {
+
+        startSession.setVisibility(View.INVISIBLE);
+
+        makeToast(getApplicationContext(), "Move your phone to the desired starting position. When you are ready, calibrate the sensors.", 1);
+
+        calibrateSensor.setVisibility(View.VISIBLE);
+    }
+
+    private void sessionLoop() {
+
+        captureButton.setVisibility(View.INVISIBLE);
+
+        //takePicture();
+        takePicture2();
+        setCheckPoint();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                while (SWITCH) {
+                    //only moves forward to capture a photo if within pitch range
+                    if (withinPitchRange(currentAvgOrientation[1], globalOrientation[1], (float) 0.325)) {
+                        if (Math.abs(Math.abs(currentAvgOrientation[2]) - Math.abs(previousOrientation[2])) >= 0.1396263402) {
+                            //takePicture();
+                            takePicture2(); //helper function to take a picture when button is clicked
+                            setCheckPoint();
+                        }
+                    } else {
+                        //logic to display to the user that they are out of pitch range
+                    }
+                }
+            }
+        }).start();
+
+
+
+    }
+    /*----------------------------------------------------------------*/
 }
