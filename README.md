@@ -11,7 +11,8 @@ In our proposed infrastructure, an amputee would be able to access a virtual cli
 ### Photogrammetry Mobile Application
 
 This repository outlines the work from the Software Team over Summer 2019. The app has many key components that make it specialized for our proposed virual clinic.
-..* Automated Photo Capturing Session
-..* Well-Designed gallery to view individual user sessions
-..* Specialized Camera
-..* Connection to UCSD Database 
+
+* Automated Photo Capturing Session
+* Well-Designed gallery to view individual user sessions
+* Specialized Camera
+* Connection to UCSD Database 
