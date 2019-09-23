@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.bumptech.glide.load.resource.bitmap.TransformationUtils;
@@ -166,7 +167,7 @@ public class AlbumActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onBindViewHolder(AlbumAdapter.ViewHolder viewHolder, int position) {
+        public void onBindViewHolder(AlbumAdapter.ViewHolder viewHolder, final int position) {
 
 
             Glide.with(viewHolder.imageView.getContext())
@@ -175,10 +176,23 @@ public class AlbumActivity extends AppCompatActivity {
                     .centerCrop()
                     .transform(new ImageTransformation(viewHolder.imageView.getContext(),
                             90))
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(viewHolder.imageView);
 
-        }
 
+            viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent= new Intent(context,FullImageActivity.class);
+                    intent.putExtra("image_url",images.get(position));
+                    intent.putExtra("folderName",folderName);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
+            });
+
+
+        }
 
 
         @Override
@@ -196,7 +210,10 @@ public class AlbumActivity extends AppCompatActivity {
 
                 super(view);
                 imageView = (ImageView) view.findViewById(R.id.img);
+
             }
+
+
         }
 
     }

@@ -239,6 +239,7 @@ public class GalleryActivity extends AppCompatActivity {
     }
 
 
+    //  ConCreateOptionMenu and onOptionItemsSelected create a return button
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_items, menu);
