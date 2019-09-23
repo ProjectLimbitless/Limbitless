@@ -31,9 +31,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        String username = getIntent().getStringExtra("username");
+
+        Toast.makeText(this, "Signed in as " + username,
+                Toast.LENGTH_LONG).show();
+
         //Create a buttons and adds a listener to it
-
-
 
 
         btnStart = findViewById(R.id.btn_to_start);

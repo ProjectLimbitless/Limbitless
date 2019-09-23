@@ -13,7 +13,16 @@
           "package_name": "com.example.limbitlesssummerproject19"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "479154573546-113l1hqhp366ek6iqc1ua9rbuoplbb1m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.limbitlesssummerproject19",
+            "certificate_hash": "f00fb417841e85ef600c9321a986916970e94e53"
+          }
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDxMuncQAHbNDw9x3BmLibZmSguIi0Jh10"
