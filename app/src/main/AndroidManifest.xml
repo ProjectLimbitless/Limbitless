@@ -35,7 +35,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity"/>
+        <!--<activity android:name=".LoginActivity"/>-->
         <activity android:name=".CameraActivity" />
         <activity android:name=".GalleryActivity"></activity>
         <activity android:name=".AlbumActivity" />
