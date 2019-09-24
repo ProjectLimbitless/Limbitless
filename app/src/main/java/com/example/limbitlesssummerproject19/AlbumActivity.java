@@ -93,6 +93,7 @@ public class AlbumActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+
                 sendButton.setText("Sending!");
                 sendButton.setBackgroundColor(getResources().getColor(R.color.accentColor));
 
