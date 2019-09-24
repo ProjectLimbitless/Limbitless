@@ -31,11 +31,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /**
+         * This is the log in system that has been commented out for testing
+         */
         String username = getIntent().getStringExtra("username");
 
-        Toast.makeText(this, "Signed in as " + username,
-                Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "Signed in as " + username,
+        //        Toast.LENGTH_LONG).show();
 
+        /**
+         *  This is the continuation of the code.
+         */
         //Create a buttons and adds a listener to it
 
 

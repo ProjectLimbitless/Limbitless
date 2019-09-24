@@ -154,7 +154,7 @@ public class CameraActivity extends AppCompatActivity {
             public void onClick(View v) {
                 takePicture2(); //helper function to take a picture when button is clicked
                 vibe.vibrate(100);
-                mediaPlayer.start();
+                //mediaPlayer.start();
             }
         });
 
@@ -219,9 +219,9 @@ public class CameraActivity extends AppCompatActivity {
             session.mkdirs();
         }
 
-
+       // "yyyy_mm_dd_hh_mm"//
         // Get current date
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy_mm_dd_hh_mm",
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM_dd_yyyy_hh_mm",
                 Locale.getDefault());
         sessionName = directoryName + File.separator + dateFormat.format(new Date());
 
