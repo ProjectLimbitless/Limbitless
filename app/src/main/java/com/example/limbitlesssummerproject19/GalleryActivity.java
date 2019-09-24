@@ -29,8 +29,12 @@ import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.bumptech.glide.load.resource.bitmap.TransformationUtils;
 import java.io.File;
 import java.io.FileFilter;
+import java.io.Serializable;
 import java.security.MessageDigest;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 
 
 public class GalleryActivity extends AppCompatActivity {
@@ -40,9 +44,12 @@ public class GalleryActivity extends AppCompatActivity {
     public File[] files;
     private String directoryName;
 
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         //  Sets the content of the gallery activity
         setContentView(R.layout.activity_gallery);
@@ -76,10 +83,36 @@ public class GalleryActivity extends AppCompatActivity {
                 }
             });
 
+
+            /**
+             * We are using a comparator to compare files inside the folder. By doing so, we
+             * can sort the files based on the last Modified. Last Modified means the newest file
+             * saved with a time in milliseconds since *epoch* 1970. Hence, larger
+             * the number, the newest a file is. Code below compares the time of files they were
+             * created and sorts it from newest to oldest in a descending order. Using
+             * history to do the following code. Cool right?
+             */
+            if (files != null && files.length > 1) {
+                Collections.sort(Arrays.asList(files), new Comparator<File>() {
+                    public int compare(File o1, File o2) {
+                        long lastModifiedO1 = o1.lastModified();
+                        long lastModifiedO2 = o2.lastModified();
+
+                        return (lastModifiedO2 < lastModifiedO1) ? -1 :
+                                ((lastModifiedO1 > lastModifiedO2) ? 1 : 0);
+                    }
+                });
+            } else {
+
+                Toast.makeText(getApplicationContext(), "No Albums To Display!",
+                        Toast.LENGTH_LONG).show();
+            }
+
             // Get session thumbnails ( image at first index of each session )
             for (File f : files) {
 
                 File[] sessionImages = f.listFiles();
+
 
                 if (sessionImages.length != 0) {
 
@@ -109,6 +142,7 @@ public class GalleryActivity extends AppCompatActivity {
 
 
     }
+
 
 
     public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.PlaceViewHolder> {

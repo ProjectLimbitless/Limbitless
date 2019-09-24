@@ -65,7 +65,7 @@ public class AlbumActivity extends AppCompatActivity {
         // Set up recycler view
         albumGallery = (RecyclerView) findViewById(R.id.recView);
         albumGallery.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(context, 3);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(context, 1);
         albumGallery.setLayoutManager(layoutManager);
 
         // We looked through all the images inside the internal storage
