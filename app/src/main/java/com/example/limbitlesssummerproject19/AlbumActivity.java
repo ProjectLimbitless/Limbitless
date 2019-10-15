@@ -35,12 +35,18 @@ import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class AlbumActivity extends AppCompatActivity {
 
     //  Firebase storage references
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
     Context context;
+
+    // Auth object
+    private FirebaseAuth mAuth;
 
     //  RecyclerView declarations
     RecyclerView albumGallery;
@@ -94,8 +100,8 @@ public class AlbumActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                sendButton.setText("Sending!");
-                sendButton.setBackgroundColor(getResources().getColor(R.color.accentColor));
+                sendButton.setText("Sending...");
+                //sendButton.setBackgroundColor(getResources().getColor(R.color.accentColor));
 
 
                 for (String f : album) {
@@ -104,21 +110,31 @@ public class AlbumActivity extends AppCompatActivity {
 
                     Uri uri = Uri.fromFile(new File(f));
 
-                    StorageReference saveRef = storageRef.child("userSessions/" +
+                    mAuth = FirebaseAuth.getInstance();
+                    FirebaseUser user = mAuth.getCurrentUser();
+                    String username = user.getDisplayName();
+
+                    StorageReference saveRef = storageRef.child("userSessions/" + username + "/"+
                                 sessionFolder.getName() + "/" + image.getName());
 
-                    Task upload = saveRef.putFile(uri);
+                    final Task upload = saveRef.putFile(uri);
 
-                    myTasks.add(upload);
+                    new Thread(new Runnable() {
+                        public void run() {
+                            //Do whatever
+                            myTasks.add(upload);
+                        }
+                    }).start();
+                    //myTasks.add(upload);
                 }
                 // Notify user when all images have been uploaded
                 Tasks.whenAll(myTasks).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
 
-                        sendButton.setText("Send to Server");
+                        sendButton.setText("Done!");
 
-                        sendButton.setBackgroundColor(getResources().getColor(R.color.sendColor));
+                        //sendButton.setBackgroundColor(getResources().getColor(R.color.sendColor));
 
                         Toast.makeText(context, "Images Sent Successfully!",
                                 Toast.LENGTH_LONG).show();
@@ -128,9 +144,9 @@ public class AlbumActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
 
-                        sendButton.setText("Send to Server");
+                        //sendButton.setText("Sent to Server");
 
-                        sendButton.setBackgroundColor(getResources().getColor(R.color.sendColor));
+                        //sendButton.setBackgroundColor(getResources().getColor(R.color.sendColor));
 
                         Toast.makeText(context, "Error. Images not sent.",
                                 Toast.LENGTH_LONG).show();

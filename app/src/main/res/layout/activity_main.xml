@@ -23,6 +23,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
+        <TextView
+            android:id="@+id/text_display_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:fontFamily="@font/montserrat_regular"
+            android:paddingLeft="30px"
+            android:text="Username"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            tools:visibility="visible" />
+
         <ImageButton
             android:id="@+id/btn_to_start"
             android:layout_width="250dp"

@@ -17,7 +17,7 @@
         android:layout_marginTop="41dp"
         android:layout_marginEnd="162dp"
         android:layout_marginRight="162dp"
-        android:background="#3C50BFD9"
+        android:background="@drawable/common_google_signin_btn_text_dark"
         android:text="Sign In"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
@@ -33,7 +33,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="172dp"
 
-        android:background="@drawable/ic_launcher_round"
+        android:background="@mipmap/login_img_edited"
 
         android:gravity="center|bottom"
 
@@ -68,8 +68,26 @@
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/login_image"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/login_title2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="121dp"
+        android:layout_marginLeft="121dp"
+        android:layout_marginEnd="121dp"
+        android:layout_marginRight="121dp"
+        android:layout_marginBottom="7dp"
+        android:text="Welcome to "
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/login_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>

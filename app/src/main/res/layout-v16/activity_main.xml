@@ -23,6 +23,32 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
+        <TextView
+            android:id="@+id/text_display_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:fontFamily="@font/montserrat_regular"
+            android:paddingLeft="20px"
+            android:text="Username"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/text_logout"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:fontFamily="@font/montserrat_regular"
+            android:paddingLeft="20px"
+            android:text="Logout"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            tools:visibility="visible" />
+
         <ImageButton
             android:id="@+id/btn_to_start"
             android:layout_width="250dp"
@@ -38,7 +64,6 @@
             android:layout_height="wrap_content"
             android:text="New Session"
             android:fontFamily="@font/montserrat_regular"
-
             android:layout_gravity="center"
             android:textColor="@android:color/white"
             android:textSize="30sp"
@@ -123,3 +148,4 @@
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
+
