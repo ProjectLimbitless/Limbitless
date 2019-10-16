@@ -20,6 +20,14 @@ import com.bumptech.glide.load.resource.bitmap.TransformationUtils;
 
 import java.security.MessageDigest;
 
+/**
+ *  FullImageActivity class works in conjunction with Album Activity. Upon pressing a single
+ *  image inside album activity, a new activity opens up and inflastes the window with the image
+ *  selected. The image cannot be removed from the list, and there is a back button to go back to
+ *  the album activity
+ *
+ */
+
 public class FullImageActivity extends AppCompatActivity {
 
     ImageView imageView;

@@ -74,6 +74,7 @@ import java.util.Locale;
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class CameraActivity extends AppCompatActivity implements SensorEventListener{
 
+
     //Button captureButton; //Button on camera preview to capture image
     ImageButton imageButton, returnButton, captureButton;
     AutoFitTextureView textureView; //The camera preview itself
@@ -104,7 +105,7 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
     private Integer mSensorOrientation;
     private static final int MAX_PREVIEW_WIDTH = 1080;
     private static final int MAX_PREVIEW_HEIGHT = 1920;
-    private static final String TAG = "Project Limbitless";
+    private static final String TAG = CameraActivity.class.getSimpleName();
     private Size mPreviewSize;
     private boolean mFlashSupported;
     private int numberOfImages = 0;
@@ -120,6 +121,8 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
     private static final int STATE_WAITING_PRECAPTURE = 2;
     private static final int STATE_WAITING_NON_PRECAPTURE = 3;
     private static final int STATE_PICTURE_TAKEN = 4;
+
+
     Context context;
 
     /*------------------------------------------------------------------*/
@@ -163,7 +166,8 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         returnButton = (ImageButton) findViewById(R.id.return_button);
         //imageButton = (ImageButton) findViewById(R.id.image_button);
 
-
+        // Creates the layout of the camera view. In this case its is the opaque windows
+        // encapsulating the view of the camera
 
         View topView = (View) findViewById(R.id.topView);
         View bottomView = (View) findViewById(R.id.bottomView);
@@ -185,52 +189,26 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
 
         textureView.setSurfaceTextureListener(textureListener);
 
-        //set a listener to respond when the camera capture button is clicked
-        /*captureButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                takePicture2(); //helper function to take a picture when button is clicked
-                vibe.vibrate(100);
-                //mediaPlayer.start();
-            }
-        });*/
 
-        /*returnButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CameraActivity.this,
-                        MainActivity.class);
-                startActivity(intent);
-
-            }
-        });*/
-
-       /* imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Toast.makeText(getApplicationContext(), "Opening Gallery...",
-                        Toast.LENGTH_SHORT).show();
-
-                Intent intent = new Intent(CameraActivity.this,
-                        GalleryActivity.class);
-                startActivity(intent);
-            }
-        });*/
-
+        /**
+         *  Here is the starting session of the vectors sensors, on Create. Upon opening the new
+         *  activity, the sensors begin to orient themselves to acquire the required data. More
+         *  work has to be done, but it works up to now.
+         *
+         */
         /*------------------------------------------------------------*/
-        //STARTING SESSION
+        //STARTS THE SESSION
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-
         startSession = (ImageButton) findViewById(R.id.startSession);
         startSession.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, "startSession in progress");
                 startSession();
             }
         });
 
-        //CALIBRATING SENSOR
+        //CALIBRATES THE SENSOR
         calibrateSensor = (ImageButton) findViewById(R.id.calibrate_sensor);
         calibrateSensor.setVisibility(View.INVISIBLE);
         calibrateSensor.setOnClickListener(new View.OnClickListener() {
@@ -238,19 +216,22 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
             public void onClick(View v) {
                 calibrateSensor.setVisibility(View.INVISIBLE);
                 setStartingPosition();
+                Log.d(TAG, " setCheckPoint in progress");
                 setCheckPoint();
                 makeToast(getApplicationContext(), "Sensors calibrated! Begin session when ready.", Toast.LENGTH_LONG);
                 captureButton.setVisibility(View.VISIBLE);
             }
         });
 
-        //STARTING CAPTURE SESSION
+        //STARTS CAPTURE SESSION
         captureButton = (ImageButton) findViewById(R.id.button_capture);
         captureButton.setVisibility(View.INVISIBLE);
         captureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, "SessionLoop in progress");
                 sessionLoop();
+
             }
         });
 
@@ -570,8 +551,8 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
 
             }else if (numberOfImages < 2) {
 
-//                Log.d(TAG, mFile.toString());
-                //Log.d(TAG, session.toString());
+                // Log.d(TAG, mFile.toString());
+                // Log.d(TAG, session.toString());
                 unlockFocus();
                 numberOfImages++;
 
@@ -1243,6 +1224,14 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
 
         calibrateSensor.setVisibility(View.VISIBLE);
     }
+
+    /**
+     * sessionLoop is important since it allows the camera to capture images using withinPitchRange
+     * method and some other checkpoint within MATH.ABS. Here is where we need to update the
+     * progress bar. This is interesting since the images captured are used in a runnable method.
+     * This means that capturing images and gathering data from the accelerometer and magnetometer
+     * happen at the same time asynchronously.
+     */
 
     private void sessionLoop() {
 
