@@ -10,7 +10,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
+
 
 
 
@@ -25,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton btnStart;                        //Declaring btnStart as an instance of Button
     private ImageButton btnGallery;
     private ImageButton btnTutorial;
+    private TextView setUsername;
+    private TextView logoutBtn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,19 +43,35 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         /**
-         * This is the log in system that has been commented out for testing
+         * Display username of logged-in user
          */
         String username = getIntent().getStringExtra("username");
 
+        setUsername = findViewById(R.id.text_display_username);
+        setUsername.setText(username);
         //Toast.makeText(this, "Signed in as " + username,
         //        Toast.LENGTH_LONG).show();
+
+        /**
+         * Logout button
+         */
+        logoutBtn = findViewById(R.id.text_logout);
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Sign out user using firebase
+                FirebaseAuth.getInstance().signOut();
+                // Switch back to login page
+                Intent intent = new Intent(MainActivity.this,
+                        LoginActivity.class);
+                startActivity(intent);
+            }
+        });
 
         /**
          *  This is the continuation of the code.
          */
         //Create a buttons and adds a listener to it
-
-
         btnStart = findViewById(R.id.btn_to_start);
         btnStart.setOnClickListener( new View.OnClickListener() {
 
