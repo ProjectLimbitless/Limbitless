@@ -190,7 +190,7 @@ public class AlbumActivity extends AppCompatActivity {
                     .asBitmap()
                     .load(images.get(position))
                     //.centerCrop()
-                    .placeholder(R.drawable.loading_symbol)
+                    .placeholder(R.drawable.loading_symbol2)
                     .transform(new ImageTransformation(viewHolder.imageView.getContext(),
                             90))
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
