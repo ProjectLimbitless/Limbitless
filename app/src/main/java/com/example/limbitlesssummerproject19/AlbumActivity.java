@@ -71,7 +71,7 @@ public class AlbumActivity extends AppCompatActivity {
         // Set up recycler view
         albumGallery = (RecyclerView) findViewById(R.id.recView);
         albumGallery.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(context, 1);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(context, 2);
         albumGallery.setLayoutManager(layoutManager);
 
         // We looked through all the images inside the internal storage
@@ -189,7 +189,8 @@ public class AlbumActivity extends AppCompatActivity {
             Glide.with(viewHolder.imageView.getContext())
                     .asBitmap()
                     .load(images.get(position))
-                    .centerCrop()
+                    //.centerCrop()
+                    .placeholder(R.drawable.loading_symbol2)
                     .transform(new ImageTransformation(viewHolder.imageView.getContext(),
                             90))
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
