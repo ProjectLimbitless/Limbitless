@@ -180,7 +180,8 @@ public class GalleryActivity extends AppCompatActivity {
             Glide.with(holder.mImageView.getContext())
                     .asBitmap()
                     .load(mSessionImage.get(position).first)
-                    .centerCrop()
+                    //.centerCrop()
+                    .placeholder(R.drawable.loading_symbol2)
                     .transform(new ImageTransformation(holder.mImageView.getContext(), 90))
                     .into(holder.mImageView);
 
