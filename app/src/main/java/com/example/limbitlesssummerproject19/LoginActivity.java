@@ -99,9 +99,11 @@ public class LoginActivity extends AppCompatActivity {
 
     // [START auth_with_google]
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        //System.out.println("firebaseAuthWithGoogle:" + acct.getId());
+        System.out.println("firebaseAuthWithGoogle:" + acct.getId());
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+        System.out.println("credential:" + credential);
+
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -117,6 +119,7 @@ public class LoginActivity extends AppCompatActivity {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(getApplicationContext(), "Authentication Failed.",
                                     Toast.LENGTH_SHORT).show();
+                            System.out.println(mAuth.getCurrentUser());
                         }
 
                     }

@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -38,6 +39,7 @@ import java.util.List;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+
 public class AlbumActivity extends AppCompatActivity {
 
     //  Firebase storage references
@@ -51,6 +53,7 @@ public class AlbumActivity extends AppCompatActivity {
     //  RecyclerView declarations
     RecyclerView albumGallery;
     private Button sendButton;
+    private TextView deleteButton;
 
     // Create an array of albums
     private ArrayList<String> album = new ArrayList<String>();
@@ -79,7 +82,7 @@ public class AlbumActivity extends AppCompatActivity {
         folderName = intent.getStringExtra("fileName");
 
         // Get file paths of images inside selected session folder
-        sessionFolder = new File(folderName);//childFolder.getParent());
+        sessionFolder = new File(folderName);
         for ( File i : sessionFolder.listFiles() ) {
             album.add(i.getAbsolutePath());
 
@@ -89,8 +92,9 @@ public class AlbumActivity extends AppCompatActivity {
         AlbumAdapter albumAdapter = new AlbumAdapter(this, album);
         albumGallery.setAdapter(albumAdapter);
 
-        // Sets the sendButton
+        // Sets the sendButton and deleteButton
         sendButton = (Button) findViewById(R.id.sendDataBtn);
+        deleteButton = (TextView) findViewById(R.id.deleteBtn);
 
         // Push data to firebase storage
         sendButton.setOnClickListener(new View.OnClickListener() {
@@ -155,7 +159,25 @@ public class AlbumActivity extends AppCompatActivity {
             }
         });
 
+        // Delete session from storage
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Delete all images in folder
+                for (String s : album){
+                    File f = new File(s);
+                    System.out.println(f.delete());
+                }
+                // Delete folder itself
+                sessionFolder.delete();
+                Intent backToGallery = new Intent(AlbumActivity.this,
+                        GalleryActivity.class);
+                startActivity(backToGallery);
+            }
+        });
+
     }
+
 
 
     /**
@@ -175,6 +197,7 @@ public class AlbumActivity extends AppCompatActivity {
 
         @Override
         public AlbumAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+            System.out.println("in view holder");
 
             View view = LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.single_image, viewGroup, false);
@@ -184,7 +207,6 @@ public class AlbumActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(AlbumAdapter.ViewHolder viewHolder, final int position) {
-
 
             Glide.with(viewHolder.imageView.getContext())
                     .asBitmap()
@@ -207,7 +229,6 @@ public class AlbumActivity extends AppCompatActivity {
                     context.startActivity(intent);
                 }
             });
-
 
         }
 

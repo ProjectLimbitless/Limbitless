@@ -12,11 +12,7 @@
         android:id="@+id/btn_sign_in"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="161dp"
-        android:layout_marginLeft="161dp"
-        android:layout_marginTop="41dp"
-        android:layout_marginEnd="162dp"
-        android:layout_marginRight="162dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/common_google_signin_btn_text_dark"
         android:text="Sign In"
         android:textColor="#FFFFFF"
@@ -32,18 +28,13 @@
         android:layout_height="317dp"
         android:layout_gravity="center"
         android:layout_marginTop="172dp"
-
         android:background="@mipmap/login_img_edited"
-
         android:gravity="center|bottom"
-
         android:paddingTop="25dp"
         android:paddingBottom="25dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="#F4F0DB"
         android:textSize="@android:dimen/app_icon_size"
-
-
         android:textStyle="normal"
         android:typeface="normal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -55,40 +46,55 @@
 
     <TextView
         android:id="@+id/login_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="74dp"
-        android:layout_marginLeft="74dp"
-        android:layout_marginTop="86dp"
-        android:layout_marginEnd="75dp"
-        android:layout_marginRight="75dp"
-        android:layout_marginBottom="45dp"
+        android:layout_width="405dp"
+        android:layout_height="59dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:fontFamily="@font/montserrat_regular"
+        android:gravity="center"
         android:text="Project Lim(b)itless"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/login_image"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.857"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.796" />
 
     <TextView
         android:id="@+id/login_title2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="121dp"
-        android:layout_marginLeft="121dp"
-        android:layout_marginEnd="121dp"
-        android:layout_marginRight="121dp"
-        android:layout_marginBottom="7dp"
+        android:layout_width="398dp"
+        android:layout_height="53dp"
+        android:fontFamily="@font/montserrat_regular"
+        android:gravity="center"
         android:text="Welcome to "
         android:textColor="#FFFFFF"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/login_title"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="38dp" />
 
 
 </android.support.constraint.ConstraintLayout>
 
+    <!--android:layout_marginLeft="74dp"-->
+    <!---android:layout_marginRight="75dp"-->
+    <!---android:layout_marginStart="74dp"
+    android:layout_marginTop="86dp"
+    android:layout_marginEnd="75dp"-->
+
+    <!--android:layout_marginLeft="161dp"
+    android:layout_marginRight="162dp"-->
+
+    <!---android:layout_marginBottom="45dp"-->
+
+    <!--android:layout_marginLeft="121dp"-->
+    <!---android:layout_marginRight="121dp"-->
+
+    <!---android:layout_marginStart="121dp"-->
+    <!---android:layout_marginEnd="121dp"-->
+
+   <!-- android:layout_marginStart="161dp"
+    android:layout_marginTop="41dp"
+    android:layout_marginEnd="162dp"-->
