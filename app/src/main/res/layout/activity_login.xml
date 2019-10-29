@@ -46,8 +46,10 @@
 
     <TextView
         android:id="@+id/login_title"
-        android:layout_width="386dp"
-        android:layout_height="49dp"
+        android:layout_width="405dp"
+        android:layout_height="59dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:fontFamily="@font/montserrat_regular"
         android:gravity="center"
         android:text="Project Lim(b)itless"
@@ -62,17 +64,16 @@
 
     <TextView
         android:id="@+id/login_title2"
-        android:layout_width="392dp"
-        android:layout_height="46dp"
-        android:layout_marginBottom="7dp"
+        android:layout_width="398dp"
+        android:layout_height="53dp"
         android:fontFamily="@font/montserrat_regular"
         android:gravity="center"
         android:text="Welcome to "
         android:textColor="#FFFFFF"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/login_title"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="38dp" />
 
 
 </android.support.constraint.ConstraintLayout>

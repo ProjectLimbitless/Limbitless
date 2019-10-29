@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.bumptech.glide.load.resource.bitmap.TransformationUtils;
@@ -183,6 +184,7 @@ public class GalleryActivity extends AppCompatActivity {
                     //.centerCrop()
                     .placeholder(R.drawable.loading_symbol2)
                     .transform(new ImageTransformation(holder.mImageView.getContext(), 90))
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(holder.mImageView);
 
 
@@ -195,7 +197,8 @@ public class GalleryActivity extends AppCompatActivity {
 
                     Intent intent = new Intent(mContext, AlbumActivity.class);
                     intent.putExtra("fileName", files[position].getAbsolutePath());
-                    mContext.startActivity(intent);
+                    startActivity(intent);
+                    finish();
 
                 }
             });
