@@ -1247,14 +1247,10 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
 
                 while (SWITCH) {
                     //only moves forward to capture a photo if within pitch range
-                    if (withinPitchRange(currentAvgOrientation[1], globalOrientation[1], (float) 0.325)) {
-                        if (Math.abs(Math.abs(currentAvgOrientation[2]) - Math.abs(previousOrientation[2])) >= 0.1396263402) {
-                            //takePicture();
-                            takePicture2(); //helper function to take a picture when button is clicked
-                            setCheckPoint();
-                        }
-                    } else {
-                        //logic to display to the user that they are out of pitch range
+                    if (Math.abs(Math.abs(currentAvgOrientation[2]) - Math.abs(previousOrientation[2])) >= 0.1396263402) {
+                        //takePicture();
+                        takePicture2(); //helper function to take a picture when button is clicked
+                        setCheckPoint();
                     }
                 }
             }
