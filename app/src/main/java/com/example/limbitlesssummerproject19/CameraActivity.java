@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.graphics.ImageFormat;
 import android.graphics.Matrix;
 import android.graphics.Point;
@@ -54,9 +55,12 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.google.firebase.database.collection.LLRBNode;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -81,11 +85,13 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
 
 
     //Button captureButton; //Button on camera preview to capture image
-    ImageButton imageButton, returnButton, captureButton;
-    AutoFitTextureView textureView; //The camera preview itself
+    private ImageButton imageButton, returnButton, captureButton;
+
+    public AutoFitTextureView textureView; //The camera preview itself
 
     // used for orientation correction of photos
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
+
     static {
         ORIENTATIONS.append(Surface.ROTATION_0, 90);
         ORIENTATIONS.append(Surface.ROTATION_90, 0);
@@ -94,24 +100,24 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
     }
 
     private String mCameraId; //unique ID used to access the camera
-    CameraDevice cameraDevice; //representation of a single camera connected to the device
-    CameraCaptureSession mCaptureSession; //configured capture session; used for capturing images from the camera
-    CaptureRequest.Builder mPreviewRequestBuilder; //how to create the capture request
+    public CameraDevice cameraDevice; //representation of a single camera connected to the device
+    public CameraCaptureSession mCaptureSession; //configured capture session; used for capturing images from the camera
+    public CaptureRequest.Builder mPreviewRequestBuilder; //how to create the capture request
 
     private File file; //file where photo will be stored
-    Handler mBackgroundHandler; //to schedule actions to be executed at some point in the future
-    HandlerThread mBackgroundThread; //the thread associated with the handler
+    public Handler mBackgroundHandler; //to schedule actions to be executed at some point in the future
+    public HandlerThread mBackgroundThread; //the thread associated with the handler
 
-    String directoryName;
-    String sessionName;
-    File session;
+    public String directoryName;
+    public String sessionName;
+    public File session;
     private Semaphore mCameraOpenCloseLock = new Semaphore(1);
     private ImageReader mImageReader;
     private Integer mSensorOrientation;
-    private static final int MAX_PREVIEW_WIDTH = 1080;
-    private static final int MAX_PREVIEW_HEIGHT = 1920;
-    private static final String TAG = CameraActivity.class.getSimpleName();
+
     private Size mPreviewSize;
+    private static final String TAG = CameraActivity.class.getSimpleName();
+
     private boolean mFlashSupported;
     private int numberOfImages = 0;
     private File mFile;
@@ -121,14 +127,23 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
     private int hundredsDigit = 0;
     private int thousandsDigit = 0;
     private int mState = STATE_PREVIEW;
+
+    private static final int MAX_PREVIEW_WIDTH = 1080;
+    private static final int MAX_PREVIEW_HEIGHT = 1920;
     private static final int STATE_PREVIEW = 0;
     private static final int STATE_WAITING_LOCK = 1;
     private static final int STATE_WAITING_PRECAPTURE = 2;
     private static final int STATE_WAITING_NON_PRECAPTURE = 3;
     private static final int STATE_PICTURE_TAKEN = 4;
 
+    // Progress bar member declaration variables
+    private ProgressBar progressBar;
+    private TextView textView;
+    private int mProgressBarStatus = 0;
+    private Handler mProgressBarHandler = new Handler();
 
-    Context context;
+
+    public Context context;
 
     /*------------------------------------------------------------------*/
     private SensorManager sensorManager;
@@ -139,6 +154,7 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
     private Handler mSensorHandler;
     private Handler mainHandler = new Handler();
     ImageButton calibrateSensor, startSession;
+    ImageView leftConnector, rightConnector;
 
     private float[] mAccelerometerData = new float[3];
     private float[] avgAccelerometerData = new float[3];
@@ -149,6 +165,8 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
     float[] currentOrientation = new float[3];
     float[] previousOrientation = new float[3];
     float[] currentAvgOrientation = new float[3];
+
+    // final Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
     private Display mDisplay;
 
@@ -164,12 +182,11 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
+
         context = this;
 
         textureView = (AutoFitTextureView) findViewById(R.id.texture);
-        //captureButton = (ImageButton) findViewById(R.id.button_capture);
         returnButton = (ImageButton) findViewById(R.id.return_button);
-        //imageButton = (ImageButton) findViewById(R.id.image_button);
 
         // Creates the layout of the camera view. In this case its is the opaque windows
         // encapsulating the view of the camera
@@ -186,7 +203,7 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         rightView.getBackground().setAlpha(128);
 
 
-        final Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
         final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.completion);
 
         //set up paths to store photos
@@ -205,6 +222,10 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         //STARTS THE SESSION
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         startSession = (ImageButton) findViewById(R.id.startSession);
+
+        leftConnector = (ImageView) findViewById(R.id.leftConnector);
+        rightConnector = (ImageView) findViewById(R.id.rightConnector);
+
         startSession.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -213,13 +234,28 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
             }
         });
 
+        /**
+         *
+         *
+         * YOU ARe WORKING HERE
+         *
+         *
+         *
+         */
+
+
+
         //CALIBRATES THE SENSOR
         calibrateSensor = (ImageButton) findViewById(R.id.calibrate_sensor);
-        calibrateSensor.setVisibility(View.INVISIBLE);
+        //calibrateSensor.setVisibility(View.INVISIBLE);
         calibrateSensor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                calibrateSensor.setVisibility(View.INVISIBLE);
+
+                calibrateSensor.setBackground(getDrawable(R.drawable.picture_button_pressed));
+                rightConnector.setBackground(getDrawable(R.drawable.rectangle_progress_bar_pressed));
+
+                //calibrateSensor.setVisibility(View.INVISIBLE);
                 setStartingPosition();
                 Log.d(TAG, " setCheckPoint in progress");
                 setCheckPoint();
@@ -231,11 +267,15 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
 
         //STARTS CAPTURE SESSION
         captureButton = (ImageButton) findViewById(R.id.button_capture);
-        captureButton.setVisibility(View.INVISIBLE);
+        //captureButton.setVisibility(View.INVISIBLE);
         captureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                captureButton.setBackground(getDrawable(R.drawable.picture_button_pressed));
+
+
                 Log.d(TAG, "SessionLoop in progress");
+
                 sessionLoop();
 
             }
@@ -265,6 +305,8 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
     }
 
     private void takePicture2(){
+
+
         lockFocus();
     }
 
@@ -979,7 +1021,7 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
 
 
     /* helper function to save bytes
-     * called in takePicture() -> ImageReader.onImageAvailableListener -> onImageAvailable();
+     * called in takePicture() -> .onImageAvailableListener -> onImageAvailable();
      */
     private void save(byte[] bytes) throws IOException {
         OutputStream outputStream = null;
@@ -1084,11 +1126,18 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
 
     }
 
+    /**
+     *
+     * Modifying the accelerometer and magnetometer using the sensors. Checks if the accelerometer
+     * and temp values are not close to each other by 0.01
+     *
+     */
     @Override
     public void onSensorChanged(SensorEvent event) {
         Sensor sensor = event.sensor;
 
         if(sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+
             mAccelerometerData = event.values.clone();
             accelerometerMA.addData(mAccelerometerData);
             float[] temp = accelerometerMA.getAverage();
@@ -1121,9 +1170,12 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         setOrientation();
     }
 
+    // Why do we need setOrientation?
+
     private void setOrientation() {
         float[] rotationMatrix = new float[9];
-        boolean rotationOK = SensorManager.getRotationMatrix(rotationMatrix, null, avgAccelerometerData, avgMagnetometerData);
+        boolean rotationOK = SensorManager.getRotationMatrix(rotationMatrix,
+                null, avgAccelerometerData, avgMagnetometerData);
 
         float[] rotationMatrixAdjusted = new float[9];
         switch(mDisplay.getRotation()) {
@@ -1241,7 +1293,8 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
 
     private void startSession() {
 
-        startSession.setVisibility(View.INVISIBLE);
+        startSession.setBackground(getDrawable(R.drawable.picture_button_pressed));
+        leftConnector.setBackground(getDrawable(R.drawable.rectangle_progress_bar_pressed));
 
         customToast("Move your phone to the desired starting position. When you are ready, calibrate the sensors.");
 
@@ -1258,9 +1311,7 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
 
     private void sessionLoop() {
 
-        captureButton.setVisibility(View.INVISIBLE);
 
-        //takePicture();
         takePicture2();
         setCheckPoint();
 
@@ -1270,6 +1321,7 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
 
                 while (SWITCH) {
                     //only moves forward to capture a photo if within pitch range
+
                     if (Math.abs(Math.abs(currentAvgOrientation[2]) - Math.abs(previousOrientation[2])) >= 0.1396263402) {
                         //takePicture();
                         takePicture2(); //helper function to take a picture when button is clicked
@@ -1278,8 +1330,6 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
                 }
             }
         }).start();
-
-
 
     }
     /*----------------------------------------------------------------*/
