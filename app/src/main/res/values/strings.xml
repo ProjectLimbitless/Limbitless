@@ -11,4 +11,5 @@
     <string name="newSession">New Session</string>
     <string name="camera">Camera</string>
     <string name="galleryButton">Gallery</string>
+    <string name="sessioncomplete_textview">SessionComplete</string>
 </resources>
