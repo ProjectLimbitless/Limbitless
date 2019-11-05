@@ -47,11 +47,6 @@ public class MainActivity extends AppCompatActivity {
          */
         String username = getIntent().getStringExtra("username");
 
-        setUsername = findViewById(R.id.text_display_username);
-        setUsername.setText(username);
-        //Toast.makeText(this, "Signed in as " + username,
-        //        Toast.LENGTH_LONG).show();
-
         /**
          * Logout button
          */
