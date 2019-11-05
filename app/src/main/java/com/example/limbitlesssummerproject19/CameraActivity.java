@@ -41,15 +41,20 @@ import android.util.Log;
 import android.util.Size;
 import android.util.SparseIntArray;
 import android.view.Display;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -218,7 +223,8 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
                 setStartingPosition();
                 Log.d(TAG, " setCheckPoint in progress");
                 setCheckPoint();
-                makeToast(getApplicationContext(), "Sensors calibrated! Begin session when ready.", Toast.LENGTH_LONG);
+                customToast("Sensors calibrated! Begin session when ready.");
+                //makeToast(getApplicationContext(), "Sensors calibrated! Begin session when ready.", Toast.LENGTH_LONG);
                 captureButton.setVisibility(View.VISIBLE);
             }
         });
@@ -239,6 +245,23 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         mDisplay = wm.getDefaultDisplay();
         /*------------------------------------------------------------*/
 
+    }
+
+    public void customToast(String message) {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.toast_layout, (ViewGroup) findViewById(R.id.toast_root));
+
+        TextView toastText = layout.findViewById(R.id.toast_text);
+        //ImageView toastImage = layout.findViewById(R.id.toast_image); //to dynamically set image of toast
+
+        toastText.setText(message);
+
+        Toast toast = new Toast(getApplicationContext());
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
+
+        toast.show();
     }
 
     private void takePicture2(){
@@ -1220,7 +1243,7 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
 
         startSession.setVisibility(View.INVISIBLE);
 
-        makeToast(getApplicationContext(), "Move your phone to the desired starting position. When you are ready, calibrate the sensors.", 1);
+        customToast("Move your phone to the desired starting position. When you are ready, calibrate the sensors.");
 
         calibrateSensor.setVisibility(View.VISIBLE);
     }
