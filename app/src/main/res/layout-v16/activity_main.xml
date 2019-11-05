@@ -24,18 +24,6 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView
-            android:id="@+id/text_display_username"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:baselineAligned="false"
-            android:fontFamily="@font/montserrat_regular"
-            android:paddingLeft="20px"
-            android:text="Username"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp"
-            tools:visibility="visible" />
-
-        <TextView
             android:id="@+id/text_logout"
             android:clickable="true"
             android:focusable="true"
