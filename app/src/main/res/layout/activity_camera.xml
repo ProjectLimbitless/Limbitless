@@ -163,7 +163,6 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
-                android:text="@string/sessioncomplete_textview"
                 android:textSize="24sp"
                 android:visibility="invisible" />
 
