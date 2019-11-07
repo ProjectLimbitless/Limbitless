@@ -23,20 +23,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <TextView
-            android:id="@+id/text_logout"
-            android:clickable="true"
-            android:focusable="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:baselineAligned="false"
-            android:fontFamily="@font/montserrat_regular"
-            android:paddingLeft="20px"
-            android:text="Logout"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp"
-            tools:visibility="visible" />
-
         <ImageButton
             android:id="@+id/btn_to_start"
             android:layout_width="250dp"

@@ -48,7 +48,6 @@ public class LoginActivity extends AppCompatActivity {
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken("479154573546-l7h3fmcrf3qsn9s4ll76q204egpjschb.apps.googleusercontent.com")
-                .requestEmail()
                 .build();
 
 
@@ -142,7 +141,7 @@ public class LoginActivity extends AppCompatActivity {
     private void changeActivity(){
         FirebaseUser user = mAuth.getCurrentUser();
         System.out.println("Current user: "+ user.getDisplayName());
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, DrawerActivity.class);
         intent.putExtra("username", user.getDisplayName());
         startActivity(intent);
     }

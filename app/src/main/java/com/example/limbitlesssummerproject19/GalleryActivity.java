@@ -193,8 +193,6 @@ public class GalleryActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
 
-                    Toast.makeText(mContext, "Preparing Session...", Toast.LENGTH_LONG).show();
-
                     Intent intent = new Intent(mContext, AlbumActivity.class);
                     intent.putExtra("fileName", files[position].getAbsolutePath());
                     startActivity(intent);
@@ -291,7 +289,7 @@ public class GalleryActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.return_button:
-                startActivity(new Intent(this, MainActivity.class));
+                startActivity(new Intent(this, DrawerActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -1,8 +1,13 @@
 package com.example.limbitlesssummerproject19;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -12,6 +17,7 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
 
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
@@ -33,8 +39,6 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton btnStart;                        //Declaring btnStart as an instance of Button
     private ImageButton btnGallery;
     private ImageButton btnTutorial;
-    private TextView setUsername;
-    private TextView logoutBtn;
 
 
     @Override
@@ -44,24 +48,9 @@ public class MainActivity extends AppCompatActivity {
 
         /**
          * Display username of logged-in user
-         */
-        String username = getIntent().getStringExtra("username");
 
-        /**
-         * Logout button
-         */
-        logoutBtn = findViewById(R.id.text_logout);
-        logoutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Sign out user using firebase
-                FirebaseAuth.getInstance().signOut();
-                // Switch back to login page
-                Intent intent = new Intent(MainActivity.this,
-                        LoginActivity.class);
-                startActivity(intent);
-            }
-        });
+        String username = getIntent().getStringExtra("username");*/
+
 
         /**
          *  This is the continuation of the code.
@@ -107,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
          */
 
        btnTutorial = findViewById(R.id.btn_to_tutorial);
-        btnTutorial.setOnClickListener( new View.OnClickListener(){
+       btnTutorial.setOnClickListener( new View.OnClickListener(){
             /*
              * Upon click, the button opens CameraActivity.
              */
@@ -120,8 +109,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-
 
     }
 

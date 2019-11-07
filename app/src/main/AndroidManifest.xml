@@ -26,8 +26,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".DrawerActivity"
+        <activity android:name=".DrawerActivity"
             android:label="@string/title_activity_drawer"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -35,14 +34,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.limbitlesssummerproject19.MainActivity" />
         </activity>
-        <activity android:name=".LoginActivity">
+        <activity android:name=".MainActivity"/>
+        <activity android:name=".LoginActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
         <activity android:name=".CameraActivity" />
         <activity android:name=".GalleryActivity" />
         <activity android:name=".AlbumActivity" />
@@ -50,3 +48,13 @@
     </application>
 
 </manifest>
+
+<!--<activity-->
+<!--android:name=".DrawerActivity"-->
+<!--android:label="@string/title_activity_drawer"-->
+<!--android:parentActivityName=".MainActivity"-->
+<!--android:theme="@style/AppTheme.NoActionBar">-->
+<!--<meta-data-->
+    <!--android:name="android.support.PARENT_ACTIVITY"-->
+    <!--android:value="com.example.limbitlesssummerproject19.MainActivity" />-->
+<!--</activity>-->
