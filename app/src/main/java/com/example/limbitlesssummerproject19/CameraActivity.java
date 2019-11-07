@@ -85,7 +85,7 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
 
 
     //Button captureButton; //Button on camera preview to capture image
-    private ImageButton imageButton, returnButton, captureButton;
+    private ImageButton imageButton, returnButton, captureButton, endsession;
 
     public AutoFitTextureView textureView; //The camera preview itself
 
@@ -273,11 +273,29 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
             public void onClick(View v) {
                 captureButton.setBackground(getDrawable(R.drawable.picture_button_pressed));
 
+                startSession.setVisibility(View.INVISIBLE);
+                calibrateSensor.setVisibility(View.INVISIBLE);
+                captureButton.setVisibility(View.INVISIBLE);
+                leftConnector.setVisibility(View.INVISIBLE);
+                rightConnector.setVisibility(View.INVISIBLE);
+
+                endsession.setVisibility(View.VISIBLE);
 
                 Log.d(TAG, "SessionLoop in progress");
 
                 sessionLoop();
 
+            }
+        });
+
+        endsession = (ImageButton) findViewById(R.id.end_session);
+        endsession.setVisibility(View.INVISIBLE);
+        endsession.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SWITCH = false;
+                customToast("Session Over. Hit the return button and start a new session!");
+                endsession.setVisibility(View.INVISIBLE);
             }
         });
 

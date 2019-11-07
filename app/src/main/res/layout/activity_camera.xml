@@ -149,6 +149,13 @@
                 android:background="@drawable/picture_button_default" />
 
             <ImageButton
+                android:id="@+id/end_session"
+                android:layout_width="60dp"
+                android:layout_height="58dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/end_session_button" />
+
+            <ImageButton
                 android:id="@+id/button_capture"
                 android:layout_width="62dp"
                 android:layout_height="64dp"
