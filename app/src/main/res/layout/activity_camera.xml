@@ -92,7 +92,7 @@
     <FrameLayout
         android:id="@+id/button_container"
         android:layout_width="@+id/RectangleWithBorders"
-        android:layout_height="@+id/RectangleWithBorders"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
@@ -103,36 +103,75 @@
         app:layout_constraintStart_toEndOf="@id/leftView" >
 
         <RelativeLayout
-
+            android:id="@+id/relative"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="40dp"
-            android:layout_gravity="center">
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="40dp">
+
+            <ImageView
+                android:id="@+id/leftConnector"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rectangle_progress_bar_default"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignEnd="@id/calibrate_sensor"
+                android:layout_alignRight="@id/calibrate_sensor" />
+
+
+            <ImageView
+                android:id="@+id/rightConnector"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rectangle_progress_bar_default"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignStart="@id/calibrate_sensor"
+                android:layout_alignLeft="@id/calibrate_sensor" />
+
 
             <ImageButton
                 android:id="@+id/startSession"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/picture_button"
+                android:layout_width="58dp"
+                android:layout_height="58dp"
                 android:layout_centerVertical="true"
-                android:layout_toStartOf="@id/calibrate_sensor"
-                android:layout_toLeftOf="@id/calibrate_sensor"/>
+                android:layout_marginEnd="22dp"
+                android:layout_marginRight="22dp"
+                android:layout_alignParentLeft="true"
+                android:background="@drawable/picture_button_default" />
 
             <ImageButton
                 android:id="@+id/calibrate_sensor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/picture_button"
-                android:layout_centerInParent="true" />
+                android:layout_width="60dp"
+                android:layout_height="58dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/picture_button_default" />
+
+            <ImageButton
+                android:id="@+id/end_session"
+                android:layout_width="60dp"
+                android:layout_height="58dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/end_session_button" />
 
             <ImageButton
                 android:id="@+id/button_capture"
+                android:layout_width="62dp"
+                android:layout_height="64dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/picture_button_default" />
+
+            <TextView
+                android:id="@+id/SessionCompleteTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/picture_button"
-                android:layout_centerVertical="true"
-                android:layout_toEndOf="@id/calibrate_sensor"
-                android:layout_toRightOf="@id/calibrate_sensor"/>
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:textSize="24sp"
+                android:visibility="invisible" />
 
         </RelativeLayout>
     </FrameLayout>

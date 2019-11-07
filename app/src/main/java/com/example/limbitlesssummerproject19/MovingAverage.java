@@ -5,6 +5,8 @@ import java.util.Queue;
 
 public class MovingAverage {
     private final Queue<float[]> Dataset = new LinkedList<float[]>();
+    // period is the size of the Dataset (in this case we have a set of 20 values being
+    // average all together
     private final float period;
     private float[] sum = new float[3];
 
@@ -32,6 +34,8 @@ public class MovingAverage {
         }
     }
 
+    // We take the average of the values and set it to answers. Then we return the array of
+    // average answers. Returns and array of floats
     public float[] getAverage() {
         float[] answer = new float[3];
         if(Dataset.size() < period) {
