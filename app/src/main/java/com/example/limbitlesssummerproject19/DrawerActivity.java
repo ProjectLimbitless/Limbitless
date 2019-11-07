@@ -38,7 +38,7 @@ public class DrawerActivity extends AppCompatActivity
     private FirebaseAuth mAuth;
 
     // Main activity objects
-    private ImageButton btnStart;                        //Declaring btnStart as an instance of Button
+    private ImageButton btnStart;  //Declaring btnStart as an instance of Button
     private ImageButton btnGallery;
     private ImageButton btnTutorial;
 
