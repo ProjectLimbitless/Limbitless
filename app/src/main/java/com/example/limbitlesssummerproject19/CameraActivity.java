@@ -29,6 +29,7 @@ import android.media.Image;
 import android.media.ImageReader;
 import android.media.MediaPlayer;
 import android.os.Build;
+import android.os.CountDownTimer;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -153,8 +154,8 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
     private HandlerThread mSensorThread;
     private Handler mSensorHandler;
     private Handler mainHandler = new Handler();
-    ImageButton calibrateSensor, startSession;
-    ImageView leftConnector, rightConnector;
+    ImageButton startSession;
+
 
     private float[] mAccelerometerData = new float[3];
     private float[] avgAccelerometerData = new float[3];
@@ -176,6 +177,11 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
     MovingAverage orientationMA = new MovingAverage(20);
     MovingAverage accelerometerMA = new MovingAverage(20);
     MovingAverage magnetometerMA = new MovingAverage(20);
+
+    private static final long START_TIME_IN_MILLIS = 6000;
+    private TextView mTextViewCountdown;
+    private CountDownTimer mCountDownTimer;
+    private long mTimeLeftInMillis = START_TIME_IN_MILLIS;
 
     /*------------------------------------------------------------------*/
     @Override
@@ -223,68 +229,12 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         startSession = (ImageButton) findViewById(R.id.startSession);
 
-        leftConnector = (ImageView) findViewById(R.id.leftConnector);
-        rightConnector = (ImageView) findViewById(R.id.rightConnector);
-
         startSession.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "startSession in progress");
-                startSession();
-            }
-        });
-
-        /**
-         *
-         *
-         * YOU ARe WORKING HERE
-         *
-         *
-         *
-         */
-
-
-
-        //CALIBRATES THE SENSOR
-        calibrateSensor = (ImageButton) findViewById(R.id.calibrate_sensor);
-        //calibrateSensor.setVisibility(View.INVISIBLE);
-        calibrateSensor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                calibrateSensor.setBackground(getDrawable(R.drawable.picture_button_pressed));
-                rightConnector.setBackground(getDrawable(R.drawable.rectangle_progress_bar_pressed));
-
-                //calibrateSensor.setVisibility(View.INVISIBLE);
-                setStartingPosition();
-                Log.d(TAG, " setCheckPoint in progress");
-                setCheckPoint();
-                customToast("Sensors calibrated! Begin session when ready.");
-                //makeToast(getApplicationContext(), "Sensors calibrated! Begin session when ready.", Toast.LENGTH_LONG);
-                captureButton.setVisibility(View.VISIBLE);
-            }
-        });
-
-        //STARTS CAPTURE SESSION
-        captureButton = (ImageButton) findViewById(R.id.button_capture);
-        //captureButton.setVisibility(View.INVISIBLE);
-        captureButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                captureButton.setBackground(getDrawable(R.drawable.picture_button_pressed));
-
                 startSession.setVisibility(View.INVISIBLE);
-                calibrateSensor.setVisibility(View.INVISIBLE);
-                captureButton.setVisibility(View.INVISIBLE);
-                leftConnector.setVisibility(View.INVISIBLE);
-                rightConnector.setVisibility(View.INVISIBLE);
-
-                endsession.setVisibility(View.VISIBLE);
-
-                Log.d(TAG, "SessionLoop in progress");
-
-                sessionLoop();
-
+                startTimer();
             }
         });
 
@@ -303,8 +253,51 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         mDisplay = wm.getDefaultDisplay();
         /*------------------------------------------------------------*/
 
+        //Countdown code
+        mTextViewCountdown = (TextView) findViewById(R.id.countdown);
+
+
     }
 
+    //start the countdown when a user starts the session
+    //counts down from 5
+    public void startTimer() {
+        mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                mTimeLeftInMillis = millisUntilFinished;
+                updateCountDownText();
+            }
+
+            @Override
+            public void onFinish() {
+                endsession.setVisibility(View.VISIBLE);
+                sessionLoop();
+            }
+        }.start();
+    }
+
+    //displays the numbers decreasing to the screen (for the countdown)
+    public void updateCountDownText() {
+        int seconds = (int) (mTimeLeftInMillis / 1000) % 60;
+
+        if(seconds == 4) {
+            setStartingPosition();
+            setCheckPoint();
+            customToast("Sensors calibrated!");
+        }
+
+        if(seconds == 2)
+            customToast("Session is starting!");
+
+        String timeLeft = Integer.toString(seconds);
+        if (seconds == 0) {
+            mTextViewCountdown.setText("");
+        } else
+            mTextViewCountdown.setText(timeLeft);
+    }
+
+    //displays custom toast messages to the screen
     public void customToast(String message) {
         LayoutInflater inflater = getLayoutInflater();
         View layout = inflater.inflate(R.layout.toast_layout, (ViewGroup) findViewById(R.id.toast_root));
@@ -315,19 +308,19 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         toastText.setText(message);
 
         Toast toast = new Toast(getApplicationContext());
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER, 0, 250);
+        toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(layout);
 
         toast.show();
     }
 
+    //takes a picture
     private void takePicture2(){
-
-
         lockFocus();
     }
 
+    // creates a directory per session
     public void  createDirectory(){
         directoryName = Environment.getExternalStorageDirectory() +
                 File.separator + "ProstheticFolder";
@@ -1188,8 +1181,7 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         setOrientation();
     }
 
-    // Why do we need setOrientation?
-
+    //helper function to set the correct orientation after extracting raw data from onSensorChanged
     private void setOrientation() {
         float[] rotationMatrix = new float[9];
         boolean rotationOK = SensorManager.getRotationMatrix(rotationMatrix,
@@ -1234,17 +1226,12 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         }
     }
 
+    //makes toasts to the screen (this one is meant for feedback after image capture
     private void makeToast(Context context, String message, int messageLength) {
         //short = 0, long = 1
         if(mToast!= null) mToast.cancel();
         mToast = Toast.makeText(context, message, messageLength);
         mToast.show();
-    }
-
-    private boolean withinPitchRange(float constant, float comparedVal, float range) {
-        if(Math.abs(constant - comparedVal) > range)
-            return false;
-        return true;
     }
 
     //test if compared val is +/- 0.1 from constant
@@ -1253,33 +1240,6 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         if(Math.abs(constant - comparedVal) > range)
             return false;
         return true;
-    }
-
-    //function to calculate the "angle" between two vectors
-    private float calculateAngle(float[] start, float[] end) {
-        float numerator = dotProduct(start, end);
-        float denominator = magnitude(start) * magnitude(end);
-        float answer = numerator / denominator;
-
-        return answer;
-    }
-
-    //function to take the dot product between two vectors
-    private float dotProduct(float[] start, float[] end) {
-        float product = 0;
-
-        for(int i = 0; i < 3; i++)
-            product = product + start[i] * end[i];
-        return product;
-    }
-
-    //function to take the magnitude of a vector
-    private float magnitude(float[] vector) {
-        float product = 0;
-        for(int i = 0; i < 3; i++)
-            product = product + (float) Math.pow(vector[i], 2);
-
-        return (float) Math.sqrt(product);
     }
 
     private void setStartingPosition() {
@@ -1309,16 +1269,6 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
     }
 
 
-    private void startSession() {
-
-        startSession.setBackground(getDrawable(R.drawable.picture_button_pressed));
-        leftConnector.setBackground(getDrawable(R.drawable.rectangle_progress_bar_pressed));
-
-        customToast("Move your phone to the desired starting position. When you are ready, calibrate the sensors.");
-
-        calibrateSensor.setVisibility(View.VISIBLE);
-    }
-
     /**
      * sessionLoop is important since it allows the camera to capture images using withinPitchRange
      * method and some other checkpoint within MATH.ABS. Here is where we need to update the
@@ -1328,8 +1278,6 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
      */
 
     private void sessionLoop() {
-
-
         takePicture2();
         setCheckPoint();
 
@@ -1341,7 +1289,6 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
                     //only moves forward to capture a photo if within pitch range
 
                     if (Math.abs(Math.abs(currentAvgOrientation[2]) - Math.abs(previousOrientation[2])) >= 0.1396263402) {
-                        //takePicture();
                         takePicture2(); //helper function to take a picture when button is clicked
                         setCheckPoint();
                     }
