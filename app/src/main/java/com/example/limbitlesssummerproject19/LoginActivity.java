@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -28,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
+    private TextView guest;
 
 
     @Override
@@ -35,6 +37,18 @@ public class LoginActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        // Guest sign in
+        guest = (TextView) findViewById(R.id.guest_login);
+        guest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("Current user: Guest");
+                Intent intent = new Intent(LoginActivity.this, DrawerActivity.class);
+                intent.putExtra("username", "Guest");
+                startActivity(intent);
+            }
+        });
 
         // Sign-In Button Listener
         findViewById(R.id.btn_sign_in).setOnClickListener(new View.OnClickListener() {

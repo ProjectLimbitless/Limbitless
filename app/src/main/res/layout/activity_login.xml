@@ -52,6 +52,7 @@
         android:layout_marginLeft="8dp"
         android:fontFamily="@font/montserrat_regular"
         android:gravity="center"
+        android:layout_gravity="center"
         android:text="Project Lim(b)itless"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
@@ -62,18 +63,41 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.796" />
 
+
     <TextView
         android:id="@+id/login_title2"
         android:layout_width="398dp"
         android:layout_height="53dp"
+        android:layout_marginTop="36dp"
         android:fontFamily="@font/montserrat_regular"
         android:gravity="center"
         android:text="Welcome to "
         android:textColor="#FFFFFF"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.461"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="38dp" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/guest_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center|bottom"
+        android:paddingTop="10dp"
+        android:text="Continue as Guest"
+        android:textColor="#FFFEFE"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_sign_in" />
+
+    <android.support.constraint.Constraints
+        android:id="@+id/constraints"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 
 </android.support.constraint.ConstraintLayout>
