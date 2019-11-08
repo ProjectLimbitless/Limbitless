@@ -1,12 +1,15 @@
 package com.example.limbitlesssummerproject19;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -58,9 +61,11 @@ public class AlbumActivity extends AppCompatActivity {
 
     // Create an array of albums
     private ArrayList<String> album = new ArrayList<String>();
-
     File sessionFolder;
     String folderName;
+
+    // Alert Dialog
+    AlertDialog.Builder builder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,11 +108,8 @@ public class AlbumActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-
-
                 sendButton.setText("Sending...");
                 //sendButton.setBackgroundColor(getResources().getColor(R.color.accentColor));
-
 
                 for (String f : album) {
 
@@ -136,11 +138,8 @@ public class AlbumActivity extends AppCompatActivity {
                 Tasks.whenAll(myTasks).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-
                         sendButton.setText("Done!");
-
                         //sendButton.setBackgroundColor(getResources().getColor(R.color.sendColor));
-
                         Toast.makeText(context, "Images Sent Successfully!",
                                 Toast.LENGTH_LONG).show();
 
@@ -148,11 +147,8 @@ public class AlbumActivity extends AppCompatActivity {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-
-                        //sendButton.setText("Sent to Server");
-
+                        //sendButton.setText("ent to Server");
                         //sendButton.setBackgroundColor(getResources().getColor(R.color.sendColor));
-
                         Toast.makeText(context, "Error. Images not sent.",
                                 Toast.LENGTH_LONG).show();
                     }
@@ -160,25 +156,45 @@ public class AlbumActivity extends AppCompatActivity {
             }
         });
 
+
+        // Instantiate alert dialog builder
+        builder = new AlertDialog.Builder(this);
+
         // Delete session from storage
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Delete all images in folder
-                for (String s : album){
-                    File f = new File(s);
-                    System.out.println(f.delete());
-                }
-                // Delete folder itself
-                sessionFolder.delete();
-                Intent backToGallery = new Intent(AlbumActivity.this,
-                        GalleryActivity.class);
-                startActivity(backToGallery);
+
+                // Chain together various setter methods to set the dialog characteristics
+                builder.setMessage(R.string.dialog_message)
+                        .setTitle(R.string.dialog_title);
+
+                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked OK button
+                        // Delete all images in folder
+                        for (String s : album){
+                            File f = new File(s);
+                            System.out.println(f.delete());
+                        }
+                        // Delete folder itself
+                        sessionFolder.delete();
+                        Intent backToGallery = new Intent(AlbumActivity.this,
+                                GalleryActivity.class);
+                        startActivity(backToGallery);
+                    }
+                });
+                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
-
     }
-
 
 
     /**
