@@ -26,4 +26,10 @@
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
 
+    <string name="dialog_message">Warning: You will lose all photos from this session</string>
+    <string name="dialog_title">Delete Session?</string>
+    <string name="ok">Continue</string>
+    <string name="cancel">Cancel</string>
+
+
 </resources>
