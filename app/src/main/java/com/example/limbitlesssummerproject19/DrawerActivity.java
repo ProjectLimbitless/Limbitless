@@ -65,10 +65,7 @@ public class DrawerActivity extends AppCompatActivity
          */
         Menu menu = navigationView.getMenu();
         setUserName = menu.findItem(R.id.nav_user);
-
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
-        String username = user.getDisplayName();
+        String username = getIntent().getStringExtra("username");
         setUserName.setTitle(username);
 
         /**

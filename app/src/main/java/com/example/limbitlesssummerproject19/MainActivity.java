@@ -10,9 +10,7 @@ import android.widget.Toast;
 
 /**
  * UPDATE: Functionality moved to DrawerActivity! This activity is essentially never executed
- * Main Activity is the first window that opens in the device. This window has two buttons: Start
- * and Tutorial. However, Tutorial has not yet been implemented, only Start button.
- *
+ * Main Activity is the first window that opens in the device.
  */
 
 
