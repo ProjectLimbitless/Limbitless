@@ -52,6 +52,7 @@
         android:layout_marginLeft="8dp"
         android:fontFamily="@font/montserrat_regular"
         android:gravity="center"
+        android:layout_gravity="center"
         android:text="Project Lim(b)itless"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
