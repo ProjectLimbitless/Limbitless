@@ -1124,7 +1124,7 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
 
         switch (item.getItemId()) {
             case R.id.return_button:
-                startActivity(new Intent(this, MainActivity.class));
+                startActivity(new Intent(this, DrawerActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

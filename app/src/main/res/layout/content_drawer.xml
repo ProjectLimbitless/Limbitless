@@ -8,4 +8,6 @@
     tools:context=".DrawerActivity"
     tools:showIn="@layout/app_bar_drawer">
 
+    <include layout="@layout/activity_main" />
+
 </android.support.constraint.ConstraintLayout>
