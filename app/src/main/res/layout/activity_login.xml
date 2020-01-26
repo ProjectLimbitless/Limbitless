@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         android:background="#040C36"
         android:orientation="vertical"
-        tools:context=".LoginActivity">
+        tools:context=".Login.LoginActivity">
 
 
     <TextView
@@ -31,7 +31,8 @@
         android:gravity="center|top"
         android:text="Project Lim(b)itless"
         android:textColor="#FFFFFF"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        android:layout_marginLeft="8dp" />
 
     <Button
         android:id="@+id/login_image"
@@ -46,10 +47,11 @@
         android:textColor="#F4F0DB"
         android:textSize="@android:dimen/app_icon_size"
         android:textStyle="normal"
-        android:typeface="normal"></Button>
+        android:typeface="normal">
+    </Button>
 
     <Button
-        android:id="@+id/btn_sign_in"
+        android:id="@+id/signInButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
