@@ -30,6 +30,10 @@
     <string name="dialog_title">Delete Session?</string>
     <string name="ok">Continue</string>
     <string name="cancel">Cancel</string>
+    <string name="guestText">Continue as Guest</string>
+    <string name="signInText">Sign In</string>
+    <string name="projectLimbitlessTitle">Project Lim(b)itless</string>
+    <string name="WelcomToText">Welcome to</string>
 
 
 </resources>

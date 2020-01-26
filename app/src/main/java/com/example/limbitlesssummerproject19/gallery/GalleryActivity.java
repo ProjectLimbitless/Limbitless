@@ -1,4 +1,4 @@
-package com.example.limbitlesssummerproject19;
+package com.example.limbitlesssummerproject19.gallery;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,8 +11,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.SpannableString;
-import android.text.style.TextAppearanceSpan;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -28,9 +26,12 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.bumptech.glide.load.resource.bitmap.TransformationUtils;
+import com.example.limbitlesssummerproject19.camera.DrawerActivity;
+import com.example.limbitlesssummerproject19.R;
+import com.example.limbitlesssummerproject19.gallery.album.AlbumActivity;
+
 import java.io.File;
 import java.io.FileFilter;
-import java.io.Serializable;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Arrays;

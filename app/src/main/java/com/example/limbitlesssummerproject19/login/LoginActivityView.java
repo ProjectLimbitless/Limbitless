@@ -1,4 +1,4 @@
-package com.example.limbitlesssummerproject19.Login;
+package com.example.limbitlesssummerproject19.login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.example.limbitlesssummerproject19.R;
 
 
-public class LoginActivity extends AppCompatActivity implements LoginActivityMVPManager.View,
+public class LoginActivityView extends AppCompatActivity implements LoginActivityMVPManager.View,
         View.OnClickListener {
 
     // declaring presenter
@@ -22,7 +22,7 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityMVP
         setContentView(R.layout.activity_login);
 
         // find view
-        TextView guestButton = findViewById(R.id.guest_login);
+        TextView guestButton = findViewById(R.id.guestLogInButton);
         Button signInButton = findViewById(R.id.signInButton);
 
         // set listener
@@ -39,7 +39,7 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityMVP
 
         // Login into account as guest or as user
         switch (view.getId()){
-            case R.id.guest_login:
+            case R.id.guestLogInButton:
                 loginPresenter.guestUserSignInButtonClicked();
                 break;
 
@@ -54,7 +54,7 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityMVP
     public void onStart() {
         super.onStart();
 
-        // updating UI
+        // update UI
         loginPresenter.updateUI();
     }
 

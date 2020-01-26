@@ -1,4 +1,4 @@
-package com.example.limbitlesssummerproject19;
+package com.example.limbitlesssummerproject19.gallery.album;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +17,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.bumptech.glide.load.resource.bitmap.TransformationUtils;
+import com.example.limbitlesssummerproject19.R;
 
 import java.security.MessageDigest;
 

@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#040C36"
         android:orientation="vertical"
-        tools:context=".Login.LoginActivity">
-
+        tools:context=".login.LoginActivityView">
 
     <TextView
         android:id="@+id/login_title2"
@@ -17,7 +15,7 @@
         android:layout_marginTop="30dp"
         android:fontFamily="@font/montserrat_regular"
         android:gravity="center|top"
-        android:text="Welcome to "
+        android:text="@string/WelcomToText"
         android:textColor="#FFFFFF"
         android:textSize="30sp" />
 
@@ -29,7 +27,7 @@
         android:layout_marginStart="8dp"
         android:fontFamily="@font/roboto_regular"
         android:gravity="center|top"
-        android:text="Project Lim(b)itless"
+        android:text="@string/projectLimbitlessTitle"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
         android:layout_marginLeft="8dp" />
@@ -57,12 +55,12 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:background="@drawable/common_google_signin_btn_text_dark"
-        android:text="Sign In"
+        android:text="@string/signInText"
         android:textColor="#FFFFFF"
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/guest_login"
+        android:id="@+id/guestLogInButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -70,7 +68,7 @@
         android:focusable="true"
         android:gravity="center|bottom"
         android:paddingTop="10dp"
-        android:text="Continue as Guest"
+        android:text="@string/guestText"
         android:textColor="#FFFEFE" />
 
 </LinearLayout>

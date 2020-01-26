@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#333333"
 
-    tools:context=".GalleryActivity">
+    tools:context=".gallery.GalleryActivity">
 
 
     <android.support.v7.widget.RecyclerView

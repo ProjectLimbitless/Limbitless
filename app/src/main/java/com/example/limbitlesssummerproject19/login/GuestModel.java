@@ -1,8 +1,8 @@
-package com.example.limbitlesssummerproject19.Login;
+package com.example.limbitlesssummerproject19.login;
 
 import android.content.Context;
 import android.content.Intent;
-import com.example.limbitlesssummerproject19.DrawerActivity;
+import com.example.limbitlesssummerproject19.camera.DrawerActivity;
 
 public class GuestModel implements LoginActivityMVPManager.guestModel {
 

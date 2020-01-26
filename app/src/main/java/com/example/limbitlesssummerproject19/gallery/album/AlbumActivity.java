@@ -1,4 +1,4 @@
-package com.example.limbitlesssummerproject19;
+package com.example.limbitlesssummerproject19.gallery.album;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -9,7 +9,6 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,6 +27,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.bumptech.glide.load.resource.bitmap.TransformationUtils;
+import com.example.limbitlesssummerproject19.R;
+import com.example.limbitlesssummerproject19.gallery.GalleryActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -239,7 +240,7 @@ public class AlbumActivity extends AppCompatActivity {
             viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent= new Intent(context,FullImageActivity.class);
+                    Intent intent= new Intent(context, FullImageActivity.class);
                     intent.putExtra("image_url",images.get(position));
                     intent.putExtra("folderName",folderName);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

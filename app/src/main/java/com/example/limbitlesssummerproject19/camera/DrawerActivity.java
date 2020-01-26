@@ -1,4 +1,4 @@
-package com.example.limbitlesssummerproject19;
+package com.example.limbitlesssummerproject19.camera;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,7 +16,9 @@ import android.view.Menu;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.example.limbitlesssummerproject19.Login.LoginActivity;
+import com.example.limbitlesssummerproject19.R;
+import com.example.limbitlesssummerproject19.gallery.GalleryActivity;
+import com.example.limbitlesssummerproject19.login.LoginActivityView;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -197,11 +199,12 @@ public class DrawerActivity extends AppCompatActivity
                     .addOnCompleteListener(this, new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
+
                         }
                     });
             // Switch back to login page
             Intent intent = new Intent(DrawerActivity.this,
-                    LoginActivity.class);
+                    LoginActivityView.class);
             startActivity(intent);
         }
 

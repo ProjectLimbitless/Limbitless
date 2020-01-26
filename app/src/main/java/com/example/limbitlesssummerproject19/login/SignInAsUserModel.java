@@ -1,11 +1,11 @@
-package com.example.limbitlesssummerproject19.Login;
+package com.example.limbitlesssummerproject19.login;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
-import com.example.limbitlesssummerproject19.DrawerActivity;
+import com.example.limbitlesssummerproject19.camera.DrawerActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -25,11 +25,11 @@ public class SignInAsUserModel implements LoginActivityMVPManager.signInModel {
     private static final int RC_SIGN_IN = 9001;
     private String tokenID = "479154573546-l7h3fmcrf3qsn9s4ll76q204egpjschb.apps.googleusercontent.com";
     private GoogleSignInClient mGoogleSignInClient;
-    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private FirebaseAuth mAuthentication = FirebaseAuth.getInstance();
     private LoginActivityMVPManager.View view;
 
 
-    // initializing LoginActivity "this" in view
+    // initializing LoginActivityView "this" in view
     public SignInAsUserModel(LoginActivityMVPManager.View view) { this.view = view; }
 
 
@@ -76,7 +76,7 @@ public class SignInAsUserModel implements LoginActivityMVPManager.signInModel {
     @Override
     public void checkIfUserSignedIn() {
 
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        FirebaseUser currentUser = mAuthentication.getCurrentUser();
         if(currentUser != null)  updateUIAfterAuthentication();
 
     }
@@ -84,26 +84,24 @@ public class SignInAsUserModel implements LoginActivityMVPManager.signInModel {
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
 
         System.out.println("firebaseAuthWithGoogle:" + account.getId());
-
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
-
         System.out.println("credential:" + credential);
 
-        mAuth.signInWithCredential(credential)
+        mAuthentication.signInWithCredential(credential)
                 .addOnCompleteListener(((Activity) view), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
                         // updates UI if task is successful, otherwise returns failure
                         if (task.isSuccessful()) {
-                            FirebaseUser user = mAuth.getCurrentUser();
+                            FirebaseUser user = mAuthentication.getCurrentUser();
                             if (user != null)  updateUIAfterAuthentication();
 
                         } else {
                             Toast.makeText(((Activity) view).getApplication(),
                                     "Authentication Failed.",
                                     Toast.LENGTH_SHORT).show();
-                            System.out.println(mAuth.getCurrentUser());
+                            System.out.println(mAuthentication.getCurrentUser());
                         }
 
                     }
@@ -112,10 +110,10 @@ public class SignInAsUserModel implements LoginActivityMVPManager.signInModel {
 
     private void updateUIAfterAuthentication() {
 
-        FirebaseUser user = mAuth.getCurrentUser();
+        FirebaseUser user = mAuthentication.getCurrentUser();
         System.out.println("Current user: "+ user.getDisplayName());
         Intent intent = new Intent(((Context) view), DrawerActivity.class);
         intent.putExtra("username", user.getDisplayName());
-        ((Context)view).startActivity(intent);
+        ((Context) view).startActivity(intent);
     }
 }
