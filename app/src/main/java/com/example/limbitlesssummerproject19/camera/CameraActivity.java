@@ -255,8 +255,14 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
 
     }
 
-    //start the countdown when a user starts the session
-    //counts down from 5
+
+
+    /**
+     * Function: startTimer()
+     * Purpose: starts a countdown when the user starts a camera capturing session
+     * Parameters: none
+     * Return: none
+     */
     public void startTimer() {
         mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
             @Override
@@ -273,7 +279,14 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         }.start();
     }
 
-    //displays the numbers decreasing to the screen (for the countdown)
+
+
+    /**
+     * Function: updateCountDownText()
+     * Purpose: display the countdown to the screen (shows numbers decreasing)
+     * Parameters: none
+     * Return: none
+     */
     public void updateCountDownText() {
         int seconds = (int) (mTimeLeftInMillis / 1000) % 60;
 
@@ -293,7 +306,14 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
             mTextViewCountdown.setText(timeLeft);
     }
 
-    //displays custom toast messages to the screen
+
+
+    /**
+     * Function: customToast()
+     * Purpose: display a custom toast message to the screen
+     * Parameters: String message = the message that will be printed to the screen
+     * Return: none
+     */
     public void customToast(String message) {
         LayoutInflater inflater = getLayoutInflater();
         View layout = inflater.inflate(R.layout.toast_layout, (ViewGroup) findViewById(R.id.toast_root));
@@ -311,12 +331,27 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         toast.show();
     }
 
-    //takes a picture
+
+
+    /**
+     * Function: takePicture2()
+     * Purpose: Take a picture (delegates to lockFocus() function)
+     * Parameters: none
+     * Return: none
+     */
     private void takePicture2(){
         lockFocus();
     }
 
+
+
     // creates a directory per session
+    /**
+     * Function: createDirectory()
+     * Purpose: creates a directory per photo capturing session
+     * Parameters: none
+     * Return: none
+     */
     public void  createDirectory(){
         directoryName = Environment.getExternalStorageDirectory() +
                 File.separator + "ProstheticFolder";
@@ -362,7 +397,16 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         }
     }
 
-    //this interface is the contract for receiving the results for permission requests
+
+
+    /**
+     * Function: onRequestPermissionsResult()
+     * Purpose: this interface is the contract for receiving the results for permission requests
+     * Parameters: int requestCode =
+     *             String[] permissions =
+     *             int[] grantResults =
+     * Return: none
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if(requestCode == 101) {
@@ -373,8 +417,15 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
 
     }
 
-    //TextureView is the view which renders captured camera image data
-    //This callback gives us a notification when we are read to prepare for the camera device initialization
+
+
+    /**
+     * Function: SurfaceTextureListener() (not really a function, but a listener initialization)
+     * Purpose: this callback gives us a notification when we are ready to prepare the camera device initialization
+     *          Note: TextureView is the view which renders captured camera image data
+     * Parameters: none
+     * Return: new TextureView.SurfaceTextureListener
+     */
     private final TextureView.SurfaceTextureListener textureListener
             = new TextureView.SurfaceTextureListener() {
 
@@ -406,7 +457,14 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
     };
 
 
-    //callback objects for receiving updates about the state of a camera device
+
+
+    /**
+     * Function: StateCallBack() (not really a function but a callback initialization)
+     * Purpose: this creates a callback object for receiving updates about the state of a camera device
+     * Parameters: none
+     * Return: new CameraDevice.StateCallBack()
+     */
     private final CameraDevice.StateCallback mStateCallBack = new CameraDevice.StateCallback() {
         @Override
         public void onOpened(CameraDevice camera) {
@@ -431,8 +489,13 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         }
     };
 
-    /* helper function to create the camera preview;
-     * called in CameraDevice.StateCallback() -> onOpened()
+
+
+    /**
+     * Function: createCameraPreviewSession()
+     * Purpose: helper function to create the camera preview (called in CameraDevice.StateCallback() -> onOpened()
+     * Parameters: none
+     * Return: none
      */
     private void createCameraPreviewSession()  {
         try {
@@ -495,6 +558,14 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         }
     }
 
+
+
+    /**
+     * Function: setAutoFlash()
+     * Purpose: sets up auto flash when capturing photos
+     * Parameters: CaptureRequest.Builder requestBuilder =
+     * Return: none
+     */
     private void setAutoFlash(CaptureRequest.Builder requestBuilder) {
         if (mFlashSupported) {
             requestBuilder.set(CaptureRequest.CONTROL_AE_MODE,
@@ -502,7 +573,15 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         }
     }
 
-    /*handles events related to JPEG capture.*/
+
+
+
+    /**
+     * Function: CaptureCallback (not really a function but a callback initialization)
+     * Purpose: create a callback to handle events related to JPEG capture
+     * Parameters: none
+     * Return: CameraCaptureSession.CaptureCallback
+     */
     private CameraCaptureSession.CaptureCallback mCaptureCallback
             = new CameraCaptureSession.CaptureCallback() {
 
@@ -571,6 +650,14 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
 
     };
 
+
+
+    /**
+     * Function: runPrecaptureSequence()
+     * Purpose:
+     * Parameters: none
+     * Return: none
+     */
     private void runPrecaptureSequence() {
         try {
             // This is how to tell the camera to trigger.
@@ -585,9 +672,14 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         }
     }
 
+
+
+
     /**
-     * Capture a still picture. This method should be called when we get a response in
-     * {@link #mCaptureCallback} from both
+     * Function: captureStillPicture()
+     * Purpose: capture a still picture. this method should be called when we get a response in {@link #mCaptureCallback}
+     * Parameters: none
+     * Return: none
      */
     private void captureStillPicture() {
         try {
@@ -609,6 +701,14 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
 
     }
 
+
+
+    /**
+     * Function: CaptureCallBack() (not really a function, but a callback intialization
+     * Purpose: crete a callback object for ____________
+     * Parameters: none
+     * Return: none
+     */
     CameraCaptureSession.CaptureCallback cameraCaptureCallback = new CameraCaptureSession.CaptureCallback() {
 
         @Override
@@ -639,6 +739,14 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         }
     };
 
+
+
+    /**
+     * Function: lockFocus()
+     * Purpose: lock the focus??
+     * Parameters: none
+     * Return: none
+     */
     private void lockFocus() {
         try {
             // This is how to tell the camera to lock focus.
@@ -653,6 +761,14 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         }
     }
 
+
+
+    /**
+     * Function: unlockFocus()
+     * Purpose: to unlock the focus??
+     * Parameters: none
+     * Return: none
+     */
     private void unlockFocus() {
         try {
             // Reset the auto-focus trigger
@@ -699,6 +815,15 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
     /* helper function to update the preview
      * called in createCameraPreview() -> cameraDevice.createCaptureSession(___ , StateCallBack() -> onConfigured, ____ );
      */
+
+
+
+    /**
+     * Function: updatePreview()
+     * Purpose:  never used?
+     * Parameters: none
+     * Return: none
+     */
     private void updatePreview() throws CameraAccessException {
         //returns if cameraDevice is null
         if(cameraDevice == null) {
@@ -713,8 +838,15 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         mCaptureSession.setRepeatingRequest(mPreviewRequestBuilder.build(), null, mBackgroundHandler);
     }
 
-    /* helper function to open up the camera;
-     * called in TextureView.SurfaceTextureListener() -> onSurfaceTextureAvailable;
+
+
+
+    /**
+     * Function: openCamera()
+     * Purpose: helper function to open up the camera ; called in TextureView.SurfaceTextureListener() -> onSurfaceTextureAvailable
+     * Parameters: int width =
+     *             int height =
+     * Return: none
      */
     private void openCamera(int width, int height) throws CameraAccessException {
 
@@ -749,6 +881,15 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         }
     }
 
+
+
+    /**
+     * Function: setUpCameraOutputs()
+     * Purpose: set up the camera outputs?
+     * Parameters: int width =
+     *             int height =
+     * Return: none
+     */
     private void setUpCameraOutputs(int width, int height) {
         CameraManager manager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
         try {
@@ -851,6 +992,20 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         }
 
     }
+
+
+
+    /**
+     * Function: chooseOptimalSize()
+     * Purpose: idk??
+     * Parameters: Size[] choices =
+     *             int textureViewWidth =
+     *             int textureViewHeight =
+     *             int maxWidth =
+     *             int maxHeight =
+     *             Size aspectRatio =
+     * Return: Size??
+     */
     private static Size chooseOptimalSize(Size[] choices, int textureViewWidth,
                                           int textureViewHeight, int maxWidth, int maxHeight, Size aspectRatio) {
 
@@ -884,6 +1039,14 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         }
     }
 
+
+
+    /**
+     * Function:
+     * Purpose:
+     * Parameters:
+     * Return:
+     */
     static class CompareSizesByArea implements Comparator<Size> {
 
         @Override
@@ -895,13 +1058,18 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
 
     }
 
+
+    /**
+     * Function: OnImageAvailableListener()
+     * Purpose: (not really a function, but a callback initialization)
+     * Parameters: none
+     * Return: none
+     */
     private final ImageReader.OnImageAvailableListener mOnImageAvailableListener
             = new ImageReader.OnImageAvailableListener() {
 
         @Override
         public void onImageAvailable(ImageReader reader) {
-
-
             Image image = null;
             newFile();
             image = reader.acquireNextImage();
@@ -911,9 +1079,15 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
 
     };
 
+
+
+    /**
+     * Function: newFile()
+     * Purpose: to generate a new file in the Android Phone Files
+     * Parameters: none
+     * Return: none
+     */
     public void newFile(){
-
-
         thousandsDigit++;
 
         if( thousandsDigit > 9){
@@ -931,6 +1105,14 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
 
     }
 
+
+
+    /**
+     * Function:
+     * Purpose:
+     * Parameters:
+     * Return:
+     */
     private static class ImageSaver implements Runnable {
 
         /**
@@ -976,6 +1158,15 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         }
 
     }
+
+
+
+    /**
+     * Function: showToast()
+     * Purpose: show a custom toast to the screen
+     * Parameters: final String text = the message to be displayed to the screen
+     * Return: none
+     */
     private void showToast(final String text) {
 
         this.runOnUiThread(new Runnable() {
@@ -997,10 +1188,16 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
     }
 
 
-    /*
-     * Configures the necessary {@link android.graphics.Matrix} transformation to `textureView`.
-     * This method should be called after the camera preview size is determined in
-     * setUpCameraOutputs and also the size of `mTextureView` is fixed.
+
+
+    /**
+     * Function:
+     * Purpose: Configures the necessary {@link android.graphics.Matrix} transformation to 'textureView',
+     *          This method should be called after the camera preview size is determined in setUpCameraOutputs and
+     *          also the size of 'mTextureView' is fixed.
+     * Parameters: int viewWidth =
+     *             int viewHeight =
+     * Return: none
      */
     private void configureTransform(int viewWidth, int viewHeight) {
         if (null == textureView || null == mPreviewSize ) {
@@ -1027,8 +1224,15 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
     }
 
 
+
     /* helper function to save bytes
      * called in takePicture() -> .onImageAvailableListener -> onImageAvailable();
+     */
+    /**
+     * Function: save()
+     * Purpose: helper function to save bytes (called in takePicture() -> .onImageAvailableListener -> onImageAvailable() )
+     * Parameters: byte[] bytes =
+     * Return: none
      */
     private void save(byte[] bytes) throws IOException {
         OutputStream outputStream = null;
@@ -1038,7 +1242,15 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         outputStream.write(bytes);
     }
 
-    //this function is called when this activity is resumed after coming from another activity
+
+
+
+    /**
+     * Function: onResume()
+     * Purpose: this function is called when this activity is resumed after coming from another activity
+     * Parameters: none
+     * Return: none
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -1073,8 +1285,14 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         /*------------------------------------------------------------*/
     }
 
-    /* helper function to start a thread to have concurrent execution;
-     * called in onResume()
+
+
+
+    /**
+     * Function: startBackgroundThread()
+     * Purpose: helper function to start a thread to have concurrent execution (called in onResume() )
+     * Parameters: none
+     * Return: none
      */
     private void startBackgroundThread() {
         mBackgroundThread = new HandlerThread("Camera Background");
@@ -1083,7 +1301,13 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
     }
 
 
-    //this function is called when the current activity (this) is paused to go into another activity
+
+    /**
+     * Function: onPause()
+     * Purpose: this function is called when the current activity (this) is paused to go into another activity
+     * Parameters: none
+     * Return: none
+     */
     @Override
     protected void onPause() {
         super.onPause();
@@ -1100,8 +1324,16 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         /*---------------------------------------------------------------*/
     }
 
+
+
     /* helper function to end any threads;
      * called in onPause()
+     */
+    /**
+     * Function: stopBackgroundThread()
+     * Purpose: helper function to end any threads (called in onPause() )
+     * Parameters: none
+     * Return: none
      */
     protected void stopBackgroundThread() throws InterruptedException {
         mBackgroundThread.quitSafely();
@@ -1110,12 +1342,30 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         mBackgroundHandler = null;
     }
 
+
+
+    /**
+     * Function: onCreateOptionsMenu()
+     * Purpose:
+     * Parameters: Menu menu =
+     * Return: true if
+     *         false otherwise
+     */
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_items, menu);
         return true;
     }
 
+
+
+    /**
+     * Function: onOptionsItemSelected()
+     * Purpose:
+     * Parameters: MenuItem item =
+     * Return: true if
+     *         false otherwise
+     */
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
@@ -1128,16 +1378,34 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
     }
 
     /*----------------------------------------------------------------*/
+
+
+    /**
+     * Function: onAccuracyChanged()
+     * Purpose: meh
+     * Parameters: meh
+     * Return: meh
+     */
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
+
+
+
 
     /**
      *
      * Modifying the accelerometer and magnetometer using the sensors. Checks if the accelerometer
      * and temp values are not close to each other by 0.01
      *
+     */
+    /**
+     * Function: onSensorChanged()
+     * Purpose: CONSTANTLY update the accelerometer and magnetometer readings (differences > 0.01) //
+     *          initialize/set the MovingAverage object values
+     * Parameters: SensorEvent event =
+     * Return: none
      */
     @Override
     public void onSensorChanged(SensorEvent event) {
@@ -1177,11 +1445,18 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         setOrientation();
     }
 
-    //helper function to set the correct orientation after extracting raw data from onSensorChanged
+
+
+    /**
+     * Function: setOrientation()
+     * Purpose: set the correct [azimuth, pitch, roll] values // helper function to set the correct orientation after
+     *          extracting raw data from onSensorChanged
+     * Parameters: none
+     * Return: none
+     */
     private void setOrientation() {
         float[] rotationMatrix = new float[9];
-        boolean rotationOK = SensorManager.getRotationMatrix(rotationMatrix,
-                null, avgAccelerometerData, avgMagnetometerData);
+        boolean rotationOK = SensorManager.getRotationMatrix(rotationMatrix,null, avgAccelerometerData, avgMagnetometerData);
 
         float[] rotationMatrixAdjusted = new float[9];
         switch(mDisplay.getRotation()) {
@@ -1222,7 +1497,16 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         }
     }
 
-    //makes toasts to the screen (this one is meant for feedback after image capture
+
+
+    /**
+     * Function: makeToast()
+     * Purpose: makes toasts to the screen (this one is meant for feedback after image capture
+     * Parameters: Context context =
+     *             String message =
+     *             int messageLength =
+     * Return: Nothing, just prints a toast message
+     */
     private void makeToast(Context context, String message, int messageLength) {
         //short = 0, long = 1
         if(mToast!= null) mToast.cancel();
@@ -1230,14 +1514,32 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         mToast.show();
     }
 
-    //test if compared val is +/- 0.1 from constant
-    //returns true if comparedVal is within range; false otherwise
+
+
+
+    /**
+     * Function: withinRange()
+     * Purpose: test if compared val is +/- 0.1 from constant
+     * Parameters: float constant = constant value to compare to
+     *             float comparedVal = current value you want to check
+     *             float range = the maximum difference between the two values
+     * Return: true if within range
+     *         false otherwise
+     */
     private boolean withinRange(float constant, float comparedVal, float range) {
         if(Math.abs(constant - comparedVal) > range)
             return false;
         return true;
     }
 
+
+
+    /**
+     * Function: setStartingPosition()
+     * Purpose: initialize the current sensor position of the phone (starts the initial checkpoint in rotation)
+     * Parameters: none
+     * Return: none
+     */
     private void setStartingPosition() {
         mainHandler.post(new Runnable() {
             @Override
@@ -1258,6 +1560,14 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         globalOrientation[2] = currentAvgOrientation[2];
     }
 
+
+
+    /**
+     * Function: setCheckPoint()
+     * Purpose: set a new checkpoint in the rotation
+     * Parameters: none
+     * Return: none
+     */
     private void setCheckPoint() {
         previousOrientation[0] = currentAvgOrientation[0];
         previousOrientation[1] = currentAvgOrientation[1];
@@ -1265,14 +1575,20 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
     }
 
 
-    /**
-     * sessionLoop is important since it allows the camera to capture images using withinPitchRange
-     * method and some other checkpoint within MATH.ABS. Here is where we need to update the
-     * progress bar. This is interesting since the images captured are used in a runnable method.
-     * This means that capturing images and gathering data from the accelerometer and magnetometer
-     * happen at the same time asynchronously.
-     */
 
+
+    /**
+     * Function: sessionLoop()
+     * Purpose: creates a loop such that when the user moves around an object in a circle, this function
+     *          will capture photos automatically at every 10 degree change in position
+     *          Note: sessionLoop is important since it allows the camera to capture images using withinPitchRange
+     *                method and some other checkpoint within MATH.ABS. Here is where we need to update the
+     *                progress bar. This is interesting since the images captured are used in a runnable method.
+     *                This means that capturing images and gathering data from the accelerometer and magnetometer
+     *                happen at the same time asynchronously.
+     * Parameters: none
+     * Return: none
+     */
     private void sessionLoop() {
         takePicture2();
         setCheckPoint();
