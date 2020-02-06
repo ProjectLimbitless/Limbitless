@@ -1,9 +1,11 @@
 package com.example.limbitlesssummerproject19;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.drm.DrmStore;
 import android.graphics.Bitmap;
 import android.media.ExifInterface;
 import android.net.Uri;
@@ -50,16 +52,16 @@ public class AlbumActivity extends AppCompatActivity {
     StorageReference storageRef = storage.getReference();
     Context context;
 
+
     // Auth object
     private FirebaseAuth mAuth;
 
     //  RecyclerView declarations
     RecyclerView albumGallery;
     private Button sendButton;
-    private TextView deleteButton;
 
     // Create an array of albums
-    private ArrayList<String> album = new ArrayList<String>();
+    private ArrayList<String> album = new ArrayList<>();
     File sessionFolder;
     String folderName;
 
@@ -70,6 +72,11 @@ public class AlbumActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Setting back button to main activity
+        ActionBar actionBar = getActionBar();
+        assert actionBar != null;
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         //  Sets the activity album content
         setContentView(R.layout.activity_album);
 
@@ -77,7 +84,7 @@ public class AlbumActivity extends AppCompatActivity {
         context = getApplicationContext();
 
         // Set up recycler view
-        albumGallery = (RecyclerView) findViewById(R.id.recView);
+        albumGallery = findViewById(R.id.recView);
         albumGallery.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(context, 2);
         albumGallery.setLayoutManager(layoutManager);
@@ -94,12 +101,12 @@ public class AlbumActivity extends AppCompatActivity {
         }
 
         // Set recycler view adapter
-        AlbumAdapter albumAdapter = new AlbumAdapter(this, album);
+        AlbumAdapter albumAdapter = new AlbumAdapter(this, album, folderName);
         albumGallery.setAdapter(albumAdapter);
 
         // Sets the sendButton and deleteButton
-        sendButton = (Button) findViewById(R.id.sendDataBtn);
-        deleteButton = (TextView) findViewById(R.id.deleteBtn);
+        sendButton = findViewById(R.id.sendDataBtn);
+        TextView deleteButton = findViewById(R.id.deleteBtn);
 
         // Push data to firebase storage
         sendButton.setOnClickListener(new View.OnClickListener() {
@@ -196,137 +203,11 @@ public class AlbumActivity extends AppCompatActivity {
     }
 
 
-    /**
-     * AlbumAdapter
-     * Data provider for recyclerView
-     */
-    public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> {
 
-        private final Context mContext;
-        private ArrayList<String> images;
-
-        public AlbumAdapter(Context context, ArrayList<String> galleryList) {
-
-            this.images = galleryList;
-            this.mContext = context;
-        }
-
-        @Override
-        public AlbumAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-            System.out.println("in view holder");
-
-            View view = LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.single_image, viewGroup, false);
-
-            return new ViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(AlbumAdapter.ViewHolder viewHolder, final int position) {
-
-            Glide.with(viewHolder.imageView.getContext())
-                    .asBitmap()
-                    .load(images.get(position))
-                    //.centerCrop()
-                    .placeholder(R.drawable.loading_symbol2)
-                    .transform(new ImageTransformation(viewHolder.imageView.getContext(),
-                            90))
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(viewHolder.imageView);
-
-
-            viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent= new Intent(context, FullImageActivity.class);
-                    intent.putExtra("image_url",images.get(position));
-                    intent.putExtra("folderName",folderName);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent);
-                }
-            });
-
-        }
-
-
-        @Override
-        public int getItemCount() {
-
-            return images.size();
-        }
-
-        // Creates a viewHolder for the images inside the albums
-        public class ViewHolder extends RecyclerView.ViewHolder {
-
-            private ImageView imageView;
-
-            public ViewHolder(View view) {
-
-                super(view);
-                imageView = (ImageView) view.findViewById(R.id.img);
-
-            }
-
-
-        }
-
-    }
-
-    //  Image transformation from horizontal to vertical (used when working with Glide)
-    public class ImageTransformation extends BitmapTransformation {
-
-        private Context context;
-        private int mOrientation;
-
-        public ImageTransformation(Context context, int orientation) {
-            this.context = context;
-            this.mOrientation = orientation;
-        }
-
-        @Override
-        protected Bitmap transform(BitmapPool pool, Bitmap toTransform, int outWidth, int outHeight) {
-            int newOrientation = getOrientation(mOrientation);
-            return TransformationUtils.rotateImageExif(pool, toTransform, newOrientation);
-        }
-
-        //  Sets orientation of the images
-        private int getOrientation(int orientation) {
-            int newOrientation;
-            switch (orientation) {
-                case 90:
-                    newOrientation = ExifInterface.ORIENTATION_ROTATE_90;
-                    break;
-                // other cases
-                default:
-                    newOrientation = ExifInterface.ORIENTATION_NORMAL;
-                    break;
-            }
-            return newOrientation;
-        }
-
-
-        @Override
-        public void updateDiskCacheKey(@NonNull MessageDigest messageDigest) {
-
-        }
-    }
-
-
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_items, menu);
+    public boolean onOptionsItemSelected(MenuItem item){
+        Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivityForResult(myIntent, 0);
         return true;
     }
 
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.return_button:
-                startActivity(new Intent(this, GalleryActivity.class));
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 }
