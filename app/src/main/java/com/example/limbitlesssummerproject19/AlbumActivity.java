@@ -70,6 +70,9 @@ public class AlbumActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Setting back button to main activity
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         //  Sets the activity album content
         setContentView(R.layout.activity_album);
 
@@ -312,21 +315,12 @@ public class AlbumActivity extends AppCompatActivity {
     }
 
 
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_items, menu);
+
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivityForResult(myIntent, 0);
         return true;
     }
 
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.return_button:
-                startActivity(new Intent(this, GalleryActivity.class));
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 }
