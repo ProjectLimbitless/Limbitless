@@ -1,4 +1,4 @@
-package com.example.limbitlesssummerproject19.login;
+package com.example.limbitlesssummerproject19;
 
 
 import android.content.Intent;
@@ -10,7 +10,7 @@ public class LoginActivityPresenter implements LoginActivityMVPManager.Presenter
     private LoginActivityMVPManager.signInModel signInAsUser;
     private LoginActivityMVPManager.View view;
 
-    public LoginActivityPresenter(LoginActivityMVPManager.View view){
+    LoginActivityPresenter(LoginActivityMVPManager.View view){
 
         this.signInAsGuest = new GuestModel();
         this.signInAsUser = new SignInAsUserModel(view);

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#000"
     android:orientation="vertical"
-    tools:context=".main.MainActivity">
+    tools:context=".MainActivity">
 
     <LinearLayout
         android:id="@+id/new_session_layout"
