@@ -1,4 +1,4 @@
-package com.example.limbitlesssummerproject19.camera;
+package com.example.limbitlesssummerproject19;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,9 +16,6 @@ import android.view.Menu;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.example.limbitlesssummerproject19.R;
-import com.example.limbitlesssummerproject19.gallery.GalleryActivity;
-import com.example.limbitlesssummerproject19.login.LoginActivityView;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;

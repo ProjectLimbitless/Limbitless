@@ -1,11 +1,11 @@
-package com.example.limbitlesssummerproject19.login;
+package com.example.limbitlesssummerproject19;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
-import com.example.limbitlesssummerproject19.camera.DrawerActivity;
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -30,7 +30,7 @@ public class SignInAsUserModel implements LoginActivityMVPManager.signInModel {
 
 
     // initializing LoginActivityView "this" in view
-    public SignInAsUserModel(LoginActivityMVPManager.View view) { this.view = view; }
+    SignInAsUserModel(LoginActivityMVPManager.View view) { this.view = view; }
 
 
     @Override
@@ -47,12 +47,10 @@ public class SignInAsUserModel implements LoginActivityMVPManager.signInModel {
     // requestingSignInOptions from google for login
     private GoogleSignInOptions requestSignInOptions() {
 
-        GoogleSignInOptions googleSignInOptions =
-                new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                        .requestIdToken(tokenID)
-                        .build();
+        GoogleSignInOptions.Builder builder = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN);
+        builder.requestIdToken(tokenID);
+        return builder.build();
 
-        return googleSignInOptions;
     }
 
     @Override
