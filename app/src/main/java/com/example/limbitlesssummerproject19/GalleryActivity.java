@@ -42,7 +42,7 @@ public class GalleryActivity extends AppCompatActivity {
         // Uses RecyclerView to inflate the images in the position and recycle the child view
         RecyclerView adapter = findViewById(R.id.recycle_view);
         adapter.setLayoutManager(gridLayoutManager);
-        RecyclerAdapter recyclerAdapter = new RecyclerAdapter(this, sessionFiles, files);
+        GalleryAdapter recyclerAdapter = new GalleryAdapter(this, sessionFiles, files);
         adapter.setAdapter(recyclerAdapter);
 
     }

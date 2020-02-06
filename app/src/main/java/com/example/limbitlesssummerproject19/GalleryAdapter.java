@@ -21,7 +21,7 @@ import java.io.File;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
+public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHolder> {
 
     // Defines member variables
     private Context mContext;
@@ -29,7 +29,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     private File[] files;
 
     //  Creates a constructor for the gallery
-    RecyclerAdapter(Context mContext, ArrayList<Pair<String, String>> mImageList, File[] files) {
+    GalleryAdapter(Context mContext, ArrayList<Pair<String, String>> mImageList, File[] files) {
 
         this.mContext = mContext;
         this.mSessionImage = mImageList;
@@ -108,36 +108,4 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return mSessionImage.size();
     }
 
-    //  Image transformation from horizontal to vertical (used when working with Glide)
-    public class ImageTransformation extends BitmapTransformation {
-
-        private int mOrientation;
-
-        ImageTransformation(int orientation) {
-
-            this.mOrientation = orientation;
-        }
-
-        protected Bitmap transform(BitmapPool pool, Bitmap toTransform, int outWidth, int outHeight) {
-            int newOrientation = getOrientation(mOrientation);
-            return TransformationUtils.rotateImageExif(pool, toTransform, newOrientation);
-        }
-
-        //  Sets orientation
-        private int getOrientation(int orientation) {
-
-            if (orientation == 90) {
-                return ExifInterface.ORIENTATION_ROTATE_90;
-                // other cases
-            } else {
-                return ExifInterface.ORIENTATION_NORMAL;
-            }
-        }
-
-
-        @Override
-        public void updateDiskCacheKey(@NonNull MessageDigest messageDigest) {
-
-        }
-    }
 }
