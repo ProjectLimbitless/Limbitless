@@ -26,7 +26,6 @@ import android.hardware.camera2.TotalCaptureResult;
 import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.Image;
 import android.media.ImageReader;
-import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.CountDownTimer;
 import android.os.Environment;
@@ -43,8 +42,6 @@ import android.util.SparseIntArray;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Surface;
 import android.view.TextureView;
@@ -430,8 +427,6 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
 
         }
     };
-
-
 
 
     /**

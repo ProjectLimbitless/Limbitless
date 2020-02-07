@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Intent intent;
 
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.btn_to_start:
 
                 intent = new Intent(MainActivity.this, CameraActivity.class);
@@ -48,17 +48,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.btn_to_gallery:
 
-                Toast.makeText(getApplicationContext(), "Preparing Gallery...",
-                        Toast.LENGTH_SHORT).show();
                 intent = new Intent(MainActivity.this, GalleryActivity.class);
                 this.startActivity(intent);
                 break;
 
             case R.id.btn_to_tutorial:
 
-                Toast.makeText(getApplicationContext(),"Tutorial Not Accessible",
-                        Toast.LENGTH_SHORT).show();
+                intent = new Intent(MainActivity.this, TutorialActivity.class);
+                this.startActivity(intent);
                 break;
         }
+
     }
 }
