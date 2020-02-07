@@ -13,48 +13,70 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 
-public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> {
+/**
+ * File: AlbumAdapter.java
+ *
+ * (Used in AlbumActivty!!!!!)
+ *
+ * This class is the data provider for recyclerView
+ *
+ */
+public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>{
 
-    private final Context mContext;
-    private ArrayList<String> images;
-    private String folderName;
+    private final Context mContext; /** Should be AlbumActivity context*/
+    private ArrayList<String> images; /** list of images */
+    private String folderName; /** name of folder to store images*/
 
-    // Creates a viewHolder for the images inside the albums
-    class ViewHolder extends RecyclerView.ViewHolder {
+    /**
+     * Function: Constructor
+     * Purpose: create an AlbumAdapter object
+     * Parameters: Context context = context of the activity creating this object
+     *             ArrayList<String> galleryList = the gallery list
+     *             String foldName = name of the folder (album)
+     * Return: none
+     */
+    public AlbumAdapter(Context context, ArrayList<String> galleryList, String foldName) {
 
-        private ImageView imageView;
-
-        ViewHolder(View view) {
-            super(view);
-            imageView =  view.findViewById(R.id.img);
-        }
-    }
-
-    AlbumAdapter(Context context, ArrayList<String> galleryList, String folderName) {
-        this.folderName = folderName;
         this.images = galleryList;
         this.mContext = context;
+        this.folderName = foldName;
+
     }
 
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
 
-        System.out.println("in view holder");
+    /**
+     * Function: onCreateViewHolder()
+     * Purpose: creates a new view holder (ViewHolder is defined at bottom of file)
+     * Parameters: ViewGroup viewGroup = WHAT IS THIS
+     *             int i = WHAT IS THIS
+     * Return: none
+     */
+    @Override
+    public AlbumAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        /** System.out.println("in view holder"); */
+
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.single_image, viewGroup, false);
 
         return new ViewHolder(view);
     }
 
+
+    /**
+     * Function: onBindViewHolder()
+     * Purpose: I wish I knew what this does
+     * Parameters: AlbumAdapter.ViewHolder viewHolder = what is this
+     *             final int position = what is this
+     * Return:
+     */
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(AlbumAdapter.ViewHolder viewHolder, final int position) {
 
         Glide.with(viewHolder.imageView.getContext())
                 .asBitmap()
                 .load(images.get(position))
-                //.centerCrop()
                 .placeholder(R.drawable.loading_symbol2)
-                .transform(new ImageTransformation(
+                .transform(new ImageTransformation(viewHolder.imageView.getContext(),
                         90))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(viewHolder.imageView);
@@ -74,7 +96,31 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
     }
 
 
+    /**
+     * Function: getItemCount()
+     * Purpose: get the item count?
+     * Parameters: none
+     * Return: none
+     */
     @Override
-    public int getItemCount() { return images.size(); }
+    public int getItemCount() {
 
+        return images.size();
+    }
+
+
+    /** Creates a viewHolder for the images inside the albums */
+    public class ViewHolder extends RecyclerView.ViewHolder {
+
+        private ImageView imageView;
+
+        public ViewHolder(View view) {
+
+            super(view);
+            imageView = (ImageView) view.findViewById(R.id.img);
+
+        }
+
+
+    }
 }
