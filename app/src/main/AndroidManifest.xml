@@ -25,7 +25,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DrawerActivity"
+        <activity
+            android:name=".DrawerActivity"
             android:label="@string/title_activity_drawer"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -33,11 +34,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.limbitlesssummerproject19.MainActivity" />
         </activity>
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".LoginActivityView" >
+        <activity android:name=".MainActivity" />
+        <activity android:name=".LoginActivityView">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -48,13 +50,3 @@
     </application>
 
 </manifest>
-
-<!--<activity-->
-<!--android:name=".DrawerActivity"-->
-<!--android:label="@string/title_activity_drawer"-->
-<!--android:parentActivityName=".MainActivity"-->
-<!--android:theme="@style/AppTheme.NoActionBar">-->
-<!--<meta-data-->
-    <!--android:name="android.support.PARENT_ACTIVITY"-->
-    <!--android:value="com.example.limbitlesssummerproject19.MainActivity" />-->
-<!--</activity>-->

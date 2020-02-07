@@ -3,25 +3,21 @@ package com.example.limbitlesssummerproject19;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
-
+import android.support.media.ExifInterface;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.bumptech.glide.load.resource.bitmap.TransformationUtils;
-import android.media.ExifInterface;
-
 import java.security.MessageDigest;
 
 /**
  * File: ImageTransformation.java
  *
- * (Used in AlbumActivty!!!!!)
- *
- * This class transforms images from horizontal to vertical (used when working with Glide)
+ * This class transforms images from horizontal to vertical
+ * used in AlbumActivity and GalleryActivity
  *
  */
 public class ImageTransformation extends BitmapTransformation {
 
-    private Context context; /** Should be AlbumActivity Context*/
     private int mOrientation; /** orientation to be set*/
 
 
@@ -32,8 +28,7 @@ public class ImageTransformation extends BitmapTransformation {
      *             int orientation = the orientation for the image transformation
      * Return: none
      */
-    public ImageTransformation(Context context, int orientation) {
-        this.context = context;
+    public ImageTransformation( int orientation) {
         this.mOrientation = orientation;
     }
 

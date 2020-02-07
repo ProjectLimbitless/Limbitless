@@ -1,6 +1,5 @@
 package com.example.limbitlesssummerproject19;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,10 +12,9 @@ import android.view.MenuItem;
 import java.io.File;
 import java.util.ArrayList;
 
-
 public class GalleryActivity extends AppCompatActivity {
 
-
+    // Instantiating InternalStorage class
     InternalStorage internalStorage = new InternalStorage();
 
     @Override
@@ -47,7 +45,7 @@ public class GalleryActivity extends AppCompatActivity {
 
     }
 
-
+    // returns to the previous activity
     public boolean onOptionsItemSelected(MenuItem item){
         Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
         startActivityForResult(myIntent, 0);

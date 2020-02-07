@@ -27,6 +27,20 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>{
     private ArrayList<String> images; /** list of images */
     private String folderName; /** name of folder to store images*/
 
+    /** Creates a viewHolder for the images inside the albums */
+    class ViewHolder extends RecyclerView.ViewHolder {
+
+        private ImageView imageView;
+
+        ViewHolder(View view) {
+
+            super(view);
+            imageView =  view.findViewById(R.id.img);
+
+        }
+
+    }
+
     /**
      * Function: Constructor
      * Purpose: create an AlbumAdapter object
@@ -53,7 +67,6 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>{
      */
     @Override
     public AlbumAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        /** System.out.println("in view holder"); */
 
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.single_image, viewGroup, false);
@@ -76,8 +89,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>{
                 .asBitmap()
                 .load(images.get(position))
                 .placeholder(R.drawable.loading_symbol2)
-                .transform(new ImageTransformation(viewHolder.imageView.getContext(),
-                        90))
+                .transform(new ImageTransformation(90))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(viewHolder.imageView);
 
@@ -109,18 +121,4 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>{
     }
 
 
-    /** Creates a viewHolder for the images inside the albums */
-    public class ViewHolder extends RecyclerView.ViewHolder {
-
-        private ImageView imageView;
-
-        public ViewHolder(View view) {
-
-            super(view);
-            imageView = (ImageView) view.findViewById(R.id.img);
-
-        }
-
-
-    }
 }
