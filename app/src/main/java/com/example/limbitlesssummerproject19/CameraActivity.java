@@ -163,8 +163,10 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
-        context = this;
+        // Setting back button to main activity
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        context = this;
         textureView = findViewById(R.id.texture);
 
         // Creates the layout of the camera view. In this case its is the opaque windows
@@ -1267,38 +1269,10 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
     }
 
 
-
-    /**
-     * Function: onCreateOptionsMenu()
-     * Purpose:
-     * Parameters: Menu menu =
-     * Return: true if
-     *         false otherwise
-     */
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_items, menu);
-        return true;
-    }
-
-
-
-    /**
-     * Function: onOptionsItemSelected()
-     * Purpose:
-     * Parameters: MenuItem item =
-     * Return: true if
-     *         false otherwise
-     */
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.return_button:
-                startActivity(new Intent(this, DrawerActivity.class));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+        Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivityForResult(myIntent, 0);
+        return true;
     }
 
     /*----------------------------------------------------------------*/

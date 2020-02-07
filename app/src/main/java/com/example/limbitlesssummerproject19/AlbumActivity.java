@@ -1,5 +1,6 @@
 package com.example.limbitlesssummerproject19;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -50,6 +51,7 @@ public class AlbumActivity extends AppCompatActivity {
     private Button sendButton;
     private TextView deleteButton;
     private ArrayList<String> album = new ArrayList<>(); /** Create an array of albums */
+
     File sessionFolder;
     String folderName;
     AlertDialog.Builder builder; /** Alert Dialog */
@@ -57,6 +59,12 @@ public class AlbumActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        /** Setting back button to main activity */
+        ActionBar actionBar = getActionBar();
+        assert actionBar != null;
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         /** Sets the activity album content */
         setContentView(R.layout.activity_album);
@@ -180,7 +188,6 @@ public class AlbumActivity extends AppCompatActivity {
             }
         });
     }
-
 
     /**
      * Function: onCreateOptionsMenu()
