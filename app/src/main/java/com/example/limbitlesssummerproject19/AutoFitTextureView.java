@@ -4,6 +4,12 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.TextureView;
 
+/**
+ * File: AutoFitTextureView.java
+ *
+ * This class will autofit the texture view.... (great name for the class right?)
+ *
+ */
 public class AutoFitTextureView extends TextureView {
     private int mRatioWidth = 0;
     private int mRatioHeight = 0;
@@ -20,13 +26,16 @@ public class AutoFitTextureView extends TextureView {
         super(context, attrs, defStyle);
     }
 
+
     /**
-     * Sets the aspect ratio for this view. The size of the view will be measured based on the ratio
-     * calculated from the parameters. Note that the actual sizes of parameters don't matter, that
-     * is, calling setAspectRatio(2, 3) and setAspectRatio(4, 6) make the same result.
-     *
-     * @param width  Relative horizontal size
-     * @param height Relative vertical size
+     * Function: setAspectRatio()
+     * Purpose: Sets the aspect ratio for this view. The size of the view will be measured based on
+     *          the ratio calculated from the parameters. Note that the actual sizes of parameters
+     *          don't matter, that is, calling setAspectRatio(2, 3) and setAspectRatio(4, 6) make
+     *          the same result.
+     * Parameters: int width = width of the new layout
+     *             int height = height of the new layout
+     * Return: none
      */
     public void setAspectRatio(int width, int height) {
         if (width < 0 || height < 0) {
@@ -37,6 +46,14 @@ public class AutoFitTextureView extends TextureView {
         requestLayout();
     }
 
+
+    /**
+     * Function: onMeasure()
+     * Purpose: not sure what this does
+     * Parameters: int widthMeasureSpec =
+     *             int heightMeasureSpec =
+     * Return: none
+     */
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
