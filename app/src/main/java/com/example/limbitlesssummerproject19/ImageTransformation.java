@@ -1,6 +1,5 @@
 package com.example.limbitlesssummerproject19;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.media.ExifInterface;

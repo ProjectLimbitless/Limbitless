@@ -70,16 +70,20 @@ import java.util.concurrent.TimeUnit;
 import java.util.Date;
 import java.util.Locale;
 
-
+/**
+ * File: CameraActivity.java
+ *
+ * This activity controls the camera function of the app. (This is a BIG file!)
+ *
+ */
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class CameraActivity extends AppCompatActivity implements SensorEventListener{
 
 
-   //Button on camera preview to capture image
+   /**Button on camera preview to capture image */
     private ImageButton endsession;
-    public AutoFitTextureView textureView; //The camera preview itself
-    // used for orientation correction of photos
-    private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
+    public AutoFitTextureView textureView; /** The camera preview itself */
+    private static final SparseIntArray ORIENTATIONS = new SparseIntArray(); /** used for orientation correction of photos */
 
     static {
         ORIENTATIONS.append(Surface.ROTATION_0, 90);
@@ -88,13 +92,13 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         ORIENTATIONS.append(Surface.ROTATION_270, 180);
     }
 
-    private String mCameraId; //unique ID used to access the camera
-    public CameraDevice cameraDevice; //representation of a single camera connected to the device
-    public CameraCaptureSession mCaptureSession; //configured capture session; used for capturing images from the camera
-    public CaptureRequest.Builder mPreviewRequestBuilder; //how to create the capture request
+    private String mCameraId; /** unique ID used to access the camera */
+    public CameraDevice cameraDevice; /** representation of a single camera connected to the device */
+    public CameraCaptureSession mCaptureSession; /** configured capture session; used for capturing images from the camera */
+    public CaptureRequest.Builder mPreviewRequestBuilder; /** how to create the capture request */
 
-    public Handler mBackgroundHandler; //to schedule actions to be executed at some point in the future
-    public HandlerThread mBackgroundThread; //the thread associated with the handler
+    public Handler mBackgroundHandler; /** to schedule actions to be executed at some point in the future */
+    public HandlerThread mBackgroundThread; /** the thread associated with the handler */
 
     public String directoryName;
     public String sessionName;
@@ -163,14 +167,16 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
-        // Setting back button to main activity
+        /** Setting back button to main activity */
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         context = this;
         textureView = findViewById(R.id.texture);
 
-        // Creates the layout of the camera view. In this case its is the opaque windows
-        // encapsulating the view of the camera
+        /**
+         * Creates the layout of the camera view. In this case its is the opaque windows
+         * encapsulating the view of the camera
+         */
 
         View topView = findViewById(R.id.top_view);
         View bottomView = findViewById(R.id.bottom_view);
@@ -182,7 +188,7 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         leftView.getBackground().setAlpha(128);
         rightView.getBackground().setAlpha(128);
 
-        //set up paths to store photos
+        /** set up paths to store photos */
         createDirectory();
 
         textureView.setSurfaceTextureListener(textureListener);
@@ -194,8 +200,8 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
          *  work has to be done, but it works up to now.
          *
          */
-        /*------------------------------------------------------------*/
-        //STARTS THE SESSION
+        /**-------------------Starts the Sesion-----------------------------*/
+
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         startSession =  findViewById(R.id.startSession);
 
@@ -221,12 +227,10 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
 
         WindowManager wm = (WindowManager) getSystemService(WINDOW_SERVICE);
         mDisplay = wm.getDefaultDisplay();
-        /*------------------------------------------------------------*/
+        /**------------------------------------------------------------*/
 
-        //Countdown code
+        /**Countdown code */
         mTextViewCountdown =  findViewById(R.id.countdown);
-
-
     }
 
 
@@ -359,13 +363,13 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
             session.mkdirs();
         }
 
-       // "yyyy_mm_dd_hh_mm"//
-        // Get current date
+        /** "yyyy_mm_dd_hh_mm" */
+        /** Get current date */
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM_dd_yyyy_hh_mm",
                 Locale.getDefault());
         sessionName = directoryName + File.separator + dateFormat.format(new Date());
 
-        // Save photos
+        /** Save photos */
         session = new File(sessionName);
         if(!session.exists()) {
             session.mkdirs();
@@ -404,10 +408,10 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
     private final TextureView.SurfaceTextureListener textureListener
             = new TextureView.SurfaceTextureListener() {
 
-        @Override //SurfaceTexture captures frames from an image stream
+        @Override /**SurfaceTexture captures frames from an image stream */
         public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
             try {
-                openCamera(width, height); //helper function to open the camera (prepares the camera to take a picture)
+                openCamera(width, height); /** helper function to open the camera (prepares the camera to take a picture) */
             } catch (CameraAccessException e) {
                 e.printStackTrace();
             }
@@ -444,18 +448,18 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         @Override
         public void onOpened(CameraDevice camera) {
             mCameraOpenCloseLock.release();
-            cameraDevice = camera; //sets the cameraDevice to this camera
-            createCameraPreviewSession(); //helper function to create the camera preview
+            cameraDevice = camera; /** sets the cameraDevice to this camera */
+            createCameraPreviewSession(); /** helper function to create the camera preview */
         }
 
-        @Override //closes the camera when camera device is no longer available to use
+        @Override /** closes the camera when camera device is no longer available to use */
         public void onDisconnected(CameraDevice camera) {
             mCameraOpenCloseLock.release();
             camera.close();
             cameraDevice = null;
         }
 
-        @Override //closes the camera when camera device encounters a serious error
+        @Override /** closes the camera when camera device encounters a serious error */
         public void onError(CameraDevice camera, int error) {
             mCameraOpenCloseLock.release();
             camera.close();
@@ -474,45 +478,45 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
      */
     private void createCameraPreviewSession()  {
         try {
-            //surface textures capture frames from an image stream
+            /** surface textures capture frames from an image stream */
             SurfaceTexture texture = textureView.getSurfaceTexture();
             if (texture == null) {
                 throw new AssertionError();
             }
 
-            //sets the default size of image buffers
+            /**sets the default size of image buffers */
             texture.setDefaultBufferSize(mPreviewSize.getWidth(), mPreviewSize.getHeight());
 
-            //a surface created from a SurfaceTexture can be used as an output destination for the camera
+            /** a surface created from a SurfaceTexture can be used as an output destination for the camera */
             Surface surface = new Surface(texture);
 
-            //create a capture request for new capture requests, initialized with template for target use case
+            /** create a capture request for new capture requests, initialized with template for target use case */
             mPreviewRequestBuilder = cameraDevice.createCaptureRequest(cameraDevice.TEMPLATE_PREVIEW);
-            //adds surface to the list of targets for this request
+            /** adds surface to the list of targets for this request */
             mPreviewRequestBuilder.addTarget(surface);
 
 
-            // Here, we create a CameraCaptureSession for camera preview.
+            /** Here, we create a CameraCaptureSession for camera preview. */
             cameraDevice.createCaptureSession(Arrays.asList(surface, mImageReader.getSurface()),
                     new CameraCaptureSession.StateCallback() {
 
                         @Override
                         public void onConfigured(@NonNull CameraCaptureSession cameraCaptureSession) {
-                            // The camera is already closed
+                            /** The camera is already closed */
                             if (null == cameraDevice) {
                                 return;
                             }
 
-                            // When the session is ready, we start displaying the preview.
+                            /** When the session is ready, we start displaying the preview. */
                             mCaptureSession = cameraCaptureSession;
                             try {
-                                // Auto focus should be continuous for camera preview.
+                                /** Auto focus should be continuous for camera preview. */
                                 mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE,
                                         CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
-                                // Flash is automatically enabled when necessary.
+                                /** Flash is automatically enabled when necessary. */
                                 setAutoFlash(mPreviewRequestBuilder);
 
-                                // Finally, we start displaying the camera preview.
+                                /** Finally, we start displaying the camera preview. */
                                 mPreviewRequest = mPreviewRequestBuilder.build();
                                 mCaptureSession.setRepeatingRequest(mPreviewRequest,
                                         mCaptureCallback, mBackgroundHandler);
@@ -563,7 +567,7 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         private void process(CaptureResult result) {
             switch (mState) {
                 case STATE_PREVIEW: {
-                    // We have nothing to do when the camera preview is working normally.
+                    /** We have nothing to do when the camera preview is working normally. */
                     break;
                 }
                 case STATE_WAITING_LOCK: {
@@ -573,7 +577,7 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
                         captureStillPicture();
                     } else if (CaptureResult.CONTROL_AF_STATE_FOCUSED_LOCKED == afState ||
                             CaptureResult.CONTROL_AF_STATE_NOT_FOCUSED_LOCKED == afState) {
-                        // CONTROL_AE_STATE can be null on some devices
+                        /** CONTROL_AE_STATE can be null on some devices */
                         Integer aeState = result.get(CaptureResult.CONTROL_AE_STATE);
                         if (aeState == null ||
                                 aeState == CaptureResult.CONTROL_AE_STATE_CONVERGED) {
@@ -587,7 +591,7 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
                     break;
                 }
                 case STATE_WAITING_PRECAPTURE: {
-                    // CONTROL_AE_STATE can be null on some devices
+                    /** CONTROL_AE_STATE can be null on some devices */
                     Integer aeState = result.get(CaptureResult.CONTROL_AE_STATE);
                     if (aeState == null ||
                             aeState == CaptureResult.CONTROL_AE_STATE_PRECAPTURE ||
@@ -597,7 +601,7 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
                     break;
                 }
                 case STATE_WAITING_NON_PRECAPTURE: {
-                    // CONTROL_AE_STATE can be null on some devices
+                    /** CONTROL_AE_STATE can be null on some devices */
                     Integer aeState = result.get(CaptureResult.CONTROL_AE_STATE);
                     if (aeState == null || aeState != CaptureResult.CONTROL_AE_STATE_PRECAPTURE) {
                         mState = STATE_PICTURE_TAKEN;
@@ -635,10 +639,10 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
      */
     private void runPrecaptureSequence() {
         try {
-            // This is how to tell the camera to trigger.
+            /** This is how to tell the camera to trigger. */
             mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_PRECAPTURE_TRIGGER,
                     CaptureRequest.CONTROL_AE_PRECAPTURE_TRIGGER_START);
-            // Tell #mCaptureCallback to wait for the pre-capture sequence to be set.
+            /** Tell #mCaptureCallback to wait for the pre-capture sequence to be set. */
             mState = STATE_WAITING_PRECAPTURE;
             mCaptureSession.capture(mPreviewRequestBuilder.build(), mCaptureCallback,
                     mBackgroundHandler);
@@ -724,10 +728,10 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
      */
     private void lockFocus() {
         try {
-            // This is how to tell the camera to lock focus.
+            /** This is how to tell the camera to lock focus. */
             mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER,
                     CameraMetadata.CONTROL_AF_TRIGGER_START);
-            // Tell #mCaptureCallback to wait for the lock.
+            /** Tell #mCaptureCallback to wait for the lock. */
             mState = STATE_WAITING_LOCK;
             mCaptureSession.capture(mPreviewRequestBuilder.build(), mCaptureCallback,
                     mBackgroundHandler);
@@ -746,13 +750,13 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
      */
     private void unlockFocus() {
         try {
-            // Reset the auto-focus trigger
+            /** Reset the auto-focus trigger */
             mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER,
                     CameraMetadata.CONTROL_AF_TRIGGER_CANCEL);
             setAutoFlash(mPreviewRequestBuilder);
             mCaptureSession.capture(mPreviewRequestBuilder.build(), mCaptureCallback,
                     mBackgroundHandler);
-            // After this, the camera will go back to the normal state of preview.
+            /** After this, the camera will go back to the normal state of preview. */
             mState = STATE_PREVIEW;
             mCaptureSession.setRepeatingRequest(mPreviewRequest, mCaptureCallback,
                     mBackgroundHandler);
@@ -794,9 +798,10 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
      * Return: none
      */
     private void openCamera(int width, int height) throws CameraAccessException {
-
-        //checks that the user has permissions to access the camera and write data
-        //and requests permissions otherwise
+        /**
+         * checks that the user has permissions to access the camera and write data
+         * and requests permissions otherwise
+         */
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this,
@@ -811,7 +816,7 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         setUpCameraOutputs(width,height);
         configureTransform(width,height);
 
-        //how to obtain the camera ID of the back camera
+        /** how to obtain the camera ID of the back camera */
         CameraManager manager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
 
         try {
@@ -842,7 +847,7 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
                 CameraCharacteristics characteristics
                         = manager.getCameraCharacteristics(cameraId);
 
-                // We don't use a front facing camera in this sample.
+                /** We don't use a front facing camera in this sample. */
                 Integer facing = characteristics.get(CameraCharacteristics.LENS_FACING);
                 if (facing != null && facing == CameraCharacteristics.LENS_FACING_FRONT) {
                     continue;
@@ -854,7 +859,7 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
                     continue;
                 }
 
-                // For still image captures, we use the largest available size.
+                /** For still image captures, we use the largest available size. */
                 Size largest = Collections.max(
                         Arrays.asList(map.getOutputSizes(ImageFormat.JPEG)),
                         new CompareSizesByArea());
@@ -863,8 +868,7 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
                 mImageReader.setOnImageAvailableListener(
                         mOnImageAvailableListener, mBackgroundHandler);
 
-                // Find out if we need to swap dimension to get the preview size relative to sensor
-                // coordinate.
+                /** Find out if we need to swap dimension to get the preview size relative to sensor coordinate */
                 int displayRotation = getWindowManager().getDefaultDisplay().getRotation();
                 //noinspection ConstantConditions
                 Integer mSensorOrientation = characteristics.get(CameraCharacteristics.SENSOR_ORIENTATION);

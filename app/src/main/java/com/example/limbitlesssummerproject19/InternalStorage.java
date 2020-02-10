@@ -11,12 +11,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 
-
+/**
+ * File: InternalStorage.java
+ *
+ *
+ * Class to represent internal storage.
+ *
+ */
 class InternalStorage {
 
     private ArrayList<Pair<String, String>> sessionFiles = new ArrayList<>();
 
-    // Obtains the directory name
+    /** Obtains the directory name */
     private String directoryName = Environment.getExternalStorageDirectory() + File.separator +
             "ProstheticFolder";
 
@@ -24,7 +30,7 @@ class InternalStorage {
     ArrayList<Pair<String, String>> getListFromFiles(Context context, File[] files) {
         try {
 
-            // Get session thumbnails ( image at first index of each session )
+            /** Get session thumbnails ( image at first index of each session ) */
             for (File file : files) {
                 File[] sessionImages = file.listFiles();
                 if (sessionImages.length != 0) {
@@ -32,7 +38,7 @@ class InternalStorage {
                             file.getName());
                     sessionFiles.add(newPair);
                 } else {
-                    file.delete(); // Delete empty folders
+                    file.delete();
                 }
             }
 
@@ -45,6 +51,12 @@ class InternalStorage {
     }
 
 
+    /**
+     * Function: getFilesFromInternalStorage()
+     * Purpose: get files from internal storage...(:
+     * Parameters: Context context = te context of the activity calling this function
+     * Return: an array of files... from internal storage
+     */
     File[] getFilesFromInternalStorage(Context context) {
 
         File countFiles = new File(directoryName);
