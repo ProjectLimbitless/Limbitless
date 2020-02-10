@@ -112,7 +112,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>{
      * Function: getItemCount()
      * Purpose: get the item count?
      * Parameters: none
-     * Return: none
+     * Return: number of images
      */
     @Override
     public int getItemCount() {

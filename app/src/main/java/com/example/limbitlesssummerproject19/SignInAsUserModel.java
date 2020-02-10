@@ -19,7 +19,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-
+/**
+ * File: SignInAsUserModel.java
+ *
+ *
+ * Model class for a user with an account.
+ *
+ */
 public class SignInAsUserModel implements LoginActivityMVPManager.signInModel {
 
     private static final int RC_SIGN_IN = 9001;
@@ -29,14 +35,20 @@ public class SignInAsUserModel implements LoginActivityMVPManager.signInModel {
     private LoginActivityMVPManager.View view;
 
 
-    // initializing LoginActivityView "this" in view
+    /** initializing LoginActivityView "this" in view */
     SignInAsUserModel(LoginActivityMVPManager.View view) { this.view = view; }
 
 
+    /**
+     * Function: startSignInActivity()
+     * Purpose: starts user sign in activity when the user sign in button is clicked
+     * Parameters: LoginActivityMVPManager.View view = what is this?
+     * Return: none
+     */
     @Override
     public void startSignInActivity(LoginActivityMVPManager.View view) {
 
-        // Builds Google client
+        /** Builds Google client */
         GoogleSignInOptions googleSignInOptions = requestSignInOptions();
         mGoogleSignInClient = GoogleSignIn.getClient((Context) view, googleSignInOptions);
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
@@ -44,7 +56,13 @@ public class SignInAsUserModel implements LoginActivityMVPManager.signInModel {
 
     }
 
-    // requestingSignInOptions from google for login
+
+    /**
+     * Function: requestSignInOptions()
+     * Purpose: requestingSignInOptions from google for login
+     * Parameters: none
+     * Return: Google Object for sign in options
+     */
     private GoogleSignInOptions requestSignInOptions() {
 
         GoogleSignInOptions.Builder builder = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN);
@@ -53,10 +71,18 @@ public class SignInAsUserModel implements LoginActivityMVPManager.signInModel {
 
     }
 
+
+    /**
+     * Function: requestAuth()
+     * Purpose: request authentication with Firebase
+     * Parameters: int requestCode = the request code
+     *             Intent data = ???
+     * Return: none
+     */
     @Override
     public void requestAuth(int requestCode, Intent data) {
 
-        // Creating an account with Google and authenticating with Firebase
+        /** Creating an account with Google and authenticating with Firebase */
         if (requestCode == RC_SIGN_IN) {
 
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
@@ -71,6 +97,13 @@ public class SignInAsUserModel implements LoginActivityMVPManager.signInModel {
 
     }
 
+
+    /**
+     * Function: checkIfUserSignedIn()
+     * Purpose: checks if the user is signed in already
+     * Parameters: none
+     * Return: none
+     */
     @Override
     public void checkIfUserSignedIn() {
 
@@ -79,6 +112,13 @@ public class SignInAsUserModel implements LoginActivityMVPManager.signInModel {
 
     }
 
+
+    /**
+     * Function: firebaseAuthWithGoogle()
+     * Purpose: access firebase with google account
+     * Parameters: GoogleSignInAccount account = the account to authenticate
+     * Return: none
+     */
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
 
         System.out.println("firebaseAuthWithGoogle:" + account.getId());
@@ -90,7 +130,7 @@ public class SignInAsUserModel implements LoginActivityMVPManager.signInModel {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
-                        // updates UI if task is successful, otherwise returns failure
+                        /** updates UI if task is successful, otherwise returns failure */
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuthentication.getCurrentUser();
                             if (user != null)  updateUIAfterAuthentication();
@@ -106,6 +146,13 @@ public class SignInAsUserModel implements LoginActivityMVPManager.signInModel {
                 });
     }
 
+
+    /**
+     * Function: updateUIAfterAuthentication()
+     * Purpose: updates the UI after the user account gets authenticated
+     * Parameters: none
+     * Return: none
+     */
     private void updateUIAfterAuthentication() {
 
         FirebaseUser user = mAuthentication.getCurrentUser();

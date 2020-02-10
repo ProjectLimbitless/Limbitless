@@ -3,12 +3,19 @@ package com.example.limbitlesssummerproject19;
 import android.content.Context;
 import android.content.Intent;
 
+/**
+ * File: GuestModel.java
+ *
+ *
+ * Model class for a guest user.
+ *
+ */
 public class GuestModel implements LoginActivityMVPManager.guestModel {
 
-    // empty constructor
+    /** empty constructor */
     GuestModel() { }
 
-    // starting activity as a guest user
+    /** starting activity as a guest user */
     public void starGuestActivity(LoginActivityMVPManager.View view) {
 
         String password = "Guest";

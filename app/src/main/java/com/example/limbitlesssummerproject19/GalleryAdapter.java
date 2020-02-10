@@ -21,14 +21,22 @@ import java.io.File;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 
+/**
+ * File: GalleryAdapter.java
+ *
+ * (Used in GalleryActivty!!!!!)
+ *
+ * This class is the data provider for recyclerView
+ *
+ */
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHolder> {
 
-    // Defines member variables
+    /** Defines member variables */
     private Context mContext;
     private ArrayList<Pair<String, String>> mSessionImage;
     private File[] files;
 
-    //  Creates a constructor for the gallery
+    /** Creates a constructor for the gallery */
     GalleryAdapter(Context mContext, ArrayList<Pair<String, String>> mImageList, File[] files) {
 
         this.mContext = mContext;
@@ -37,7 +45,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
     }
 
 
-    //  View placed on an a place holder and sets ImageView on single_session_view
+    /** View placed on an a place holder and sets ImageView on single_session_view */
     class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView mImageView;
@@ -52,9 +60,15 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
     }
 
 
+    /**
+     * Function: onCreateViewHolder()
+     * Purpose: Placing a view into an imageview using a holder ang attaches imageView to the parent
+     * Parameters: ViewGroup parent = WHAT IS THIS
+     *             int viewType = WHAT IS THIS
+     * Return: ViewHolder = whaT IS THIS
+     */
     @NonNull
     @Override
-    //  Placing a view into and imageview using a holder ang attaches imageView to the parent
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout
@@ -63,24 +77,31 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         return new ViewHolder(view);
     }
 
+
+    /**
+     * Function: onBindViewHolder()
+     * Purpose: binds the viewHolder to a position on the screen?
+     * Parameters: ViewHolder holder = WHAT IS THIS
+     *             final int position = WHAT IS THIS
+     * Return: none
+     */
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-
-        //  Glide is a open source library that allows a bitmap to be uploaded into
-        //  an imageView without having out of memory problems. It also allows for smooth
-        // scrolling and image transformation.
-
+        /**
+         * Glide is a open source library that allows a bitmap to be uploaded into
+         * an imageView without having out of memory problems. It also allows for smooth
+         * scrolling and image transformation.
+         */
         Glide.with(holder.mImageView.getContext())
                 .asBitmap()
                 .load(mSessionImage.get(position).first)
-                //.centerCrop()
                 .placeholder(R.drawable.loading_symbol2)
                 .transform(new ImageTransformation( 90))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.mImageView);
 
 
-        // Opens the Album activity
+        /** Opens the Album activity */
         holder.mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,7 +112,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
             }
         });
 
-        //  Sets the text just down below the image view\
+        /** Sets the text just down below the image view */
 
         String title = mSessionImage.get(position).second;
         String[] parts = title.split("_"); // Format title string and set title
@@ -101,7 +122,12 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 
     }
 
-
+    /**
+     * Function: getItemCount()
+     * Purpose: get count of images in session
+     * Parameters: none
+     * Return: number of images in session
+     */
     @Override
     public int getItemCount() {
 

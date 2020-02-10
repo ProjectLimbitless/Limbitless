@@ -3,17 +3,39 @@ package com.example.limbitlesssummerproject19;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/**
+ * File: MovingAverage.java
+ *
+ *
+ * This class computes a moving average from the streamed hardware sensor data.
+ *
+ */
 public class MovingAverage {
     private final Queue<float[]> Dataset = new LinkedList<float[]>();
-    // period is the size of the Dataset (in this case we have a set of 20 values being
-    // average all together
+    /**
+     * period is the size of the Dataset (in this case we have a set of 20 values being
+     * average all together
+     */
     private final float period;
     private float[] sum = new float[3];
 
+    /**
+     * Function: constructor
+     * Purpose: initialize a moving average object with a specified queue size
+     * Parameters: float period = the size of the queue (larger queue size = more accurate averages)
+     * Return: none
+     */
     public MovingAverage(float period) {
         this.period = period;
     }
 
+
+    /**
+     * Function: addData()
+     * Purpose: adds new hardware sensor data to the moving average queue
+     * Parameters: float[] vector = sensor data to be added to the moving average
+     * Return: none
+     */
     public void addData(float[] vector) {
         sum[0] += vector[0];
         sum[1] += vector[1];
@@ -25,8 +47,8 @@ public class MovingAverage {
             Dataset.add(vector);
         }
 
+        /** subtract the values about to be removed (if movingAverage is full*/
         if(Dataset.size() > period) {
-            //subtract the values about to be removed
             float[] ret = Dataset.remove();
             sum[0] -= ret[0];
             sum[1] -= ret[1];
@@ -34,8 +56,13 @@ public class MovingAverage {
         }
     }
 
-    // We take the average of the values and set it to answers. Then we return the array of
-    // average answers. Returns and array of floats
+
+    /**
+     * Function: getAverage()
+     * Purpose: takes the average of the values inside the queue
+     * Parameters: none
+     * Return: float[] = the average position value over all values in the queue
+     */
     public float[] getAverage() {
         float[] answer = new float[3];
         if(Dataset.size() < period) {
