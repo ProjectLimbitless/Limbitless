@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    Intent intent = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,14 +32,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // set listener
         btnStart.setOnClickListener(this);
         btnGallery.setOnClickListener(this);
-        btnTutorial.setOnClickListener( this);
+        btnTutorial.setOnClickListener(this);
 
     }
 
     @Override
     public void onClick(View view) {
 
-        Intent intent;
+
 
         switch (view.getId()) {
             case R.id.btn_to_start:
