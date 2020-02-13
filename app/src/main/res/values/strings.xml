@@ -34,6 +34,8 @@
     <string name="signInText">Sign In</string>
     <string name="projectLimbitlessTitle">Project Lim(b)itless</string>
     <string name="WelcomToText">Welcome to</string>
+    <string name="string_previous">Previous</string>
+    <string name="string_next_finish">Next</string>
 
 
 </resources>
