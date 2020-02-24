@@ -1,45 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
     android:layout_height="match_parent"
-    tools:context=".TutorialActivity">
+    android:background="#ffffff">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
         <android.support.v4.view.ViewPager
             android:id="@+id/pager"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1">
-
         </android.support.v4.view.ViewPager>
-
-        <LinearLayout
+        <View
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="horizontal"
-            android:layout_gravity="center"
-            android:background="#111111"
-            android:layout_weight="0.15"
-            android:gravity="center">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="@string/string_previous"/>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="@string/string_next_finish"/>
-        </LinearLayout>
-
+            android:layout_height="100dp"
+            android:background="#000000"
+            android:layout_weight="0.1">
+        </View>
     </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+
+    <FrameLayout
+        android:alpha="0"
+        android:id="@+id/dim"
+        android:fitsSystemWindows="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/dimBg" />
+
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/rootView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="48dp"
+        tools:context="com.example.slideup.SlideUpViewActivity">
+
+        <include layout="@layout/content_slide_up_view"
+            tools:visibility = "gone"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            app:fabSize="normal"
+            app:maxImageSize="35dp"
+            app:srcCompat="@drawable/ic_expand_tutorial_info" />
+
+    </android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>

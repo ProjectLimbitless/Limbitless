@@ -61,11 +61,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
-import java.util.Date;
-import java.util.Locale;
 
 /**
  * File: CameraActivity.java
@@ -75,6 +75,7 @@ import java.util.Locale;
  */
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class CameraActivity extends AppCompatActivity implements SensorEventListener{
+
 
 
    /**Button on camera preview to capture image */
@@ -97,9 +98,9 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
     public Handler mBackgroundHandler; /** to schedule actions to be executed at some point in the future */
     public HandlerThread mBackgroundThread; /** the thread associated with the handler */
 
-    public String directoryName;
-    public String sessionName;
-    public File session;
+    String directoryName;
+    String sessionName;
+    File session;
     private Semaphore mCameraOpenCloseLock = new Semaphore(1);
     private ImageReader mImageReader;
 
@@ -115,6 +116,7 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
     private int thousandsDigit = 0;
     private int mState = STATE_PREVIEW;
 
+
     private static final int MAX_PREVIEW_WIDTH = 1080;
     private static final int MAX_PREVIEW_HEIGHT = 1920;
     private static final int STATE_PREVIEW = 0;
@@ -123,17 +125,13 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
     private static final int STATE_WAITING_NON_PRECAPTURE = 3;
     private static final int STATE_PICTURE_TAKEN = 4;
 
-
-
     public Context context;
-
 
     private SensorManager sensorManager;
 
     private HandlerThread mSensorThread;
     private Handler mainHandler = new Handler();
     ImageButton startSession;
-
 
     private float[] avgAccelerometerData = new float[3];
     private float[] avgMagnetometerData = new float[3];
@@ -179,6 +177,8 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         View bottomView = findViewById(R.id.bottom_view);
         View leftView =  findViewById(R.id.left_view);
         View rightView = findViewById(R.id.right_view);
+        View buttonContainer = (View) findViewById(R.id.button_container);
+
 
         topView.getBackground().setAlpha(128);
         bottomView.getBackground().setAlpha(128);
@@ -186,7 +186,9 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         rightView.getBackground().setAlpha(128);
 
         /** set up paths to store photos */
+
         createDirectory();
+
 
         textureView.setSurfaceTextureListener(textureListener);
 
@@ -239,7 +241,7 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
      * Return: none
      */
     public void startTimer() {
-        CountDownTimer mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
+       new CountDownTimer(mTimeLeftInMillis, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 mTimeLeftInMillis = millisUntilFinished;
@@ -315,20 +317,13 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
      * Parameters: none
      * Return: none
      */
-    private void takePicture2(){
+    private void takePicture(){
         lockFocus();
     }
 
 
-
-    // creates a directory per session
-    /**
-     * Function: createDirectory()
-     * Purpose: creates a directory per photo capturing session
-     * Parameters: none
-     * Return: none
-     */
     public void  createDirectory(){
+
         directoryName = Environment.getExternalStorageDirectory() +
                 File.separator + "ProstheticFolder";
         File directory = new File( directoryName );
@@ -347,7 +342,6 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
 
         //May be necessary
 
-
         if ( null == files){
             sessionName = directoryName + File.separator + "Session 1";
             System.out.println("null under countFiles");
@@ -360,19 +354,18 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
             session.mkdirs();
         }
 
-        /** "yyyy_mm_dd_hh_mm" */
-        /** Get current date */
+        // "yyyy_mm_dd_hh_mm"//
+        // Get current date
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM_dd_yyyy_hh_mm",
                 Locale.getDefault());
         sessionName = directoryName + File.separator + dateFormat.format(new Date());
 
-        /** Save photos */
+        // Save photos
         session = new File(sessionName);
         if(!session.exists()) {
             session.mkdirs();
         }
     }
-
 
 
     /**
@@ -473,7 +466,7 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
      */
     private void createCameraPreviewSession()  {
         try {
-            /** surface textures capture frames from an image stream */
+            /** surface textures capture frames from an image stream **/
             SurfaceTexture texture = textureView.getSurfaceTexture();
             if (texture == null) {
                 throw new AssertionError();
@@ -762,28 +755,6 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
 
 
 
-    /**
-     * Function: updatePreview()
-     * Purpose:  never used?
-     * Parameters: none
-     * Return: none
-     */
-    private void updatePreview() throws CameraAccessException {
-        //returns if cameraDevice is null
-        if(cameraDevice == null) {
-            return;
-        }
-
-        //sets a capture request field to a value;
-        //sets control_mode field to control_mode_auto (auto-exposure, auto-white-balance, auto-focus)
-        mPreviewRequestBuilder.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO);
-
-        //request endlessly repeating capture of images by this capture session
-        mCaptureSession.setRepeatingRequest(mPreviewRequestBuilder.build(), null, mBackgroundHandler);
-    }
-
-
-
 
     /**
      * Function: openCamera()
@@ -802,12 +773,18 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
                 && ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(CameraActivity.this,
-                    new String[]{Manifest.permission.CAMERA,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    101);
-            return;
-        }
+                try {
+                    ActivityCompat.requestPermissions(CameraActivity.this,
+                        new String[]{Manifest.permission.CAMERA,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        101);
+                    return;
+                } catch( IllegalAccessError e ) {
+                    Log.e(TAG, "Camera failed to open!");
+                }
+            }
+
+
         setUpCameraOutputs(width,height);
         configureTransform(width,height);
 
@@ -1025,39 +1002,6 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
 
 
 
-    /**
-     * Function: newFile()
-     * Purpose: to generate a new file in the Android Phone Files
-     * Parameters: none
-     * Return: none
-     */
-    public void newFile(){
-        thousandsDigit++;
-
-        if( thousandsDigit > 9){
-            hundredsDigit++;
-            thousandsDigit = 0;
-        }
-
-        if(hundredsDigit > 9){
-            tenthDigit++;
-            hundredsDigit = 0;
-        }
-
-        int onesDigit = 0;
-        mFile = new File(sessionName + "/Image " + onesDigit +
-                tenthDigit + hundredsDigit + thousandsDigit + ".jpg");
-
-    }
-
-
-
-    /**
-     * Function:
-     * Purpose:
-     * Parameters:
-     * Return:
-     */
     private static class ImageSaver implements Runnable {
 
         /**
@@ -1104,6 +1048,32 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
 
     }
 
+
+
+    /**
+     * Function: newFile()
+     * Purpose: to generate a new file in the Android Phone Files
+     * Parameters: none
+     * Return: none
+     */
+    public void newFile(){
+        thousandsDigit++;
+
+        if( thousandsDigit > 9){
+            hundredsDigit++;
+            thousandsDigit = 0;
+        }
+
+        if(hundredsDigit > 9){
+            tenthDigit++;
+            hundredsDigit = 0;
+        }
+
+        int onesDigit = 0;
+        mFile = new File(sessionName + "/Image " + onesDigit +
+                tenthDigit + hundredsDigit + thousandsDigit + ".jpg");
+
+    }
 
 
     /**
@@ -1487,18 +1457,17 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
      * Return: none
      */
     private void sessionLoop() {
-        takePicture2();
+        takePicture();
         setCheckPoint();
 
+        // Check if the image is within the range before proceeding to take a picture
         new Thread(new Runnable() {
             @Override
             public void run() {
 
                 while (SWITCH) {
-                    //only moves forward to capture a photo if within pitch range
-
                     if (Math.abs(Math.abs(currentAvgOrientation[2]) - Math.abs(previousOrientation[2])) >= 0.1396263402) {
-                        takePicture2(); //helper function to take a picture when button is clicked
+                        takePicture(); //helper function to take a picture when button is clicked
                         setCheckPoint();
                     }
                 }

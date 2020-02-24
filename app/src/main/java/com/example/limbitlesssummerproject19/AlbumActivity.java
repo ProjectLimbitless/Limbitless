@@ -45,6 +45,7 @@ public class AlbumActivity extends AppCompatActivity {
 
     FirebaseStorage storage = FirebaseStorage.getInstance(); /**  Firebase storage references */
     StorageReference storageRef = storage.getReference();
+
     Context context;
     private FirebaseAuth mAuth; /** Auth object */
     RecyclerView albumGallery; /** RecyclerView declaration */
@@ -105,14 +106,18 @@ public class AlbumActivity extends AppCompatActivity {
 
         /** Push data to firebase storage */
         sendButton.setOnClickListener(new View.OnClickListener() {
+
             List<Task<Void>> myTasks = new ArrayList<>();
             @Override
             public void onClick(View v) {
+
+
+                // Create SendToFirebase class !
                 sendButton.setText("Sending...");
+
                 for (String f : album) {
                     final File image = new File(f);
                     Uri uri = Uri.fromFile(new File(f));
-
                     mAuth = FirebaseAuth.getInstance();
                     FirebaseUser user = mAuth.getCurrentUser();
                     String username = user.getDisplayName();
