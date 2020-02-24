@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.Slide;
 import android.view.Gravity;
@@ -36,6 +37,11 @@ public class TutorialActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutorial);
+
+        /** Setting back button to main activity */
+        ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         // What the hell is going on with mPager
         ViewPager mPager = findViewById(R.id.pager);
@@ -93,20 +99,18 @@ public class TutorialActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Function: onOptionsItemSelected()
+     * Purpose: Handles onClick on action bar
+     * Parameters: MenuItem item = the menu item being selected
+     * Return: success code of action
+     */
     public boolean onOptionsItemSelected(MenuItem item){
         Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
         startActivityForResult(myIntent, 0);
         return true;
     }
 
-//    @Override
-//    public void onClick(View view) {
-//
-//        Intent intent;
-//        if(view.getId() == R.id.left_button_tutorial){
-//            intent = new Intent(this, SlideUpViewActivity.class);
-//            this.startActivity(intent);
-//        }
-//
-//    }
+
+
 }
