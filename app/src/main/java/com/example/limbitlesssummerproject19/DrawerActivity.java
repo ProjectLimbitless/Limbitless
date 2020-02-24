@@ -1,4 +1,4 @@
-package com.example.limbitlesssummerproject19.camera;
+package com.example.limbitlesssummerproject19;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,9 +16,6 @@ import android.view.Menu;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.example.limbitlesssummerproject19.R;
-import com.example.limbitlesssummerproject19.gallery.GalleryActivity;
-import com.example.limbitlesssummerproject19.login.LoginActivityView;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -29,19 +26,17 @@ import com.google.firebase.auth.FirebaseUser;
 
 
 /**
- *  New MainActivity with side drawer support
+ * File: DrawerActivity.java
+ *
+ * This activity controls the function of the drawers on the application.
+ *
  */
-
 public class DrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private MenuItem setUserName;
-
-    // Auth object
-    private FirebaseAuth mAuth;
-
-    // Main activity objects
-    private ImageButton btnStart;  //Declaring btnStart as an instance of Button
+    private FirebaseAuth mAuth; /** Auth object */
+    private ImageButton btnStart;  /** Declaring btnStart as an instance of Button */
     private ImageButton btnGallery;
     private ImageButton btnTutorial;
 
@@ -50,22 +45,16 @@ public class DrawerActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
 
-        /**
-         * Set toolbar
-         */
+        /** Set toolbar */
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 
-        /**
-         * Set drawer layout
-         */
+        /** Set drawer layout */
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
 
-        /**
-         * Display username of logged-in user
-         */
+        /** Display username of logged-in user */
         Menu menu = navigationView.getMenu();
         setUserName = menu.findItem(R.id.nav_user);
         String username;
@@ -78,9 +67,7 @@ public class DrawerActivity extends AppCompatActivity
         }
         setUserName.setTitle(username);
 
-        /**
-         * Set drawer toggle
-         */
+        /** Set drawer toggle */
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -88,29 +75,23 @@ public class DrawerActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        /**
-         * Camera button
-         */
+        /** Camera button */
         btnStart = findViewById(R.id.btn_to_start);
         btnStart.setOnClickListener( new View.OnClickListener() {
 
             public void onClick(View view){
-
-                //On Click start button, we go to the start activity
+                /** On Click start button, we go to the start activity */
                 Intent intent = new Intent(DrawerActivity.this,
                         CameraActivity.class);
                 startActivity(intent);
             }
         });
 
-        /**
-         * Gallery Button
-         */
+        /** Gallery Button */
         btnGallery = findViewById(R.id.btn_to_gallery);
         btnGallery.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
-
                 Intent intent = new Intent(DrawerActivity.this,
                         GalleryActivity.class);
                 startActivity(intent);
@@ -118,15 +99,12 @@ public class DrawerActivity extends AppCompatActivity
             }
         });
 
-        /**
-         * Tutorial Button
-         */
+        /** Tutorial Button */
         btnTutorial = findViewById(R.id.btn_to_tutorial);
         btnTutorial.setOnClickListener( new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {
-
                 Toast.makeText(getApplicationContext(),"Tutorial Not Accessible",
                         Toast.LENGTH_SHORT).show();
 
@@ -137,7 +115,10 @@ public class DrawerActivity extends AppCompatActivity
 
 
     /**
-     * Closes drawer when "return" pressed
+     * Function: onBackPressed()
+     * Purpose: Closes drawer when "return" pressed
+     * Parameters: none
+     * Return: none
      */
     @Override
     public void onBackPressed() {
@@ -149,27 +130,36 @@ public class DrawerActivity extends AppCompatActivity
         }
     }
 
+
     /**
-     * Adds "settings" to action bar
+     * Function: onCreateOptionsMenu()
+     * Purpose: Adds "settings" to action bar
+     * Parameters: Menu menu = the menu to access
+     * Return: success code of action
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        /** Inflate the menu; this adds items to the action bar if it is present. */
         getMenuInflater().inflate(R.menu.drawer, menu);
         return true;
     }
 
+
     /**
-     * Handles onClick on action bar
+     * Function: onOptionsItemSelected()
+     * Purpose: Handles onClick on action bar
+     * Parameters: MenuItem item = the menu item being selected
+     * Return: success code of action
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+        /**
+         * Handle action bar item clicks here. The action bar will
+         * automatically handle clicks on the Home/Up button, so long
+         * as you specify a parent activity in AndroidManifest.xml. */
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+        /** noinspection SimplifiableIfStatement */
         if (id == R.id.action_settings) {
             return true;
         }
@@ -177,20 +167,22 @@ public class DrawerActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+
     /**
-     * Handles items selected from drawer
-     * (such as logout)
+     * Function: onNavigationItemSelected()
+     * Purpose: Handles items selected from drawer (such as logout)
+     * Parameters: MenuItem item = the menu item being selected
+     * Return: success code of action
      */
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+        /** Handle navigation view item clicks here. */
         int id = item.getItemId();
 
         if (id == R.id.nav_logout) {
-            // Sign out user using firebase
+            /** Sign out user using firebase */
             FirebaseAuth.getInstance().signOut();
-            // Sign out user using google sign out
+            /** Sign out user using google sign out */
             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                     .requestIdToken("479154573546-l7h3fmcrf3qsn9s4ll76q204egpjschb.apps.googleusercontent.com")
                     .build();
@@ -202,7 +194,7 @@ public class DrawerActivity extends AppCompatActivity
 
                         }
                     });
-            // Switch back to login page
+            /** Switch back to login page */
             Intent intent = new Intent(DrawerActivity.this,
                     LoginActivityView.class);
             startActivity(intent);

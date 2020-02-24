@@ -1,20 +1,25 @@
-package com.example.limbitlesssummerproject19.login;
+package com.example.limbitlesssummerproject19;
 
 import android.content.Context;
 import android.content.Intent;
-import com.example.limbitlesssummerproject19.camera.DrawerActivity;
 
+/**
+ * File: GuestModel.java
+ *
+ *
+ * Model class for a guest user.
+ *
+ */
 public class GuestModel implements LoginActivityMVPManager.guestModel {
 
-    private String name = "username";
-    private String password = "Guest";
+    /** empty constructor */
+    GuestModel() { }
 
-    // empty constructor
-    public GuestModel() { }
-
-    // starting activity as a guest user
+    /** starting activity as a guest user */
     public void starGuestActivity(LoginActivityMVPManager.View view) {
 
+        String password = "Guest";
+        String name = "username";
         Intent intent = new Intent((Context) view, DrawerActivity.class);
         intent.putExtra(name, password);
         ((Context) view).startActivity(intent);

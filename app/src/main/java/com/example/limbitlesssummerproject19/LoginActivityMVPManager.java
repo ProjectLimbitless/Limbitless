@@ -1,10 +1,17 @@
-package com.example.limbitlesssummerproject19.login;
+package com.example.limbitlesssummerproject19;
 
 import android.content.Intent;
 
+/**
+ * File: LoginActivityMVPManager.java
+ *
+ *
+ * Interface to implement for the login activity.
+ *
+ */
 public interface LoginActivityMVPManager {
 
-    // sign-in model
+    /** sign-in model */
     interface signInModel {
         
         void startSignInActivity(View view);
@@ -15,7 +22,7 @@ public interface LoginActivityMVPManager {
     }
 
 
-    // guest model
+    /** guest model */
     interface guestModel{
 
         void starGuestActivity( LoginActivityMVPManager.View view );
@@ -23,10 +30,10 @@ public interface LoginActivityMVPManager {
     }
 
 
-    // Noting to return to the view, but important to understand MVC
+    /** Noting to return to the view, but important to understand MVC */
     interface View { }
 
-    // Presenter controls the flow of calls between the model and view
+    /** Presenter controls the flow of calls between the model and view */
     interface Presenter{
 
         void guestUserSignInButtonClicked();

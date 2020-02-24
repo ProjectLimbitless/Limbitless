@@ -25,36 +25,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".camera.DrawerActivity"
+        <activity android:name=".TutorialActivity"></activity>
+        <activity
+            android:name=".DrawerActivity"
             android:label="@string/title_activity_drawer"
-            android:parentActivityName=".main.MainActivity"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.limbitlesssummerproject19.main.MainActivity" />
+                android:value="com.example.limbitlesssummerproject19.MainActivity" />
         </activity>
-        <activity android:name=".main.MainActivity"/>
-        <activity android:name=".login.LoginActivityView" >
+        <activity android:name=".MainActivity" />
+        <activity android:name=".LoginActivityView">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".camera.CameraActivity" />
-        <activity android:name=".gallery.GalleryActivity" />
-        <activity android:name=".gallery.album.AlbumActivity" />
-        <activity android:name=".gallery.album.FullImageActivity" />
+        <activity android:name=".CameraActivity" />
+        <activity android:name=".GalleryActivity" />
+        <activity android:name=".AlbumActivity" />
+        <activity android:name=".FullImageActivity" />
     </application>
 
 </manifest>
-
-<!--<activity-->
-<!--android:name=".DrawerActivity"-->
-<!--android:label="@string/title_activity_drawer"-->
-<!--android:parentActivityName=".MainActivity"-->
-<!--android:theme="@style/AppTheme.NoActionBar">-->
-<!--<meta-data-->
-    <!--android:name="android.support.PARENT_ACTIVITY"-->
-    <!--android:value="com.example.limbitlesssummerproject19.main.MainActivity" />-->
-<!--</activity>-->

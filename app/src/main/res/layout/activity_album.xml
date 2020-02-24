@@ -3,7 +3,6 @@
 
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="8dp"
@@ -62,33 +61,3 @@
     </RelativeLayout>
 
 </RelativeLayout>
-
-<!--<Button
-android:id="@+id/sendDataBtn"
-android:layout_width="80dp"
-android:layout_height="80dp"
-android:layout_alignParentBottom="true"
-android:layout_centerHorizontal="true"
-android:layout_marginBottom="10dp"
-android:background="@drawable/send_to_server_button"
-android:text="Send"
-android:fontFamily="@font/montserrat_regular"
-
-    <ImageButton
-            android:id="@+id/button_capture"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/picture_button"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/calibrate_sensor"
-            android:layout_toRightOf="@id/calibrate_sensor"/> />
-
-<TextView
-android:id="@+id/textView"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:layout_alignParentBottom="true"
-android:layout_centerRight="true"
-android:layout_marginBottom="41dp"
-android:text="Delete"
-tools:layout_centerHorizontal="false" />-->
