@@ -59,7 +59,7 @@ public class GalleryActivity extends AppCompatActivity {
      * Return: success code of action
      */
     public boolean onOptionsItemSelected(MenuItem item){
-        Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
+        Intent myIntent = new Intent(getApplicationContext(), DrawerActivity.class);
         startActivityForResult(myIntent, 0);
         return true;
     }

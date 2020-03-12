@@ -30,13 +30,13 @@
             android:layout_below="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             app:srcCompat="@drawable/ic_keyboard_arrow_down_black_24dp"
             android:id="@+id/imageView"
             android:layout_marginTop="4dp"/>
 
         <TextView
             android:layout_alignParentTop="true"
-            android:text="Slide it down"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/textView"

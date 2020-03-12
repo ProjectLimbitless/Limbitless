@@ -214,7 +214,6 @@ public class AlbumActivity extends AppCompatActivity {
             case R.id.return_button:
                 startActivity(new Intent(this, GalleryActivity.class));
                 return true;
-
             default:
                 return super.onOptionsItemSelected(item);
         }

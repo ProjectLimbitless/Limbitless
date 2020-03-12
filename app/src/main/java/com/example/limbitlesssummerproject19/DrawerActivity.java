@@ -105,9 +105,9 @@ public class DrawerActivity extends AppCompatActivity
 
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"Tutorial Not Accessible",
-                        Toast.LENGTH_SHORT).show();
-
+                Intent intent = new Intent(DrawerActivity.this,
+                        TutorialActivity.class);
+                startActivity(intent);
             }
         });
 
