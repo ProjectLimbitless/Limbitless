@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 
 /**
- * UPDATE: Functionality moved to DrawerActivity! This activity is essentially never executed
+ * UPDATE: Functionality moved to DrawActivity! This activity is essentially never executed
  * Main Activity is the first window that opens in the device.
  */
 

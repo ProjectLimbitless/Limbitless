@@ -157,7 +157,7 @@ public class SignInAsUserModel implements LoginActivityMVPManager.signInModel {
 
         FirebaseUser user = mAuthentication.getCurrentUser();
         System.out.println("Current user: "+ user.getDisplayName());
-        Intent intent = new Intent(((Context) view), DrawerActivity.class);
+        Intent intent = new Intent(((Context) view), DrawActivity.class);
         intent.putExtra("username", user.getDisplayName());
         ((Context) view).startActivity(intent);
     }

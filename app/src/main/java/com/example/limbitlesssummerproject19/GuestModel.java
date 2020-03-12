@@ -20,7 +20,7 @@ public class GuestModel implements LoginActivityMVPManager.guestModel {
 
         String password = "Guest";
         String name = "username";
-        Intent intent = new Intent((Context) view, DrawerActivity.class);
+        Intent intent = new Intent((Context) view, DrawActivity.class);
         intent.putExtra(name, password);
         ((Context) view).startActivity(intent);
 

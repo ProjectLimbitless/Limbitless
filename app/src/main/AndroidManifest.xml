@@ -27,7 +27,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".TutorialActivity"></activity>
         <activity
-            android:name=".DrawerActivity"
+            android:name=".DrawActivity"
             android:label="@string/title_activity_drawer"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">

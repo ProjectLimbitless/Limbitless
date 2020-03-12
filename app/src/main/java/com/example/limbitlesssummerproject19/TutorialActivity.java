@@ -1,15 +1,12 @@
 package com.example.limbitlesssummerproject19;
 
 import android.content.Intent;
-import android.media.Image;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.transition.Slide;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -54,7 +51,6 @@ public class TutorialActivity extends AppCompatActivity {
 
         final TextView text = findViewById(R.id.textView);
 
-
         final ImageAdapter adapter = new ImageAdapter(this);
 
 
@@ -95,9 +91,6 @@ public class TutorialActivity extends AppCompatActivity {
                 .withSlideFromOtherView(findViewById(R.id.rootView))
                 .build();
 
-
-
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -123,7 +116,7 @@ public class TutorialActivity extends AppCompatActivity {
      * Return: success code of action
      */
     public boolean onOptionsItemSelected(MenuItem item){
-        Intent myIntent = new Intent(getApplicationContext(), DrawerActivity.class);
+        Intent myIntent = new Intent(getApplicationContext(), DrawActivity.class);
         startActivityForResult(myIntent, 0);
         return true;
     }

@@ -1244,7 +1244,7 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
 
 
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent myIntent = new Intent(getApplicationContext(), DrawerActivity.class);
+        Intent myIntent = new Intent(getApplicationContext(), DrawActivity.class);
         startActivityForResult(myIntent, 0);
         return true;
     }
