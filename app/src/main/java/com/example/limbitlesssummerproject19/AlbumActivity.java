@@ -62,11 +62,6 @@ public class AlbumActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
 
-        /** Setting back button to main activity */
-        ActionBar actionBar = getActionBar();
-        assert actionBar != null;
-        actionBar.setDisplayHomeAsUpEnabled(true);
-
         /** Sets the activity album content */
         setContentView(R.layout.activity_album);
 
@@ -219,7 +214,6 @@ public class AlbumActivity extends AppCompatActivity {
             case R.id.return_button:
                 startActivity(new Intent(this, GalleryActivity.class));
                 return true;
-
             default:
                 return super.onOptionsItemSelected(item);
         }

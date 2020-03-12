@@ -1024,6 +1024,7 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
 
         @Override
         public void run() {
+            Log.d(TAG,"running in imagesaver");
             ByteBuffer buffer = mImage.getPlanes()[0].getBuffer();
             byte[] bytes = new byte[buffer.remaining()];
             buffer.get(bytes);
@@ -1087,12 +1088,16 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                Log.d(TAG,"running in showToast");
+
                 final Toast toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
                 toast.show();
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        Log.d(TAG,"running in postDelayed");
+
                         toast.cancel();
                     }
                 }, 300);
@@ -1239,7 +1244,7 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
 
 
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
+        Intent myIntent = new Intent(getApplicationContext(), DrawActivity.class);
         startActivityForResult(myIntent, 0);
         return true;
     }
@@ -1411,6 +1416,8 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         mainHandler.post(new Runnable() {
             @Override
             public void run() {
+                Log.d(TAG,"running in setStartingPosition");
+
                 boolean flag = true;
                 while(flag) {
                     if(Math.abs(currentAvgOrientation[1]) > 1.2) {
@@ -1464,6 +1471,8 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         new Thread(new Runnable() {
             @Override
             public void run() {
+                Log.d(TAG,"running in sessionLoop");
+
 
                 while (SWITCH) {
                     if (Math.abs(Math.abs(currentAvgOrientation[2]) - Math.abs(previousOrientation[2])) >= 0.1396263402) {

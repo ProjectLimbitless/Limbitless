@@ -14,7 +14,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -26,12 +25,12 @@ import com.google.firebase.auth.FirebaseUser;
 
 
 /**
- * File: DrawerActivity.java
+ * File: DrawActivity.java
  *
  * This activity controls the function of the drawers on the application.
  *
  */
-public class DrawerActivity extends AppCompatActivity
+public class DrawActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private MenuItem setUserName;
@@ -81,7 +80,7 @@ public class DrawerActivity extends AppCompatActivity
 
             public void onClick(View view){
                 /** On Click start button, we go to the start activity */
-                Intent intent = new Intent(DrawerActivity.this,
+                Intent intent = new Intent(DrawActivity.this,
                         CameraActivity.class);
                 startActivity(intent);
             }
@@ -92,7 +91,7 @@ public class DrawerActivity extends AppCompatActivity
         btnGallery.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
-                Intent intent = new Intent(DrawerActivity.this,
+                Intent intent = new Intent(DrawActivity.this,
                         GalleryActivity.class);
                 startActivity(intent);
 
@@ -105,9 +104,9 @@ public class DrawerActivity extends AppCompatActivity
 
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"Tutorial Not Accessible",
-                        Toast.LENGTH_SHORT).show();
-
+                Intent intent = new Intent(DrawActivity.this,
+                        TutorialActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -195,7 +194,7 @@ public class DrawerActivity extends AppCompatActivity
                         }
                     });
             /** Switch back to login page */
-            Intent intent = new Intent(DrawerActivity.this,
+            Intent intent = new Intent(DrawActivity.this,
                     LoginActivityView.class);
             startActivity(intent);
         }

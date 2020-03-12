@@ -37,5 +37,11 @@
     <string name="string_previous">Previous</string>
     <string name="string_next_finish">Next</string>
 
+    <string name="Test_1">testOne</string>
+    <string name="Test_2">testTwo</string>
+    <string name="Test_3">testThree</string>
+
+
+
 
 </resources>

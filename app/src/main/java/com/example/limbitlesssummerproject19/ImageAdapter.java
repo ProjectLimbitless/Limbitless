@@ -9,6 +9,8 @@ import android.widget.ImageView;
 
 public class ImageAdapter extends PagerAdapter {
 
+
+    private int imagePosition;
     private Context mContext;
     private int[] imageArray = new int [] {R.drawable.ic_360_leg,R.drawable.image2, R.drawable.image3,R.drawable.image4};
 
@@ -25,10 +27,12 @@ public class ImageAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
 
+        imagePosition = position;
         ImageView imageView = new ImageView(mContext);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         imageView.setImageResource(imageArray[position]);
         container.addView(imageView,0);
+
         return imageView;
 
     }
@@ -42,5 +46,11 @@ public class ImageAdapter extends PagerAdapter {
     public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
         return view == object;
     }
+
+    public int getImagePosition(){
+        return imagePosition;
+    }
+
+
 }
 

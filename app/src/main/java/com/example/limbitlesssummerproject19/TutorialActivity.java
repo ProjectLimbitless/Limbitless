@@ -2,16 +2,16 @@ package com.example.limbitlesssummerproject19;
 
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.transition.Slide;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mancj.slideup.SlideUp;
@@ -29,6 +29,7 @@ public class TutorialActivity extends AppCompatActivity {
     private View dim;
     private View sliderView;
     private FloatingActionButton fab;
+    private TextView text;
     Toast toast;
 
     Button button;
@@ -37,13 +38,21 @@ public class TutorialActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutorial);
 
+        /** Setting back button to main activity */
+        ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         // What the hell is going on with mPager
         ViewPager mPager = findViewById(R.id.pager);
-        PagerAdapter pagerAdapter = new ImageAdapter(this);
+        final PagerAdapter pagerAdapter = new ImageAdapter(this);
         mPager.setPageTransformer(true, new ZoomOutPageTransformer());
         mPager.setAdapter(pagerAdapter);
-//        button = findViewById(R.id.left_button_tutorial);
-//        button.setOnClickListener(this);
+
+        final TextView text = findViewById(R.id.textView);
+
+        final ImageAdapter adapter = new ImageAdapter(this);
+
 
         sliderView = findViewById(R.id.slideView);
         sliderView.setOnClickListener(new View.OnClickListener() {
@@ -57,7 +66,7 @@ public class TutorialActivity extends AppCompatActivity {
             }
         });
         dim = findViewById(R.id.dim);
-        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = findViewById(R.id.fab);
 
         slideUp = new SlideUpBuilder(sliderView)
                 .withListeners(new SlideUp.Listener.Events() {
@@ -68,7 +77,6 @@ public class TutorialActivity extends AppCompatActivity {
                             fab.hide();
                         }
                     }
-
                     @Override
                     public void onVisibilityChanged(int visibility) {
                         if (visibility == View.GONE){
@@ -86,6 +94,14 @@ public class TutorialActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if( adapter.getImagePosition() == 0 ){
+                    text.setText(R.string.Test_1);
+                } else if( adapter.getImagePosition() == 1){
+                    text.setText(R.string.Test_2);
+                } else if( adapter.getImagePosition() == 2){
+                    text.setText(R.string.Test_3);
+                }
                 slideUp.show();
             }
         });
@@ -93,20 +109,18 @@ public class TutorialActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Function: onOptionsItemSelected()
+     * Purpose: Handles onClick on action bar
+     * Parameters: MenuItem item = the menu item being selected
+     * Return: success code of action
+     */
     public boolean onOptionsItemSelected(MenuItem item){
-        Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
+        Intent myIntent = new Intent(getApplicationContext(), DrawActivity.class);
         startActivityForResult(myIntent, 0);
         return true;
     }
 
-//    @Override
-//    public void onClick(View view) {
-//
-//        Intent intent;
-//        if(view.getId() == R.id.left_button_tutorial){
-//            intent = new Intent(this, SlideUpViewActivity.class);
-//            this.startActivity(intent);
-//        }
-//
-//    }
+
+
 }
