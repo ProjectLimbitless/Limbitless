@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -154,10 +155,10 @@ public class SignInAsUserModel implements LoginActivityMVPManager.signInModel {
      * Return: none
      */
     private void updateUIAfterAuthentication() {
-
+        Log.d("SignInUserModel", "Does this work?");
         FirebaseUser user = mAuthentication.getCurrentUser();
         System.out.println("Current user: "+ user.getDisplayName());
-        Intent intent = new Intent(((Context) view), DrawActivity.class);
+        Intent intent = new Intent(((Context) view), MainActivity.class);
         intent.putExtra("username", user.getDisplayName());
         ((Context) view).startActivity(intent);
     }
