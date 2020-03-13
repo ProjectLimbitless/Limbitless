@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/ic_welcome_logo"
+    tools:context=".WelcomePage">
+
+    <RelativeLayout
+
+        android:id="@+id/relative"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/welcome_text_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="375dp"
+            android:textAlignment="textStart"
+            android:fontFamily="@font/open_sans_regular"
+            android:paddingStart="26dp"
+            android:paddingEnd="26dp"
+            android:textColor="#002D3F"
+            android:textSize="50sp" />
+
+        <Button
+            android:id="@+id/start_button"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/start_button_shape"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="26dp"
+            android:layout_marginBottom="52dp"
+            android:text="@string/start_text_welcome_activity"
+            android:textAllCaps="false"
+            android:onClick="startButton"
+            android:fontFamily="@font/open_sans_semibold"
+            android:textSize="25sp"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"/>
+
+        <TextView
+            android:id="@+id/ucsd_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="28dp"
+            android:paddingStart="26dp"
+            android:paddingEnd="26dp"
+            android:alpha="0.7"
+            android:text="@string/ucsd_text_welcome_page"
+            android:fontFamily="@font/lato_regular"
+            android:textColor="#002D3F"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>
