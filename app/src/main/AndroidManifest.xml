@@ -25,6 +25,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".CreateAccountActivity"></activity>
+        <activity android:name=".LoginActivity" />
         <activity android:name=".WelcomePage">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -43,7 +45,6 @@
                 android:value="com.example.limbitlesssummerproject19.MainActivity" />
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".LoginActivityView"></activity>
         <activity android:name=".CameraActivity" />
         <activity android:name=".GalleryActivity" />
         <activity android:name=".AlbumActivity" />
