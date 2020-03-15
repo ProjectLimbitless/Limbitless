@@ -23,6 +23,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 
 /**
  * File: DrawActivity.java
@@ -56,7 +58,7 @@ public class DrawActivity extends AppCompatActivity
         /** Display username of logged-in user */
         Menu menu = navigationView.getMenu();
         setUserName = menu.findItem(R.id.nav_user);
-        String username;
+        String username = null;
         try {
             mAuth = FirebaseAuth.getInstance();
             FirebaseUser user = mAuth.getCurrentUser();
@@ -195,7 +197,7 @@ public class DrawActivity extends AppCompatActivity
                     });
             /** Switch back to login page */
             Intent intent = new Intent(DrawActivity.this,
-                    LoginActivityView.class);
+                    LoginActivity.class);
             startActivity(intent);
         }
 

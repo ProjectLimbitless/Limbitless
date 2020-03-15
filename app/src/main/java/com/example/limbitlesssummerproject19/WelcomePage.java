@@ -34,7 +34,7 @@ public class WelcomePage extends AppCompatActivity {
 
     public void startButton(View view) {
 
-        Intent intent = new Intent(WelcomePage.this, LoginActivityView.class);
+        Intent intent = new Intent(WelcomePage.this, LoginActivity.class);
         this.startActivity(intent);
         this.overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
 
