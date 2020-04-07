@@ -1,10 +1,8 @@
 package com.example.limbitlesssummerproject19;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -22,9 +20,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
-import org.w3c.dom.Text;
 
 public class LoginActivity extends BaseAccountActivity {
 
@@ -40,7 +35,7 @@ public class LoginActivity extends BaseAccountActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login2);
+        setContentView(R.layout.activity_login);
 
         //Hiding the menu app bar
         getSupportActionBar().hide();
@@ -51,12 +46,8 @@ public class LoginActivity extends BaseAccountActivity {
 
         //Need a prograss bar
 
-        setProgressBar(R.id.progressBar);
-
         // Initialize firebase auth
         mAuth = FirebaseAuth.getInstance();
-
-        makeTextClickable("New to Lim[b]itless? Create an account.");
 
     }
 
@@ -143,26 +134,7 @@ public class LoginActivity extends BaseAccountActivity {
 
     }
 
-    private void makeTextClickable(String account) {
-
-        SpannableString ss = new SpannableString(account);
-        ClickableSpan clickableSpan = new ClickableSpan() {
-            @Override
-            public void onClick(View textView) {
-                startActivity(new Intent(LoginActivity.this, CreateAccountActivity.class));
-            }
-            @Override
-            public void updateDrawState(TextPaint ds) {
-                super.updateDrawState(ds);
-                ds.setUnderlineText(false);
-            }
-        };
-        ss.setSpan(clickableSpan, 21, account.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-        mCreateAccount.setText(ss);
-        mCreateAccount.setMovementMethod(LinkMovementMethod.getInstance());
-        mCreateAccount.setHighlightColor(Color.TRANSPARENT);
-
+    public void createAccount(View view) {
+        startActivity(new Intent(LoginActivity.this, CreateAccountActivity.class));
     }
-
 }
