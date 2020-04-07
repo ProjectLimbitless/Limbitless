@@ -20,17 +20,6 @@ public class WelcomePage extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
-        /*
-        TextView txt = findViewById(R.id.welcome_text_id);
-
-        String Amount="Welcome to LIM[B]ITLESS";
-        txt.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 55);
-        Spannable span = new SpannableString(Amount);
-        span.setSpan(new RelativeSizeSpan(0.8f), 0, 11,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        txt.setText(span);
-        */
-
     }
 
     public void startButton(View view) {
