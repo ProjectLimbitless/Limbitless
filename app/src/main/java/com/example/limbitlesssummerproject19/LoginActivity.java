@@ -27,7 +27,10 @@ public class LoginActivity extends BaseAccountActivity {
 
     private EditText mEmailField;
     private EditText mPassWordField;
+    private TextView mForgotPassword;
     private TextView mCreateAccount;
+
+
 
 
     private FirebaseAuth mAuth;
@@ -42,9 +45,8 @@ public class LoginActivity extends BaseAccountActivity {
 
         mEmailField = findViewById(R.id.email_text);
         mPassWordField = findViewById(R.id.password_text);
-        mCreateAccount =  findViewById(R.id.create_account_id);
-
-        //Need a prograss bar
+        mForgotPassword = findViewById(R.id.forgotPassword);
+        mCreateAccount = findViewById(R.id.create_account_id);
 
         // Initialize firebase auth
         mAuth = FirebaseAuth.getInstance();
@@ -59,22 +61,29 @@ public class LoginActivity extends BaseAccountActivity {
 
     }
 
+    public void logInToLimbitless(View view) {
+        String user_input_email = mEmailField.getText().toString().trim();
+        String user_input_password = mPassWordField.getText().toString();
+        signIn(user_input_email , user_input_password);
+
+    }
+
 
 
     private void signIn(String email, String password) {
         Log.d(TAG, "signIn:" + email);
 
-        if(!validForm()){
+        if(!validForm(email, password)){
             return;
         }
 
         showProgressBar();
 
         mAuth.signInWithEmailAndPassword(email,password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if ( task.isSuccessful()){
+                        if ( task.isSuccessful() ){
                             Log.d(TAG, "signInWithEmail:success");
                             Intent intent = new Intent(getApplicationContext(), DrawActivity.class);
                             startActivity(intent);
@@ -93,12 +102,11 @@ public class LoginActivity extends BaseAccountActivity {
     }
 
 
-    private boolean validForm() {
+    private boolean validForm(String email, String password) {
 
         boolean valid = true;
 
         // Checking if user entered email
-        String email = mEmailField.getText().toString();
         if(TextUtils.isEmpty(email)){
             mEmailField.setError("Requires email.");
             valid = false;
@@ -107,7 +115,6 @@ public class LoginActivity extends BaseAccountActivity {
         }
 
         // Checking if user entered password
-        String password = mPassWordField.getText().toString();
         if(TextUtils.isEmpty(password)){
             mPassWordField.setError("Password required!");
             valid = false;
@@ -128,13 +135,11 @@ public class LoginActivity extends BaseAccountActivity {
         this.overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
     }
 
-    public void logInToLimbitless(View view) {
-
-        signIn(mEmailField.getText().toString(),mPassWordField.getText().toString());
-
-    }
-
     public void createAccount(View view) {
         startActivity(new Intent(LoginActivity.this, CreateAccountActivity.class));
+    }
+
+    public void forgotPassword(View view) {
+        startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class));
     }
 }

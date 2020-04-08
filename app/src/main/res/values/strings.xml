@@ -44,6 +44,8 @@
     <string name="ucsd_text_welcome_page">Powered by UC San Diego</string>
     <string name="sign_in_into_your_account_text">Sign into your account</string>
     <string name="new_account_text">New to Lim[b]itless?</string>
+    <string name="title_activity_forgot_password">ForgotPasswordActivity</string>
+    <string name="create_an_account">Create an account</string>
 
 
 </resources>
