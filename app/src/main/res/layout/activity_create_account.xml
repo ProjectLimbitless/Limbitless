@@ -57,7 +57,7 @@
         app:layout_constraintTop_toBottomOf="@+id/create_an_account" />
 
     <EditText
-        android:id="@+id/username_text"
+        android:id="@+id/password_text"
         android:layout_width="330sp"
         android:layout_height="47sp"
         android:layout_marginStart="8dp"
@@ -66,10 +66,10 @@
         android:layout_marginBottom="8dp"
         android:background="@drawable/input_field"
         android:ems="10"
-        android:hint="Username"
-        android:inputType="textPersonName"
+        android:hint="Password"
+        android:inputType="textPassword"
         android:textColorHint="#002D3F"
-        app:layout_constraintBottom_toTopOf="@+id/password_text"
+        app:layout_constraintBottom_toTopOf="@+id/confirm_password_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
@@ -78,7 +78,7 @@
 
 
     <EditText
-        android:id="@+id/password_text"
+        android:id="@+id/confirm_password_text"
         android:layout_width="330sp"
         android:layout_height="47sp"
         android:layout_marginStart="8dp"
@@ -86,7 +86,7 @@
         android:layout_marginBottom="176dp"
         android:background="@drawable/input_field"
         android:ems="10"
-        android:hint="Password"
+        android:hint="Confirm Password"
         android:inputType="textPassword"
         android:textColorHint="#002D3F"
         app:layout_constraintBottom_toBottomOf="parent"

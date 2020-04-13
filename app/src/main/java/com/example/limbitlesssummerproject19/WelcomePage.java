@@ -27,7 +27,7 @@ public class WelcomePage extends AppCompatActivity {
         Intent intent = new Intent(WelcomePage.this, LoginActivity.class);
         this.startActivity(intent);
         this.overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
-
+        finish();
 
     }
 }
