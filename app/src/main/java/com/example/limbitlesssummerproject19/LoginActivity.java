@@ -30,9 +30,6 @@ public class LoginActivity extends BaseAccountActivity {
     private TextView mForgotPassword;
     private TextView mCreateAccount;
 
-
-
-
     private FirebaseAuth mAuth;
 
     @Override
@@ -52,8 +49,6 @@ public class LoginActivity extends BaseAccountActivity {
         mAuth = FirebaseAuth.getInstance();
 
     }
-
-
 
     @Override
     public void onStart() {

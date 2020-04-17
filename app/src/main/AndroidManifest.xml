@@ -31,7 +31,7 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".CreateAccountActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".LoginActivity"/>
         <activity android:name=".WelcomePage">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
