@@ -1,8 +1,8 @@
 package com.example.limbitlesssummerproject19;
 
 import android.graphics.Bitmap;
-import android.support.annotation.NonNull;
-import android.support.media.ExifInterface;
+import androidx.annotation.NonNull;
+import androidx.exifinterface.media.ExifInterface;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.bumptech.glide.load.resource.bitmap.TransformationUtils;

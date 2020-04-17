@@ -46,6 +46,8 @@
     <string name="new_account_text">New to Lim[b]itless?</string>
     <string name="title_activity_forgot_password">ForgotPasswordActivity</string>
     <string name="create_an_account">Create an account</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
 
 
 </resources>

@@ -28,7 +28,7 @@
         <activity
             android:name=".ForgotPasswordActivity"
             android:label="@string/title_activity_forgot_password"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".CreateAccountActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".LoginActivity"/>
@@ -41,15 +41,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".TutorialActivity" />
-        <activity
-            android:name=".DrawActivity"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.limbitlesssummerproject19.MainActivity" />
-        </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity"  android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".CameraActivity" />
         <activity android:name=".GalleryActivity" />
         <activity android:name=".AlbumActivity" />

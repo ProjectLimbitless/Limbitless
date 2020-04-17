@@ -12,12 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <android.support.v4.view.ViewPager
+        <androidx.viewpager.widget.ViewPager
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1">
-        </android.support.v4.view.ViewPager>
+        </androidx.viewpager.widget.ViewPager>
         <View
             android:layout_width="match_parent"
             android:layout_height="100dp"
@@ -36,7 +36,7 @@
         android:background="@color/dimBg" />
 
 
-    <android.support.design.widget.CoordinatorLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/rootView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
         <include layout="@layout/content_slide_up_view"
             tools:visibility = "gone"/>
 
-        <android.support.design.widget.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -57,5 +57,5 @@
             app:maxImageSize="35dp"
             app:srcCompat="@drawable/ic_expand_tutorial_info" />
 
-    </android.support.design.widget.CoordinatorLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </RelativeLayout>

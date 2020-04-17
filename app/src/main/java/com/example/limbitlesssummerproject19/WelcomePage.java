@@ -2,14 +2,9 @@ package com.example.limbitlesssummerproject19;
 
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.RelativeSizeSpan;
-import android.util.TypedValue;
 import android.view.View;
-import android.widget.TextView;
 
 public class WelcomePage extends AppCompatActivity {
 

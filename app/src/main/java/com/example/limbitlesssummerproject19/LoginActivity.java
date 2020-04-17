@@ -1,15 +1,10 @@
 package com.example.limbitlesssummerproject19;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 import android.os.Bundle;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.TextPaint;
 import android.text.TextUtils;
-import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -80,7 +75,7 @@ public class LoginActivity extends BaseAccountActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if ( task.isSuccessful() ){
                             Log.d(TAG, "signInWithEmail:success");
-                            Intent intent = new Intent(getApplicationContext(), DrawActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
                             overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
 
@@ -124,7 +119,7 @@ public class LoginActivity extends BaseAccountActivity {
         //Toast.makeText(getApplicationContext(), "Clickable worked",Toast.LENGTH_SHORT).show();
         String password = "Guest";
         String name = "username";
-        Intent intent = new Intent (this, DrawActivity.class);
+        Intent intent = new Intent (this, MainActivity.class);
         intent.putExtra(name, password);
         this.startActivity(intent);
         this.overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);

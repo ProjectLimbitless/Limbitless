@@ -1,13 +1,11 @@
 package com.example.limbitlesssummerproject19;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -37,7 +35,7 @@ public class CreateAccountActivity extends BaseAccountActivity implements View.O
         mAuth = FirebaseAuth.getInstance();
 
         if(mAuth.getCurrentUser() != null) {
-            startActivity(new Intent(getApplicationContext(), DrawActivity.class));
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
             finish();
         }
     }
@@ -112,7 +110,7 @@ public class CreateAccountActivity extends BaseAccountActivity implements View.O
     }
 
     private void goToMainMenuSignedIn() {
-        Intent intent = new Intent(getApplicationContext(), DrawActivity.class);
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
         finish();
         overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
