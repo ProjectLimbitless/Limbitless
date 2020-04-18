@@ -1,4 +1,4 @@
-package com.example.limbitlesssummerproject19;
+package com.example.limbitlesssummerproject19.Login;
 
 import android.content.Intent;
 
@@ -8,13 +8,16 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.limbitlesssummerproject19.BaseAccountActivity;
+import com.example.limbitlesssummerproject19.MainActivity;
+import com.example.limbitlesssummerproject19.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends BaseAccountActivity {
 
@@ -22,8 +25,6 @@ public class LoginActivity extends BaseAccountActivity {
 
     private EditText mEmailField;
     private EditText mPassWordField;
-    private TextView mForgotPassword;
-    private TextView mCreateAccount;
 
     private FirebaseAuth mAuth;
 
@@ -37,8 +38,6 @@ public class LoginActivity extends BaseAccountActivity {
 
         mEmailField = findViewById(R.id.email_text);
         mPassWordField = findViewById(R.id.password_text);
-        mForgotPassword = findViewById(R.id.forgotPassword);
-        mCreateAccount = findViewById(R.id.create_account_id);
 
         // Initialize firebase auth
         mAuth = FirebaseAuth.getInstance();
@@ -49,13 +48,21 @@ public class LoginActivity extends BaseAccountActivity {
     public void onStart() {
         super.onStart();
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if(user != null) {
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            finish();
+        }
+
     }
 
     public void logInToLimbitless(View view) {
         String user_input_email = mEmailField.getText().toString().trim();
         String user_input_password = mPassWordField.getText().toString();
         signIn(user_input_email , user_input_password);
-
+        mEmailField.getText().clear();
+        mPassWordField.getText().clear();
     }
 
 
@@ -78,6 +85,7 @@ public class LoginActivity extends BaseAccountActivity {
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
                             overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+                            finish();
 
                         } else{
                             Log.w(TAG, "signInWithEmail:failure", task.getException());

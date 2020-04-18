@@ -1,4 +1,4 @@
-package com.example.limbitlesssummerproject19;
+package com.example.limbitlesssummerproject19.Tutorial;
 
 import android.content.Context;
 import androidx.annotation.NonNull;
@@ -6,6 +6,8 @@ import androidx.viewpager.widget.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import com.example.limbitlesssummerproject19.R;
 
 public class ImageAdapter extends PagerAdapter {
 

@@ -1,4 +1,4 @@
-package com.example.limbitlesssummerproject19;
+package com.example.limbitlesssummerproject19.Album;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Pair;
 import android.view.MenuItem;
+import com.example.limbitlesssummerproject19.MainActivity;
+import com.example.limbitlesssummerproject19.R;
+
 import java.io.File;
 import java.util.ArrayList;
 

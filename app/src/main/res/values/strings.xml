@@ -48,6 +48,7 @@
     <string name="create_an_account">Create an account</string>
     <string name="open">open</string>
     <string name="close">close</string>
+    <string name="reset_password_text"> Please enter your email address. You will receive a link to reset your password shortly.</string>
 
 
 </resources>

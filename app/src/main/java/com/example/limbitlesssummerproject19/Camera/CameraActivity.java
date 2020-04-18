@@ -1,4 +1,4 @@
-package com.example.limbitlesssummerproject19;
+package com.example.limbitlesssummerproject19.Camera;
 
 import android.Manifest;
 import android.content.Context;
@@ -51,6 +51,10 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.limbitlesssummerproject19.MainActivity;
+import com.example.limbitlesssummerproject19.R;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileOutputStream;

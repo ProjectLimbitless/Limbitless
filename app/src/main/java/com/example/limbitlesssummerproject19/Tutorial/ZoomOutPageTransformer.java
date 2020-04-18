@@ -1,4 +1,4 @@
-package com.example.limbitlesssummerproject19;
+package com.example.limbitlesssummerproject19.Tutorial;
 
 import androidx.viewpager.widget.ViewPager;
 import android.view.View;

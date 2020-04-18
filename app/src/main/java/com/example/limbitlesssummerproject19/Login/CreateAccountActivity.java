@@ -1,4 +1,4 @@
-package com.example.limbitlesssummerproject19;
+package com.example.limbitlesssummerproject19.Login;
 
 import android.content.Intent;
 import androidx.annotation.NonNull;
@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.limbitlesssummerproject19.BaseAccountActivity;
+import com.example.limbitlesssummerproject19.MainActivity;
+import com.example.limbitlesssummerproject19.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -66,6 +69,9 @@ public class CreateAccountActivity extends BaseAccountActivity implements View.O
                 }
                 else {
                     Toast.makeText(getApplicationContext(), "Registration Failed.", Toast.LENGTH_SHORT).show();
+                    //mEmailText.getText().clear();
+                    mPasswordText.getText().clear();
+                    mConfirmPasswordText.getText().clear();
                 }
             }
         });

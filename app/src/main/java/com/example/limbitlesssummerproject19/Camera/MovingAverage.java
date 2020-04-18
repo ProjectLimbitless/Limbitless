@@ -1,4 +1,4 @@
-package com.example.limbitlesssummerproject19;
+package com.example.limbitlesssummerproject19.Camera;
 
 import java.util.LinkedList;
 import java.util.Queue;

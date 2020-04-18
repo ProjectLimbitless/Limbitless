@@ -1,4 +1,4 @@
-package com.example.limbitlesssummerproject19;
+package com.example.limbitlesssummerproject19.Album;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -18,6 +18,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.limbitlesssummerproject19.MainActivity;
+import com.example.limbitlesssummerproject19.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -61,6 +63,9 @@ public class AlbumActivity extends AppCompatActivity {
 
         /** Sets the activity album content */
         setContentView(R.layout.activity_album);
+
+        /** Setting back button to main activity */
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         /** Takes the content of the image */
@@ -192,11 +197,11 @@ public class AlbumActivity extends AppCompatActivity {
      * Parameters: Menu menu = the menu to inflate
      * Return: none
      */
-    public boolean onCreateOptionsMenu(Menu menu) {
+    /*public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_items, menu);
         return true;
-    }
+    }*/
 
 
     /**
@@ -206,13 +211,16 @@ public class AlbumActivity extends AppCompatActivity {
      * Return: none
      */
     public boolean onOptionsItemSelected(MenuItem item) {
-
+/*
         switch (item.getItemId()) {
             case R.id.return_button:
                 startActivity(new Intent(this, GalleryActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-        }
+        }*/
+        Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivityForResult(myIntent, 0);
+        return true;
     }
 }

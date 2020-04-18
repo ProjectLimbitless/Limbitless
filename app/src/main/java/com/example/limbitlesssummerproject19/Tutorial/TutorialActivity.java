@@ -1,6 +1,9 @@
-package com.example.limbitlesssummerproject19;
+package com.example.limbitlesssummerproject19.Tutorial;
 
 import android.content.Intent;
+
+import com.example.limbitlesssummerproject19.MainActivity;
+import com.example.limbitlesssummerproject19.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.os.Bundle;
 import androidx.viewpager.widget.PagerAdapter;

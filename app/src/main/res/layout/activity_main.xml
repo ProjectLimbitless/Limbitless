@@ -12,14 +12,10 @@
         android:layout_height="wrap_content"
         layout="@layout/drawer_toolbar"/>
 
-    <com.google.android.material.navigation.NavigationView
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:menu="@menu/drawer_menu"
-        android:id="@+id/navigation_view"
-        app:headerLayout="@layout/drawer_header"
-        android:layout_gravity= "start"
-        android:fitsSystemWindows="true"/>
+        android:id="@+id/fragment_container"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -131,5 +127,14 @@
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:menu="@menu/drawer_menu"
+        android:id="@+id/navigation_view"
+        app:headerLayout="@layout/drawer_header"
+        android:layout_gravity= "start"
+        android:fitsSystemWindows="true"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>

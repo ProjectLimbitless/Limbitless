@@ -1,4 +1,4 @@
-package com.example.limbitlesssummerproject19;
+package com.example.limbitlesssummerproject19.Album;
 
 import android.graphics.Bitmap;
 import androidx.annotation.NonNull;

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity"
+    tools:context=".Login.LoginActivity"
     android:background="@drawable/login_backdrop">
 
 
@@ -46,7 +46,7 @@
         android:background="@drawable/input_field"
         android:ems="10"
         android:hint="Email Address"
-        android:inputType="textPersonName"
+        android:inputType="textEmailAddress"
         android:textColorHint="#002D3F"
         app:layout_constraintBottom_toTopOf="@+id/password_text"
         app:layout_constraintEnd_toEndOf="parent"

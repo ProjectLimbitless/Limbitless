@@ -1,10 +1,12 @@
-package com.example.limbitlesssummerproject19;
+package com.example.limbitlesssummerproject19.Login;
 
 
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+
+import com.example.limbitlesssummerproject19.R;
 
 public class WelcomePage extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.example.limbitlesssummerproject19;
+package com.example.limbitlesssummerproject19.Camera;
 
 import android.content.Context;
 import android.util.AttributeSet;
