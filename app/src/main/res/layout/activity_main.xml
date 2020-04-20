@@ -1,131 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+    android:layout_width="match_parent"
+    tools:context=".MainActivity"
+    android:id="@+id/drawer_id">
 
-    <LinearLayout
-        android:id="@+id/new_session_layout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="#333333"
-        android:gravity="center"
-        android:orientation="vertical"
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/drawer_toolbar"/>
 
-        android:layout_marginBottom="1dp"
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fragment_container"/>
 
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/gallery_linear_layout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/text_display_username"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:baselineAligned="false"
-            android:fontFamily="@font/montserrat_regular"
-            android:paddingLeft="30dp"
-            android:text="Username"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            tools:visibility="visible" />
-
-        <ImageButton
-            android:id="@+id/btn_to_start"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
-            android:layout_gravity="center"
-            android:background="@drawable/new_session_button_selector"
-            android:scaleType="centerInside"
-            android:src="@drawable/new_session_circular"
-
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New Session"
-            android:fontFamily="@font/montserrat_regular"
-            android:layout_gravity="center"
-            android:textColor="@android:color/white"
-            android:textSize="30sp"/>
+        <LinearLayout
+            android:id="@+id/new_session_layout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_marginBottom="1dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/gallery_linear_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
 
-    </LinearLayout>
+            <ImageButton
+                android:id="@+id/btn_to_start"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:layout_gravity="center"
+                android:background="@drawable/new_session_button_selector"
+                android:scaleType="centerInside"
+                android:src="@drawable/new_session_circular" />
 
-    <LinearLayout
-        android:id="@+id/gallery_linear_layout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="1.0"
-        android:gravity="center"
-        android:background="#333333"
-        android:layout_marginRight="0.5dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/new_session_layout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/tutorial_linear_layout"
-        >
-
-        <ImageButton
-            android:id="@+id/btn_to_gallery"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:background="@drawable/gallery_tutorial_button_selector"
-            android:layout_gravity="center"
-            android:src="@drawable/gallery_circular"
-            android:scaleType="centerInside" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Gallery"
-            android:layout_gravity="center"
-            android:textColor="@android:color/white"
-            android:textSize="40sp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/tutorial_linear_layout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="1.0"
-        android:orientation="vertical"
-        android:background="#333333"
-        android:gravity="center"
-
-        android:layout_marginTop="1dp"
-        android:layout_marginLeft="0.5dp"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Session"
+                android:fontFamily="@font/montserrat_regular"
+                android:layout_gravity="center"
+                android:textColor="#002D3F"
+                android:textSize="30sp"/>
 
 
-        app:layout_constraintTop_toBottomOf="@id/new_session_layout"
-        app:layout_constraintStart_toEndOf="@id/gallery_linear_layout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        >
+        </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/btn_to_tutorial"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_gravity="center"
-            android:background="@drawable/gallery_tutorial_button_selector"
-            android:scaleType="fitCenter"
-            android:src="@drawable/tutorial_circular" />
+        <LinearLayout
+            android:id="@+id/gallery_linear_layout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1.0"
+            android:gravity="center"
+            android:layout_marginRight="0.5dp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/new_session_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tutorial_linear_layout"
+            >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tutorial"
-            android:layout_gravity="center"
-            android:textColor="@android:color/white"
-            android:textSize="40sp"/>
+            <ImageButton
+                android:id="@+id/btn_to_gallery"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:background="@drawable/gallery_tutorial_button_selector"
+                android:layout_gravity="center"
+                android:src="@drawable/gallery_circular"
+                android:scaleType="centerInside" />
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gallery"
+                android:layout_gravity="center"
+                android:textColor="#002D3F"
+                android:textSize="40sp" />
 
-</android.support.constraint.ConstraintLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tutorial_linear_layout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1.0"
+            android:orientation="vertical"
+            android:gravity="center"
+
+            android:layout_marginTop="1dp"
+            android:layout_marginLeft="0.5dp"
+
+
+            app:layout_constraintTop_toBottomOf="@id/new_session_layout"
+            app:layout_constraintStart_toEndOf="@id/gallery_linear_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
+
+            <ImageButton
+                android:id="@+id/btn_to_tutorial"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:background="@drawable/gallery_tutorial_button_selector"
+                android:scaleType="fitCenter"
+                android:src="@drawable/tutorial_circular" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tutorial"
+                android:layout_gravity="center"
+                android:textColor="#002D3F"
+                android:textSize="40sp"/>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:menu="@menu/drawer_menu"
+        android:id="@+id/navigation_view"
+        app:headerLayout="@layout/drawer_header"
+        android:layout_gravity= "start"
+        android:fitsSystemWindows="true"/>
+
+</androidx.drawerlayout.widget.DrawerLayout>

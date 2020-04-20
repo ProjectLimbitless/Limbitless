@@ -33,7 +33,7 @@
     <string name="guestText">Continue as Guest</string>
     <string name="signInText">Sign In</string>
     <string name="projectLimbitlessTitle">Project Lim(b)itless</string>
-    <string name="WelcomToText">Welcome to</string>
+    <string name="WelcomeToText">Welcome to</string>
     <string name="string_previous">Previous</string>
     <string name="string_next_finish">Next</string>
 
@@ -43,7 +43,12 @@
     <string name="start_text_welcome_activity">Start</string>
     <string name="ucsd_text_welcome_page">Powered by UC San Diego</string>
     <string name="sign_in_into_your_account_text">Sign into your account</string>
-    <string name="new_account_text">New to Lim[b]itless? Create an account.</string>
+    <string name="new_account_text">New to Lim[b]itless?</string>
+    <string name="title_activity_forgot_password">ForgotPasswordActivity</string>
+    <string name="create_an_account">Create an account</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
+    <string name="reset_password_text"> Please enter your email address. You will receive a link to reset your password shortly.</string>
 
 
 </resources>

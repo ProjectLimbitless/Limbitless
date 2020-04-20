@@ -1,77 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/ic_welcome_background"
-    tools:context=".WelcomePage">
+    android:background="@drawable/welcome_background"
+    tools:context=".Login.WelcomePage">
 
-    <RelativeLayout
-
-        android:id="@+id/relative"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
+    <TextView
+        android:id="@+id/welcome_text_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/open_sans_regular"
+        android:text="@string/WelcomeToText"
+        android:textAlignment="textStart"
+        android:textColor="#002D3F"
+        android:textSize="50sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/app_name"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.597" />
+
+
+    <TextView
+        android:id="@+id/app_name"
+        android:layout_width="352sp"
+        android:layout_height="90sp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/open_sans_regular"
+        android:text="@string/app_name"
+        android:textAlignment="textStart"
+        android:textColor="#002D3F"
+        android:textSize="60sp"
+        app:layout_constraintBottom_toTopOf="@+id/start_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/start_button"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.9" />
+
+    <TextView
+        android:id="@+id/ucsd_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/lato_regular"
+        android:text="@string/ucsd_text_welcome_page"
+        android:textColor="#707070"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.066"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.94" />
 
+    <Button
+        android:id="@+id/start_button"
+        android:layout_width="145sp"
+        android:layout_height="47sp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/start_button_shape"
+        android:onClick="startButton"
+        android:text="@string/start_text_welcome_activity"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/ucsd_id"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.07"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.982" />
 
-        <ImageView
-            android:layout_width="350dp"
-            android:layout_height="280dp"
-            android:layout_marginStart="35dp"
-            android:layout_marginTop="100dp"
-            android:background="@drawable/ic_login_people_background">
-        </ImageView>
-
-        <TextView
-            android:id="@+id/welcome_text_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="375dp"
-            android:textAlignment="textStart"
-            android:fontFamily="@font/open_sans_regular"
-            android:paddingStart="26dp"
-            android:paddingEnd="26dp"
-            android:textColor="#002D3F"
-            android:textSize="50sp" />
-
-        <Button
-            android:id="@+id/start_button"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/start_button_shape"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="26dp"
-            android:layout_marginBottom="56dp"
-            android:text="@string/start_text_welcome_activity"
-            android:textAllCaps="false"
-            android:onClick="startButton"
-            android:fontFamily="@font/open_sans_semibold"
-            android:textSize="25sp"
-            android:textAlignment="center"
-            android:textColor="#FFFFFF"/>
-
-        <TextView
-            android:id="@+id/ucsd_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginBottom="28dp"
-            android:paddingStart="26dp"
-            android:paddingEnd="26dp"
-            android:alpha="0.7"
-            android:text="@string/ucsd_text_welcome_page"
-            android:fontFamily="@font/lato_regular"
-            android:textColor="#002D3F"
-            android:textSize="15sp" />
-
-    </RelativeLayout>
-
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
