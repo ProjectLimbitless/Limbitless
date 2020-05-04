@@ -25,11 +25,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ProfileActivity"/>
+        <activity android:name=".Navigation_Drawer.AboutUsActivity"></activity>
+        <activity android:name=".Navigation_Drawer.PrivacyPolicyActivity" />
+        <activity android:name=".Navigation_Drawer.LanguageActivity" />
+        <activity android:name=".Navigation_Drawer.ProfileActivity" />
         <activity
             android:name=".Login.ForgotPasswordActivity"
             android:label="@string/title_activity_forgot_password"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            />
         <activity
             android:name=".Login.CreateAccountActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -46,7 +50,8 @@
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Camera.CameraActivity" />
+        <activity android:name=".Camera.CameraActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".Album.GalleryActivity" />
         <activity android:name=".Album.AlbumActivity" />
         <activity android:name=".Album.FullImageActivity" />
