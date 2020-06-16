@@ -59,14 +59,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mAuth = FirebaseAuth.getInstance();
 
         // initializing variables
-        ImageButton btnStart = findViewById(R.id.btn_to_start);
-        ImageButton btnGallery = findViewById(R.id.btn_to_gallery);
-        ImageButton btnTutorial = findViewById(R.id.btn_to_tutorial);
+        ImageButton cameraButton = findViewById(R.id.camera_button);
+        ImageButton galleryButton = findViewById(R.id.album_button);
+        ImageButton tutorialButton = findViewById(R.id.tutorial_button);
 
         // set listener
-        btnStart.setOnClickListener(this);
-        btnGallery.setOnClickListener(this);
-        btnTutorial.setOnClickListener(this);
+        cameraButton.setOnClickListener(this);
+        galleryButton.setOnClickListener(this);
+        tutorialButton.setOnClickListener(this);
 
         drawerLayout = findViewById(R.id.drawer_id);
         toolbar = findViewById(R.id.toolbar);
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btn_to_start:
+            case R.id.camera_button:
                 Log.d(TAG, "btn start called");
 
 
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 this.startActivity(intent);
                 break;
 
-            case R.id.btn_to_gallery:
+            case R.id.album_button:
 
                 Log.d(TAG, "btn gallery called");
 
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 this.startActivity(intent);
                 break;
 
-            case R.id.btn_to_tutorial:
+            case R.id.tutorial_button:
 
                 Log.d(TAG, "btn tutorial called");
 

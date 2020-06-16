@@ -52,8 +52,10 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Camera.CameraActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".Album.GalleryActivity" />
-        <activity android:name=".Album.AlbumActivity" />
+        <activity android:name=".Album.GalleryActivity"
+            android:theme="@style/AppTheme.Gallery"/>
+        <activity android:name=".Album.AlbumActivity"
+            android:theme="@style/AppTheme.Gallery"/>
         <activity android:name=".Album.FullImageActivity" />
     </application>
 
