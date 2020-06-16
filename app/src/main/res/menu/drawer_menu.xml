@@ -4,7 +4,19 @@
 
     <item
         android:id="@+id/drawer_profile"
-        android:title="Profile" />
+        android:title="My Profile" />
+
+    <item
+        android:id="@+id/drawer_language"
+        android:title="Language"/>
+
+    <item
+        android:id="@+id/drawer_privacy"
+        android:title="Privacy"/>
+
+    <item
+        android:id="@+id/drawer_about"
+        android:title="About Us"/>
 
     <item
         android:id="@+id/drawer_logout"

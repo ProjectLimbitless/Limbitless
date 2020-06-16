@@ -11,22 +11,22 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.limbitlesssummerproject19.Album.GalleryActivity;
 import com.example.limbitlesssummerproject19.Camera.CameraActivity;
 import com.example.limbitlesssummerproject19.Login.LoginActivity;
+import com.example.limbitlesssummerproject19.Navigation_Drawer.AboutUsActivity;
+import com.example.limbitlesssummerproject19.Navigation_Drawer.LanguageActivity;
+import com.example.limbitlesssummerproject19.Navigation_Drawer.PrivacyPolicyActivity;
+import com.example.limbitlesssummerproject19.Navigation_Drawer.ProfileActivity;
 import com.example.limbitlesssummerproject19.Tutorial.TutorialActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import java.sql.SQLOutput;
 
 
 /**
@@ -51,13 +51,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private View headerView;
     private TextView mUserEmail;
 
-    //drawer content
-    private MenuItem mProfileItem;
-    private MenuItem mLogoutItem;
-
-    private int profile_index = 0;
-    private int logout_index = 1;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,14 +59,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mAuth = FirebaseAuth.getInstance();
 
         // initializing variables
-        ImageButton btnStart = findViewById(R.id.btn_to_start);
-        ImageButton btnGallery = findViewById(R.id.btn_to_gallery);
-        ImageButton btnTutorial = findViewById(R.id.btn_to_tutorial);
+        ImageButton cameraButton = findViewById(R.id.camera_button);
+        ImageButton galleryButton = findViewById(R.id.album_button);
+        ImageButton tutorialButton = findViewById(R.id.tutorial_button);
 
         // set listener
-        btnStart.setOnClickListener(this);
-        btnGallery.setOnClickListener(this);
-        btnTutorial.setOnClickListener(this);
+        cameraButton.setOnClickListener(this);
+        galleryButton.setOnClickListener(this);
+        tutorialButton.setOnClickListener(this);
 
         drawerLayout = findViewById(R.id.drawer_id);
         toolbar = findViewById(R.id.toolbar);
@@ -89,20 +82,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         navigationView.setNavigationItemSelectedListener(this);
 
-
-        /*navigationView.getMenu().findItem(R.id.drawer_logout).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                userLogOut();
-                return false;
-            }
-        });*/
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btn_to_start:
+            case R.id.camera_button:
                 Log.d(TAG, "btn start called");
 
 
@@ -110,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 this.startActivity(intent);
                 break;
 
-            case R.id.btn_to_gallery:
+            case R.id.album_button:
 
                 Log.d(TAG, "btn gallery called");
 
@@ -118,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 this.startActivity(intent);
                 break;
 
-            case R.id.btn_to_tutorial:
+            case R.id.tutorial_button:
 
                 Log.d(TAG, "btn tutorial called");
 
@@ -162,6 +147,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.drawer_profile:
                 startProfileActivity();
                 break;
+
+            case R.id.drawer_language:
+                startLanguageActivity();
+                break;
+
+
+            case R.id.drawer_privacy:
+                startPrivacyPolicyActivity();
+                break;
+
+            case R.id.drawer_about:
+                startAboutActivity();
+                break;
         }
 
         closeDrawer();
@@ -169,9 +167,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 
+    private void startLanguageActivity() {
+        startActivity(new Intent(MainActivity.this, LanguageActivity.class));
+        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+    }
+
+    private void startPrivacyPolicyActivity() {
+        startActivity(new Intent(MainActivity.this, PrivacyPolicyActivity.class));
+        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+    }
+
+    private void startAboutActivity() {
+        startActivity(new Intent(MainActivity.this, AboutUsActivity.class));
+        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+    }
+
     private void startProfileActivity() {
         startActivity(new Intent(MainActivity.this, ProfileActivity.class));
-        //finish();
         overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
     }
 
