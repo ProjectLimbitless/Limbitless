@@ -1,63 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:weightSum="0"
+    android:background="@color/mainWhite">
 
-
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="8dp"
-        android:paddingTop="8dp"
-        android:paddingRight="8dp"
-        android:weightSum="0"
-        android:background="#333333"
-        >
+        android:columnWidth="172dp"
+        android:gravity="center"
+        android:horizontalSpacing="8dp"
+        android:verticalSpacing="8dp"
+        android:numColumns="auto_fit"
+        android:stretchMode="columnWidth" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:columnWidth="172dp"
-            android:gravity="center"
-            android:horizontalSpacing="8dp"
-            android:verticalSpacing="8dp"
-            android:numColumns="auto_fit"
-            android:stretchMode="columnWidth"
-            />
-
-
-    <RelativeLayout
-
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center">
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        android:id="@+id/bottom_nav">
 
-
-        <Button
-            android:id="@+id/sendDataBtn"
-            android:layout_width="64dp"
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/delete_album"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerInParent="true"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/send_to_server_button"
-            android:text="Send" />
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/delete_album_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/star_album"
+            app:layout_constraintHorizontal_bias="0.101"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/star_album"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/star_album_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.525"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
-        <TextView
-            android:id="@+id/deleteBtn"
-            android:layout_width="40dp"
-            android:layout_height="38dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="31dp"
-            android:layout_marginLeft="31dp"
-            android:layout_marginBottom="20dp"
-            android:layout_toEndOf="@+id/sendDataBtn"
-            android:layout_toRightOf="@+id/sendDataBtn"
-            android:background="@drawable/delete_btn_white"
-            android:clickable="true"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp" />
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/send_album"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/send_album_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.925"
+            app:layout_constraintStart_toEndOf="@+id/star_album"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+        
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </RelativeLayout>
 
 </RelativeLayout>

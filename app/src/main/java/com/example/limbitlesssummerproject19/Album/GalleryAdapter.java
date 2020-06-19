@@ -32,13 +32,18 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
     private Context mContext;
     private ArrayList<Pair<String, String>> mSessionImage;
     private File[] files;
+    private String starredFlag;
 
     /** Creates a constructor for the gallery */
-    GalleryAdapter(Context mContext, ArrayList<Pair<String, String>> mImageList, File[] files) {
+    GalleryAdapter(Context mContext, ArrayList<Pair<String, String>> mImageList, File[] files, String starred) {
 
         this.mContext = mContext;
         this.mSessionImage = mImageList;
         this.files = files;
+
+        if(starred != null) {
+            this.starredFlag = starred;
+        }
     }
 
 
@@ -105,6 +110,10 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 
                 Intent intent = new Intent(mContext, AlbumActivity.class);
                 intent.putExtra("fileName", files[position].getAbsolutePath());
+                if(starredFlag != null) {
+                    intent.putExtra("starredFlag", "starred");
+                }
+
                 mContext.startActivity(intent);
             }
         });

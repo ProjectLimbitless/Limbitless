@@ -46,7 +46,7 @@ dependencies {
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
 
     // Drawer
-    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'com.google.android.material:material:1.2.0-alpha02'
 
 
     // SDKs for the Firebase products you want to use in your app

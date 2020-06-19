@@ -166,9 +166,6 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
-        /** Setting back button to main activity */
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         context = this;
         textureView = findViewById(R.id.texture);
 

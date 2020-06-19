@@ -26,6 +26,12 @@ class InternalStorage {
     private String directoryName = Environment.getExternalStorageDirectory() + File.separator +
             "ProstheticFolder";
 
+    public InternalStorage(String dirName) {
+        if(dirName != null) {
+            directoryName = Environment.getExternalStorageDirectory() + File.separator +
+                    "StarredProstheticFolder";
+        }
+    }
 
     ArrayList<Pair<String, String>> getListFromFiles(Context context, File[] files) {
         try {

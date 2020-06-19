@@ -4,21 +4,187 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileActivity">
+    tools:context=".Navigation_Drawer.ProfileActivity">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/profile_name_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Profile Info Here"
+        android:layout_marginBottom="4dp"
         android:fontFamily="@font/open_sans_regular"
+        android:text="Name"
         android:textColor="#002D3F"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/profile_name"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/profile_name" />
+
+    <EditText
+        android:id="@+id/profile_name"
+        android:layout_width="330sp"
+        android:layout_height="47sp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="96dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/input_field"
+        android:ems="10"
+        android:hint="John Smith"
+        android:inputType="textEmailAddress"
+        android:textColorHint="#002D3F"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/profile_gender_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="4dp"
+        android:text="Gender"
+        android:fontFamily="@font/open_sans_regular"
+        android:textColor="#002D3F"
+        app:layout_constraintBottom_toTopOf="@+id/profile_gender"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/profile_name" />
+
+    <EditText
+        android:id="@+id/profile_gender"
+        android:layout_width="330sp"
+        android:layout_height="47sp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/input_field"
+        android:ems="10"
+        android:hint="Gender"
+        android:inputType="textEmailAddress"
+        android:textColorHint="#002D3F"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_name" />
+
+    <TextView
+        android:id="@+id/profile_DOB_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="4dp"
+        android:text="Date of Birth"
+        android:fontFamily="@font/open_sans_regular"
+        android:textColor="#002D3F"
+        app:layout_constraintBottom_toTopOf="@+id/profile_DOB"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/profile_name" />
+
+    <EditText
+        android:id="@+id/profile_DOB"
+        android:layout_width="330sp"
+        android:layout_height="47sp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/input_field"
+        android:ems="10"
+        android:hint="Date of Birth"
+        android:inputType="textEmailAddress"
+        android:textColorHint="#002D3F"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_gender" />
+
+    <TextView
+        android:id="@+id/profile_email_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="4dp"
+        android:text="Gender"
+        android:fontFamily="@font/open_sans_regular"
+        android:textColor="#002D3F"
+        app:layout_constraintBottom_toTopOf="@+id/profile_email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/profile_name" />
+
+    <EditText
+        android:id="@+id/profile_email"
+        android:layout_width="330sp"
+        android:layout_height="47sp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/input_field"
+        android:ems="10"
+        android:hint="Email Address"
+        android:inputType="textEmailAddress"
+        android:textColorHint="#002D3F"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_DOB" />
+
+    <TextView
+        android:id="@+id/profile_updatePassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="176dp"
+        android:clickable="true"
+        android:fontFamily="@font/lato_regular"
+        android:onClick="updatePassword"
+        android:text="update your password?"
+        android:textColor="#D21D3C"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/profile_email"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_email"
+        app:layout_constraintVertical_bias="0.22" />
+
+    <TextView
+        android:id="@+id/profile_updatePassword_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/lato_regular"
+        android:text="Want to"
+        android:textColor="#707070"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/profile_updatePassword"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/profile_updatePassword"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="217sp"
+        android:layout_height="47sp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/update_profile_button"
+        android:fontFamily="@font/open_sans_semibold"
+        android:gravity="center"
+        android:onClick="updateProfile"
+        android:text="Update Profile"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/profile_email"
+        app:layout_constraintTop_toBottomOf="@+id/profile_email"
+        app:layout_constraintVertical_bias="0.688" />
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,15 +2,21 @@ package com.example.limbitlesssummerproject19.Album;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
+
 import android.util.Pair;
 import android.view.MenuItem;
 import com.example.limbitlesssummerproject19.MainActivity;
 import com.example.limbitlesssummerproject19.R;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -24,36 +30,50 @@ import java.util.ArrayList;
  */
 public class GalleryActivity extends AppCompatActivity {
 
-    /** Instantiating InternalStorage class */
-    InternalStorage internalStorage = new InternalStorage();
+    /**
+     * Instantiating InternalStorage class
+     */
+    //InternalStorage internalStorage = new InternalStorage();
+
+    private FragmentAllAlbums allAlbumsFragment;
+    private FragmentStarredAlbums starredAlbumsFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
 
-        /** Setting back button to main activity */
+        // Setting back button to main activity
         ActionBar actionBar = getSupportActionBar();
-        assert actionBar != null;
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        //assert actionBar != null;
+        //actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("Gallery");
 
 
-        /** Creating a list of file from internal storage */
-        File[] files = internalStorage.getFilesFromInternalStorage( this );
-        ArrayList<Pair<String, String>> sessionFiles = internalStorage.getListFromFiles(this, files);
+        ViewPager2 viewPager2 = findViewById(R.id.viewpage);
+        viewPager2.setAdapter(new GalleryPagerAdapter(this));
 
+        TabLayout tabLayout = findViewById(R.id.tablayout);
+        TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(tabLayout, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
+            @Override
+            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                switch(position) {
+                    case 0: {
+                        tab.setText("All");
+                        break;
+                    }
+                    case 1: {
+                        tab.setText("Starred");
+                        break;
+                    }
+                }
+            }
+        });
+        tabLayoutMediator.attach();
 
-        /** Creates a grid layout of two columns to display the images */
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
-
-
-        /** Uses RecyclerView to inflate the images in the position and recycle the child view */
-        RecyclerView adapter = findViewById(R.id.recycle_view);
-        adapter.setLayoutManager(gridLayoutManager);
-        GalleryAdapter recyclerAdapter = new GalleryAdapter(this, sessionFiles, files);
-        adapter.setAdapter(recyclerAdapter);
 
     }
+
 
     /**
      * Function: onOptionsItemSelected()
@@ -61,10 +81,10 @@ public class GalleryActivity extends AppCompatActivity {
      * Parameters: MenuItem item = the menu item being selected
      * Return: success code of action
      */
-    public boolean onOptionsItemSelected(MenuItem item){
+    /*
+    public boolean onOptionsItemSelected(MenuItem item) {
         Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
         startActivityForResult(myIntent, 0);
         return true;
-    }
-
+    }*/
 }

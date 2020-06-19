@@ -49,6 +49,7 @@
     <string name="open">open</string>
     <string name="close">close</string>
     <string name="reset_password_text"> Please enter your email address. You will receive a link to reset your password shortly.</string>
+    <string name="lorem_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum dignissim lacus sed arcu efficitur, eu eleifend nisi elementum. Aliquam laoreet tellus in enim convallis venenatis. Cras consequat sed lectus sit amet rhoncus. Integer scelerisque lectus id blandit tempus. Morbi condimentum sodales rutrum. Nullam cursus, tortor ut faucibus eleifend, augue magna eleifend metus, nec dapibus nunc lectus sit amet quam. Nam molestie sapien ac odio convallis semper. Integer a erat ultricies sem tincidunt dapibus ut in ex. Pellentesque ut ex ut lacus fermentum facilisis et iaculis enim.Quisque non tempus lacus. Phasellus consectetur, est eu auctor venenatis, nisl odio ultrices arcu, at dictum dolor tellus quis quam. </string>
 
 
 </resources>
