@@ -10,6 +10,7 @@ import android.graphics.Matrix;
 import android.graphics.Point;
 import android.graphics.RectF;
 import android.graphics.SurfaceTexture;
+import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -34,6 +35,7 @@ import android.os.HandlerThread;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
@@ -49,9 +51,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.limbitlesssummerproject19.Album.GalleryActivity;
+import com.example.limbitlesssummerproject19.Login.LoginActivity;
+import com.example.limbitlesssummerproject19.Login.WelcomePage;
 import com.example.limbitlesssummerproject19.MainActivity;
 import com.example.limbitlesssummerproject19.R;
 
@@ -160,6 +166,15 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
     private TextView mTextViewCountdown;
     private long mTimeLeftInMillis = START_TIME_IN_MILLIS;
 
+    View transparentView;
+
+    ProgressBar progressBar;
+    ImageButton galleryButton;
+    CardView textBox;
+    TextView textBox_text;
+    ImageButton scaleMarkerButton;
+    View centerIcons;
+
     /*------------------------------------------------------------------*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,6 +194,35 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         View leftView =  findViewById(R.id.left_view);
         View rightView = findViewById(R.id.right_view);
         View buttonContainer = (View) findViewById(R.id.button_container);
+
+        progressBar = findViewById(R.id.session_progressBar);
+        progressBar.setVisibility(View.INVISIBLE);
+        Drawable draw = getResources().getDrawable(R.drawable.custom_progressbar);
+        progressBar.setProgressDrawable(draw);
+
+        galleryButton = findViewById(R.id.album_icon);
+        textBox = findViewById(R.id.photo_requirements);
+        textBox_text = findViewById(R.id.textBox_text);
+        textBox.getBackground().setAlpha(128);
+
+        textBox_text.setText("Take an image of your scaling object placed on the limb.");
+        textBox.setVisibility(View.VISIBLE);
+
+        centerIcons = findViewById(R.id.center_icons);
+
+        scaleMarkerButton = findViewById(R.id.scaleMarker_capture_button);
+
+        scaleMarkerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                takePicture();
+                textBox.setVisibility(View.INVISIBLE);
+                scaleMarkerButton.setVisibility(View.INVISIBLE);
+                makeToast(getApplicationContext(), "Now, position the limb in frame.", Toast.LENGTH_SHORT);
+                startSession.setVisibility(View.VISIBLE);
+                centerIcons.setBackgroundResource(R.drawable.limb_overlay);
+            }
+        });
 
 
         topView.getBackground().setAlpha(128);
@@ -204,13 +248,23 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         startSession =  findViewById(R.id.startSession);
+        startSession.setVisibility(View.INVISIBLE);
 
         startSession.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "startSession in progress");
-                startSession.setVisibility(View.INVISIBLE);
-                startTimer();
+
+                if(Math.abs(currentAvgOrientation[1]) > 1.2) {
+                    makeToast(getApplicationContext(), "Sensor error. Please tilt phone.", Toast.LENGTH_SHORT);
+                    transparentView.setBackgroundResource(R.drawable.error_rectangle_transparent);
+                } else {
+                    Log.d(TAG, "startSession in progress");
+                    startSession.setVisibility(View.INVISIBLE);
+                    galleryButton.setVisibility(View.INVISIBLE);
+                    centerIcons.setBackgroundResource(0);
+                    startTimer();
+                }
+
             }
         });
 
@@ -220,8 +274,21 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
             @Override
             public void onClick(View v) {
                 SWITCH = false;
-                customToast("Session Over. Hit the return button and start a new session!");
+                textBox_text.setText("Session Over. Hit the return button and start a new session!");
+                textBox.setVisibility(View.VISIBLE);
+                centerIcons.setVisibility(View.INVISIBLE);
                 endsession.setVisibility(View.INVISIBLE);
+            }
+        });
+
+
+        galleryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CameraActivity.this, GalleryActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+                finish();
             }
         });
 
@@ -231,6 +298,9 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
 
         /**Countdown code */
         mTextViewCountdown =  findViewById(R.id.countdown);
+
+        transparentView = findViewById(R.id.transparent_view);
+
     }
 
 
@@ -252,6 +322,7 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
             @Override
             public void onFinish() {
                 endsession.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.VISIBLE);
                 sessionLoop();
             }
         }.start();
@@ -272,12 +343,13 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         if(seconds == 4) {
             setStartingPosition();
             setCheckPoint();
-            customToast("Sensors calibrated!");
+            customToast("Sensors calibrating, please hold still.");
         }
 
-        if(seconds == 2)
+        if(seconds == 2) {
             customToast("Session is starting!");
-
+            centerIcons.setBackgroundResource(R.drawable.start_session_arrow);
+        }
         String timeLeft = Integer.toString(seconds);
         if (seconds == 0) {
             mTextViewCountdown.setText("");
@@ -1247,6 +1319,7 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
         startActivityForResult(myIntent, 0);
+        finish();
         return true;
     }
 
@@ -1316,6 +1389,12 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         }
 
         setOrientation();
+
+        if(Math.abs(currentAvgOrientation[1]) > 1.2) {
+            transparentView.setBackgroundResource(R.drawable.error_rectangle_transparent);
+        } else {
+            transparentView.setBackgroundResource(R.drawable.rectangle_transparent);
+        }
     }
 
 
@@ -1422,7 +1501,8 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
                 boolean flag = true;
                 while(flag) {
                     if(Math.abs(currentAvgOrientation[1]) > 1.2) {
-                        makeToast(getApplicationContext(), "Angle your phone down a bit more.", Toast.LENGTH_SHORT);
+                        makeToast(getApplicationContext(), "Sensor error. Please tilt phone.", Toast.LENGTH_SHORT);
+                        transparentView.setBackgroundResource(R.drawable.error_rectangle_transparent);
                     } else {
                         flag = false;
                     }
@@ -1468,17 +1548,58 @@ public class CameraActivity extends AppCompatActivity implements SensorEventList
         takePicture();
         setCheckPoint();
 
+
         // Check if the image is within the range before proceeding to take a picture
         new Thread(new Runnable() {
             @Override
             public void run() {
                 Log.d(TAG,"running in sessionLoop");
-
+                int progress = 0;
 
                 while (SWITCH) {
+                    if(Math.abs(currentAvgOrientation[1]) > 1.2) {
+                        transparentView.setBackgroundResource(R.drawable.error_rectangle_transparent);
+                        continue;
+                    } else {
+                        transparentView.setBackgroundResource(R.drawable.rectangle_transparent);
+                    }
+
                     if (Math.abs(Math.abs(currentAvgOrientation[2]) - Math.abs(previousOrientation[2])) >= 0.1396263402) {
                         takePicture(); //helper function to take a picture when button is clicked
                         setCheckPoint();
+                        progress += 1;
+                        if(progress < 75) {
+                            if(progress == 5) {
+                                runOnUiThread(new Runnable() {
+
+                                    @Override
+                                    public void run() {
+                                        centerIcons.setBackgroundResource(0);
+                                    }
+                                });
+                            }
+                            progressBar.setProgress(progress);
+                        } else if (progress >= 100 && progress <= 110) {
+                            progressBar.setProgress(progress);
+                            runOnUiThread(new Runnable() {
+
+                                @Override
+                                public void run() {
+                                    textBox_text.setText("Minimum numbers of photos taken. Continue rotating around limb to finish.");
+                                    textBox.setVisibility(View.VISIBLE);
+                                }
+                            });
+                        }
+                        else {
+                            runOnUiThread(new Runnable() {
+
+                                @Override
+                                public void run() {
+                                    textBox.setVisibility(View.INVISIBLE);
+                                }
+                            });
+                            progressBar.setProgress(progress);
+                        }
                     }
                 }
             }
