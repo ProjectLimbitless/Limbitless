@@ -33,9 +33,37 @@
     <string name="guestText">Continue as Guest</string>
     <string name="signInText">Sign In</string>
     <string name="projectLimbitlessTitle">Project Lim(b)itless</string>
-    <string name="WelcomToText">Welcome to</string>
+    <string name="WelcomeToText">Welcome to</string>
     <string name="string_previous">Previous</string>
     <string name="string_next_finish">Next</string>
+
+    <string name="Test_1">testOne</string>
+    <string name="Test_2">testTwo</string>
+    <string name="Test_3">testThree</string>
+    <string name="start_text_welcome_activity">Start</string>
+    <string name="ucsd_text_welcome_page">Powered by UC San Diego</string>
+    <string name="sign_in_into_your_account_text">Sign into your account</string>
+    <string name="new_account_text">New to Lim[b]itless?</string>
+    <string name="title_activity_forgot_password">ForgotPasswordActivity</string>
+    <string name="create_an_account">Create an account</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
+    <string name="reset_password_text"> Please enter your email address. You will receive a link to reset your password shortly.</string>
+    <string name="lorem_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum dignissim lacus sed arcu efficitur, eu eleifend nisi elementum. Aliquam laoreet tellus in enim convallis venenatis. Cras consequat sed lectus sit amet rhoncus. Integer scelerisque lectus id blandit tempus. Morbi condimentum sodales rutrum. Nullam cursus, tortor ut faucibus eleifend, augue magna eleifend metus, nec dapibus nunc lectus sit amet quam. Nam molestie sapien ac odio convallis semper. Integer a erat ultricies sem tincidunt dapibus ut in ex. Pellentesque ut ex ut lacus fermentum facilisis et iaculis enim.Quisque non tempus lacus. Phasellus consectetur, est eu auctor venenatis, nisl odio ultrices arcu, at dictum dolor tellus quis quam. </string>
+    <string name="text_frame_0"> In order to capture a good scan, please find a shaded outdoor area to take photos with minimal glare from the lighting. This process will require an additional person to assist with photo taking. Once a satisfactory location has been found, have the amputee take a seat and assume an appropriate position for imaging. If possible, add a colored-patterned sock on the residual limb. The residual limb should be positioned horizontally, parallel to the ground with sufficient space on all sides for the camera to rotate around.</string>
+    <string name="text_frame_1"> In order to obtain accurate measurements from your scan later on, we will need to make 4 markings either directly on the skin of the residual limb or on the sock. For these marks, please place a small, well-known object onto the residual limb. Using a marker that will not smear or fade, please make 4 dots on the top, bottom, right, and left sides of the object. For more information on possible objects to use for scaling, please click here.</string>
+    <string name="text_frame_2"> Once everything is set up and the scaling marks are all clearly visible on the skin or sock, you are ready to start the scan. Position the phone at a distance far enough from the residual limb so that its entirety can be seen and no parts are cut off. We recommend starting at the 12 o’clock position as shown in the image above. From there, you may proceed in a clockwise or counterclockwise direction until the 360° rotation is completed. When you are ready, start the session by pressing the capture button and follow the prompts on the screen. Note that during the process of one scan, the capture button only needs to be pressed once.</string>
+    <string name="text_frame_3"> While conducting the rotation around the residual limb, please move at a steady and consistent pace. Ensure that the entirety of the limb remains within the green edges at all times. Keep the phone tilted at an angle greater than 10 degrees with the vertical axis, facing the residual limb throughout the entire rotation. Continue to rotate the phone until prompted with the message “Minimum number of photos completed.” At this point, you may choose to terminate the session by pressing stop or continue the session to provide more data by resuming your rotation. Note that sessions stopped prior to the prompt are considered incomplete and do not contain sufficient data.</string>
+    <string name="text_frame_4"> When you have completed a scan and saved it into the gallery, make sure to review all photos to ensure that they are evenly lit, in focus, and contain the entire residual limb. From here, you may then choose to name the album and move forward with sending the session to the server. When we receive the information, the development team will reach out to you with further steps.</string>
+
+    <string name="step_1">Step 1: Shade</string>
+    <string name="step_2">Step 2: Marks </string>
+    <string name="step_3">Step 3: Position</string>
+    <string name="step_4">Step 4: Orientation</string>
+    <string name="step_5">Step 5: Save and Send</string>
+
+
+
 
 
 </resources>

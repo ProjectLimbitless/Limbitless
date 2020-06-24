@@ -21,22 +21,24 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label=" "
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TutorialActivity"></activity>
+        <activity android:name=".Navigation_Drawer.AboutUsActivity"></activity>
+        <activity android:name=".Navigation_Drawer.PrivacyPolicyActivity" />
+        <activity android:name=".Navigation_Drawer.LanguageActivity" />
+        <activity android:name=".Navigation_Drawer.ProfileActivity" />
         <activity
-            android:name=".DrawerActivity"
-            android:label="@string/title_activity_drawer"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.limbitlesssummerproject19.MainActivity" />
-        </activity>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".LoginActivityView">
+            android:name=".Login.ForgotPasswordActivity"
+            android:label="@string/title_activity_forgot_password"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+        <activity
+            android:name=".Login.CreateAccountActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Login.LoginActivity" />
+        <activity android:name=".Login.WelcomePage">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.MAIN" />
@@ -44,10 +46,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CameraActivity" />
-        <activity android:name=".GalleryActivity" />
-        <activity android:name=".AlbumActivity" />
-        <activity android:name=".FullImageActivity" />
+        <activity android:name=".Tutorial.TutorialActivity"
+            android:label="Tutorial"
+            android:theme="@style/AppTheme.TutorialActivity"/>
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Camera.CameraActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".Album.GalleryActivity"
+            android:theme="@style/AppTheme.Gallery"/>
+        <activity android:name=".Album.AlbumActivity"
+            android:theme="@style/AppTheme.Gallery"/>
+        <activity android:name=".Album.FullImageActivity" />
     </application>
 
 </manifest>

@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.limbitlesssummerproject19.TutorialActivity"
+    tools:context="com.example.limbitlesssummerproject19.Tutorial.TutorialActivity"
     tools:showIn="@layout/activity_tutorial">
 
     <RelativeLayout
@@ -20,23 +20,24 @@
         android:background="@drawable/rounded_up_corners_bg">
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/mushroom"
-            android:id="@+id/imageView2"
-            android:layout_marginTop="24dp"/>
-
-        <ImageView
             android:layout_below="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             app:srcCompat="@drawable/ic_keyboard_arrow_down_black_24dp"
             android:id="@+id/imageView"
             android:layout_marginTop="4dp"/>
 
         <TextView
+            android:id="@+id/image_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"/>
+
+
+
+        <TextView
             android:layout_alignParentTop="true"
-            android:text="Slide it down"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/textView"
