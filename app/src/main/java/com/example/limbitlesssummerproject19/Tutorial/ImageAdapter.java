@@ -3,45 +3,95 @@ package com.example.limbitlesssummerproject19.Tutorial;
 import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.limbitlesssummerproject19.R;
+import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
-public class ImageAdapter extends PagerAdapter {
+import org.w3c.dom.Text;
+
+public class ImageAdapter extends PagerAdapter{
 
 
-    private int imagePosition;
+    private final static String TAG = "ImageAdapter";
+
     private Context mContext;
-    private int[] imageArray = new int [] {R.drawable.ic_360_leg,R.drawable.image2, R.drawable.image3,R.drawable.image4};
+    private int [] images;
+    private int [] text;
+    private int [] title;
+    LayoutInflater inflater;
 
-    ImageAdapter(Context context) {
+
+
+    ImageAdapter(Context context, int [] images, int[] text, int [] title) {
+
         this.mContext = context;
+        this.images = images;
+        this.text = text;
+        this.title = title;
     }
 
     @Override
     public int getCount() {
-        return imageArray.length;
+
+        return images.length;
     }
 
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
 
-        imagePosition = position;
-        ImageView imageView = new ImageView(mContext);
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        imageView.setImageResource(imageArray[position]);
-        container.addView(imageView,0);
+        inflater = (LayoutInflater) mContext
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        return imageView;
+        Log.i(TAG, "instantiateItem: inflating all the images");
+        View itemView =  inflater.inflate(R.layout.viewpager_item,container,false);
+
+
+        Log.d(TAG, "instantiateItem: setting the images");
+        ImageView imageView = itemView.findViewById(R.id.tutorial_image);
+        imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+
+        imageView.setImageResource(images[position]);
+
+        WormDotsIndicator indicator = itemView.findViewById(R.id.worm_dots_indicator);
+
+        indicator.setViewPager((ViewPager) container);
+
+
+        TextView titleView = itemView.findViewById(R.id.text_view_title);
+        titleView.setText(title[position]);
+
+
+        Log.d(TAG, "instantiateItem: setting the labels");
+        TextView textView = itemView.findViewById(R.id.text_view);
+        textView.setText(text[position]);
+
+
+        ((ViewPager) container).addView(itemView, null);
+
+
+        Log.d(TAG, "Image position" + position);
+
+        return itemView;
 
     }
 
+
+
+
+
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        container.removeView((ImageView) object);
+        ((ViewPager) container).removeView((LinearLayout) object);
     }
 
     @Override
@@ -49,8 +99,10 @@ public class ImageAdapter extends PagerAdapter {
         return view == object;
     }
 
-    public int getImagePosition(){
-        return imagePosition;
+
+    @Override
+    public int getItemPosition(@NonNull Object object) {
+        return super.getItemPosition(object);
     }
 
 

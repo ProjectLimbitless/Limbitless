@@ -18,5 +18,11 @@
     <color name="tabLayoutHighlight">#a2d9dd</color>
     <color name="colorDivider">#ECECEC</color>
 
+    <color name="color1"> #768e5a </color>
+    <color name="color2"> #768e5a</color>
+    <color name="color3"> #768e5a</color>
+    <color name="color4"> #768e5a</color>
+    <color name="color5"> #dbecfe</color>
+
     <!-- #235B99   #1F1B24 -->
 </resources>
