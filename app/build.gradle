@@ -48,7 +48,7 @@ dependencies {
     // Drawer
     implementation 'com.google.android.material:material:1.2.0-alpha02'
 
-
+    implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2'
     // SDKs for the Firebase products you want to use in your app
     // For example, to use Firebase Authentication and Cloud Firestore
     implementation 'com.google.firebase:firebase-database:19.2.1'

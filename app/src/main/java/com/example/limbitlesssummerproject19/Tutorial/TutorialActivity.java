@@ -1,116 +1,111 @@
 package com.example.limbitlesssummerproject19.Tutorial;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
+import android.app.AppComponentFactory;
 import android.content.Intent;
 
 import com.example.limbitlesssummerproject19.MainActivity;
 import com.example.limbitlesssummerproject19.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import android.graphics.Color;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager2.widget.ViewPager2;
+
+import android.provider.CalendarContract;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.mancj.slideup.SlideUp;
 import com.mancj.slideup.SlideUpBuilder;
-
-
+import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
+import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
 
 // Creating a fragment instead of an activity
 public class TutorialActivity extends AppCompatActivity {
 
-    private static final int NUM_PAGES = 5;
+    public static final String TAG = ".TutorialActivity";
 
-    private SlideUp slideUp;
-    private View dim;
-    private View sliderView;
-    private FloatingActionButton fab;
-    private TextView text;
-    Toast toast;
 
-    Button button;
+    PagerAdapter pageAdapter;
+    ViewPager pager;
+
+    ArgbEvaluator argbEvaluator = new ArgbEvaluator();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutorial);
 
-        /** Setting back button to main activity */
-        ActionBar actionBar = getSupportActionBar();
-        assert actionBar != null;
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        int[] imageArray = new int [] {R.drawable.frame01,R.drawable.frame02, R.drawable.frame03,R.drawable.frame04, R.drawable.frame05};
+        int[] textArray = new int[] { R.string.text_frame_0, R.string.text_frame_1,R.string.text_frame_2,R.string.text_frame_3,R.string.text_frame_4};
+        int [] titlesArray = new int [] { R.string.step_1,R.string.step_2,R.string.step_3,R.string.step_4,R.string.step_5};
+        final Integer [] colors = {getResources().getColor(R.color.color1),
+                getResources().getColor(R.color.color2),
+                getResources().getColor(R.color.color3),
+                getResources().getColor(R.color.color4),
+                getResources().getColor(R.color.color5)
+        };
 
-        // What the hell is going on with mPager
-        ViewPager mPager = findViewById(R.id.pager);
-        final PagerAdapter pagerAdapter = new ImageAdapter(this);
-        mPager.setPageTransformer(true, new ZoomOutPageTransformer());
-        mPager.setAdapter(pagerAdapter);
+        // What the hell is going on with
 
-        final TextView text = findViewById(R.id.textView);
+        Log.d(TAG, "onCreate: calling the pager2");
+        pager = findViewById(R.id.pager);
 
-        final ImageAdapter adapter = new ImageAdapter(this);
+        pageAdapter = new ImageAdapter(this, imageArray, textArray, titlesArray);
+        pager.setPageTransformer(true, new ZoomOutPageTransformer());
+        pager.setAdapter(pageAdapter);
 
 
-        sliderView = findViewById(R.id.slideView);
-        sliderView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (toast != null){
-                    toast.cancel();
-                }
-                toast = Toast.makeText(TutorialActivity.this, "click", Toast.LENGTH_SHORT);
-                toast.show();
-            }
-        });
-        dim = findViewById(R.id.dim);
-        fab = findViewById(R.id.fab);
 
-        slideUp = new SlideUpBuilder(sliderView)
-                .withListeners(new SlideUp.Listener.Events() {
-                    @Override
-                    public void onSlide(float percent) {
-                        dim.setAlpha(1 - (percent / 100));
-                        if (fab.isShown() && percent < 100) {
-                            fab.hide();
-                        }
-                    }
-                    @Override
-                    public void onVisibilityChanged(int visibility) {
-                        if (visibility == View.GONE){
-                            fab.show();
-                        }
-                    }
-                })
-                .withStartGravity(Gravity.BOTTOM)
-                .withLoggingEnabled(true)
-                .withGesturesEnabled(true)
-                .withStartState(SlideUp.State.HIDDEN)
-                .withSlideFromOtherView(findViewById(R.id.rootView))
-                .build();
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                if( adapter.getImagePosition() == 0 ){
-                    text.setText(R.string.Test_1);
-                } else if( adapter.getImagePosition() == 1){
-                    text.setText(R.string.Test_2);
-                } else if( adapter.getImagePosition() == 2){
-                    text.setText(R.string.Test_3);
-                }
-                slideUp.show();
-            }
-        });
+
+//        pager.setOnPageChangeListener( new ViewPager.OnPageChangeListener(){
+//
+//
+//            @Override
+//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//                if(position < (pageAdapter.getCount() -1) && position <(colors.length -1)){
+//                    pager.setBackgroundColor((Integer) argbEvaluator.evaluate(
+//                            positionOffset,
+//                            colors[position],
+//                            colors[position + 1]
+//                    ));
+//                } else {
+//                    pager.setBackgroundColor(colors[colors.length -1 ]);
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onPageSelected(int position) {
+//
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int state) {
+//
+//            }
+//        });
+
 
 
     }
+
 
     /**
      * Function: onOptionsItemSelected()

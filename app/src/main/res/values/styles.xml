@@ -23,6 +23,20 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.TutorialActivity" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <item name="colorPrimary">#3f693c</item>
+
+<!--        #3f693c-->
+
+<!--        #446e1e its okay-->
+
+<!--        #264e1b too strong-->
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
