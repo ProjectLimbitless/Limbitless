@@ -231,6 +231,7 @@ public class AlbumActivity extends AppCompatActivity {
                 Intent backToGallery = new Intent(AlbumActivity.this,
                         GalleryActivity.class);
                 startActivity(backToGallery);
+                finish();
             }
         });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

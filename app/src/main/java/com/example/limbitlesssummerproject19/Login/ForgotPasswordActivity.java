@@ -3,10 +3,12 @@ package com.example.limbitlesssummerproject19.Login;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.limbitlesssummerproject19.MainActivity;
 import com.example.limbitlesssummerproject19.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -80,8 +82,17 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     }
 
     public void openLoginPage() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user != null) {
+            userLogOut();
+        }
+    }
+
+    private void userLogOut() {
+        mAuth.signOut();
         startActivity(new Intent(ForgotPasswordActivity.this, LoginActivity.class));
         finish();
+        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
     }
 
 }

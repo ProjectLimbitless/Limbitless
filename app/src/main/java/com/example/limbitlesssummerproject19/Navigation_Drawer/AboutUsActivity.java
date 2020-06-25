@@ -3,8 +3,11 @@ package com.example.limbitlesssummerproject19.Navigation_Drawer;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import com.example.limbitlesssummerproject19.MainActivity;
 import com.example.limbitlesssummerproject19.R;
@@ -18,6 +21,13 @@ public class AboutUsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_about_us);
 
 
+    }
+
+    public void learnMore(View view) {
+        String url = "http://chf.ucsd.edu/project-limbitless/";
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
     }
 
     @Override

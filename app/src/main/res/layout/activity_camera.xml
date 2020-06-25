@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#333333"
+    android:background="#002D3F"
     tools:context=".Camera.CameraActivity">
 
     <com.example.limbitlesssummerproject19.Camera.AutoFitTextureView
@@ -31,8 +31,34 @@
         app:layout_constraintStart_toEndOf="@id/left_view"
         app:layout_constraintTop_toBottomOf="@id/top_view" >
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/photo_requirements"
+            android:visibility="invisible"
+            android:layout_margin="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="45dp"
+            app:cardBackgroundColor="#F4F4F4"
+            app:cardElevation="0dp"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/textBox_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="15dp"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:padding="20dp"
+                android:textColor="#002D3F"
+                android:fontFamily="@font/open_sans_regular"
+                android:textSize="25dp" />
+
+        </androidx.cardview.widget.CardView>
+
 
         <View
+            android:id="@+id/transparent_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -49,6 +75,17 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:textSize="40sp" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:id="@+id/center_icons"
+            app:layout_constraintBottom_toTopOf="@+id/button_container"
+            app:layout_constraintEnd_toStartOf="@+id/right_view"
+            app:layout_constraintStart_toEndOf="@+id/left_view"
+            app:layout_constraintTop_toBottomOf="@+id/top_view"/>
+
 
     </FrameLayout>
 
@@ -97,47 +134,78 @@
         app:layout_constraintEnd_toStartOf="@id/right_view"/>
 
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/button_container"
         android:layout_height="0dp"
         android:layout_width="0dp"
+        android:layout_alignParentBottom="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/texture"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <RelativeLayout
-            android:id="@+id/relative"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center">
 
-            <ImageButton
-                android:id="@+id/startSession"
-                android:layout_width="60dp"
-                android:layout_height="58dp"
-                android:layout_centerInParent="true"
-                android:background="@drawable/picture_button_default" />
+        <ImageButton
+            android:id="@+id/startSession"
+            android:layout_width="60dp"
+            android:layout_height="58dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/capture_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/button_container"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
-            <ImageButton
-                android:id="@+id/end_session"
-                android:layout_width="60dp"
-                android:layout_height="58dp"
-                android:layout_centerInParent="true"
-                android:background="@drawable/end_session_button" />
+        <ImageButton
+            android:id="@+id/scaleMarker_capture_button"
+            android:layout_width="60dp"
+            android:layout_height="58dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/capture_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/button_container"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
+        <ImageButton
+            android:layout_width="60dp"
+            android:layout_height="58dp"
+            android:background="@drawable/album_icon"
+            android:id="@+id/album_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/startSession"
+            app:layout_constraintHorizontal_bias="0.215"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/button_container"
+            app:layout_constraintVertical_bias="0.482" />
 
-            <TextView
-                android:id="@+id/SessionCompleteTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:textSize="24sp"
-                android:visibility="invisible" />
+        <ProgressBar
+            android:id="@+id/session_progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="249dp"
+            android:layout_height="58dp"
+            android:background="@color/mainRed"
+            android:max="120"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/end_session"
+            app:layout_constraintHorizontal_bias="0.461"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/button_container" />
 
-        </RelativeLayout>
-    </FrameLayout>
+        <ImageButton
+            android:id="@+id/end_session"
+            android:layout_width="60dp"
+            android:layout_height="58dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/end_session_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.894"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/button_container"
+            app:layout_constraintVertical_bias="0.465" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
