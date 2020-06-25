@@ -52,6 +52,7 @@ public class LoginActivity extends BaseAccountActivity {
 
         if(user != null) {
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
             finish();
         }
 
@@ -123,21 +124,13 @@ public class LoginActivity extends BaseAccountActivity {
         return valid;
     }
 
-    public void signInAsGuest(View view) {
-        //Toast.makeText(getApplicationContext(), "Clickable worked",Toast.LENGTH_SHORT).show();
-        String password = "Guest";
-        String name = "username";
-        Intent intent = new Intent (this, MainActivity.class);
-        intent.putExtra(name, password);
-        this.startActivity(intent);
-        this.overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
-    }
-
     public void createAccount(View view) {
         startActivity(new Intent(LoginActivity.this, CreateAccountActivity.class));
+        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
     }
 
     public void forgotPassword(View view) {
         startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class));
+        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
     }
 }

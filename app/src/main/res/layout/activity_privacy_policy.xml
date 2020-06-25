@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="45dp"
+    android:padding="30dp"
     tools:context=".Navigation_Drawer.PrivacyPolicyActivity">
 
 
@@ -17,14 +17,23 @@
         app:cardElevation="0dp"
         android:layout_gravity="center">
 
-        <TextView
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="20dp"
-            android:textColor="#002D3F"
-            android:fontFamily="@font/open_sans_regular"
-            android:textSize="15dp"
-            android:text="@string/lorem_text"/>
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+            android:fillViewport="true">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="20dp"
+                android:textColor="#002D3F"
+                android:fontFamily="@font/open_sans_regular"
+                android:textSize="15dp"
+                android:text="@string/privacy_text"/>
+
+
+        </ScrollView>
 
     </androidx.cardview.widget.CardView>
 </LinearLayout>
