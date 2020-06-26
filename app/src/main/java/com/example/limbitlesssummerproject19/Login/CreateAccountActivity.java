@@ -39,8 +39,14 @@ public class CreateAccountActivity extends BaseAccountActivity implements View.O
 
         if(mAuth.getCurrentUser() != null) {
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
             finish();
         }
+    }
+
+    public void openLogin(View view) {
+        startActivity(new Intent(CreateAccountActivity.this, LoginActivity.class));
+        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
     }
 
     @Override
