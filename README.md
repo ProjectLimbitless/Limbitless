@@ -19,4 +19,4 @@ This repository outlines the work from the Software Team since Summer 2019. The 
 * Automated Photo Capturing Session
 * Well-Designed gallery to view individual user sessions
 * Specialized Camera
-* Connection to UCSD Database 
+* Connection to Firebase Realtime Database 
